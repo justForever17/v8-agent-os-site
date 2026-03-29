@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>V8 Agent OS</title>
+    <meta
+      name="description"
+      content="V8 Agent OS 是一个以 runtime 为中心的 Agent OS，覆盖聊天、记忆、自动化、插件宿主、桌面执行与多节点协作。"
+    />
+    <link rel="icon" type="image/png" href="../assets/brand-mark.png" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+    <script defer src="../assets/site.js"></script>
+  </head>
+  <body data-locale="zh">
+    <div class="site-shell">
+      <header class="topbar">
+        <a class="brand" href="./index.html">
+          <img src="../assets/brand-mark.png" alt="V8 Agent OS" />
+          <span>V8 Agent OS</span>
+        </a>
+        <nav class="topnav" aria-label="Primary">
+          <button class="topnav-link is-active" data-page-target="overview">总览</button>
+          <button class="topnav-link" data-page-target="runtimes">运行时</button>
+          <button class="topnav-link" data-page-target="install">安装</button>
+          <button class="topnav-link" data-page-target="docs">文档</button>
+          <button class="topnav-link" data-page-target="repos">仓库</button>
+        </nav>
+        <div class="topbar-actions">
+          <a class="locale-link" href="../index.html">EN</a>
+        </div>
+      </header>
+
+      <main class="deck-frame">
+        <div class="deck-track" data-page-track>
+          <section class="panel is-active" data-page="overview">
+            <div class="panel-copy">
+              <div class="eyebrow">Runtime-first Agent OS</div>
+              <h1>把聊天、记忆、自动化和真实任务收进同一条控制平面。</h1>
+              <p class="lede">
+                V8 Agent OS 面向可恢复的长期任务，把执行、记忆、自动化、插件宿主工具和多节点协作放在同一条 runtime 主链上。
+              </p>
+              <div class="hero-actions">
+                <button class="button-primary" data-page-target="install">立即安装</button>
+                <button class="button-secondary" data-page-target="docs">页内查看文档</button>
+              </div>
+              <ul class="signal-list">
+                <li>以 runtime 为核心的执行链</li>
+                <li>可恢复的长任务</li>
+                <li>Skills、MCP 与插件宿主统一协作</li>
+              </ul>
+            </div>
+
+            <div class="panel-stage">
+              <div class="video-shell">
+                <div class="video-chrome">
+                  <span>产品演示</span>
+                  <span>视频窗口</span>
+                </div>
+                <div class="video-canvas">
+                  <div class="video-pulse"></div>
+                  <div class="video-caption">
+                    这里放产品演示：任务规划、handoff、自动化心跳、插件工具调用，以及 Network Supervisor 组网流转。
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel" data-page="runtimes">
+            <div class="section-heading">
+              <div class="eyebrow">核心运行时</div>
+              <h2>每个 runtime 负责一类真正的工作。</h2>
+              <p>不要把所有事情都塞回聊天。让正确的 runtime 处理正确的问题。</p>
+            </div>
+
+            <div class="runtime-grid">
+              <article class="runtime-tile">
+                <span class="runtime-name">CHAT RUNTIME</span>
+                <p>规划、回答、委派，并保持 run ledger 一致。</p>
+              </article>
+              <article class="runtime-tile">
+                <span class="runtime-name">MEMORY RUNTIME</span>
+                <p>管理偏好、知识、产物、图谱检索与 recall。</p>
+              </article>
+              <article class="runtime-tile">
+                <span class="runtime-name">AUTOMATION RUNTIME</span>
+                <p>提供 cron、hooks 与 Supervisor 心跳唤醒。</p>
+              </article>
+              <article class="runtime-tile">
+                <span class="runtime-name">PLUGIN HOST RUNTIME</span>
+                <p>统一 OpenClaw 工具、IM 桥接与外部通道。</p>
+              </article>
+              <article class="runtime-tile">
+                <span class="runtime-name">COMPUTER USE RUNTIME</span>
+                <p>在护栏之下执行桌面动作与高摩擦任务。</p>
+              </article>
+              <article class="runtime-tile">
+                <span class="runtime-name">RPA RUNTIME</span>
+                <p>承担结构化的界面自动化与重复流程任务。</p>
+              </article>
+              <article class="runtime-tile runtime-wide">
+                <span class="runtime-name">NETWORK SUPERVISOR RUNTIME</span>
+                <p>支持局域网发现、广域网接入、定向唤醒、签名 envelope 与多 peer 协作。</p>
+              </article>
+            </div>
+          </section>
+
+          <section class="panel" data-page="install">
+            <div class="section-heading">
+              <div class="eyebrow">安装</div>
+              <h2>一条命令启动 V8 Agent OS。</h2>
+              <p>按平台复制命令，就能拉取最新版的 engine 与 admin 并直接启动。</p>
+            </div>
+
+            <div class="install-grid">
+              <article class="install-card">
+                <div class="install-title">Windows</div>
+                <pre><code>powershell -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/justForever17/v8-agent-os-engine/main/scripts/install/bootstrap.ps1 | iex"</code></pre>
+                <div class="install-actions">
+                  <button class="button-secondary copy-command" data-copy="powershell -ExecutionPolicy Bypass -Command &quot;irm https://raw.githubusercontent.com/justForever17/v8-agent-os-engine/main/scripts/install/bootstrap.ps1 | iex&quot;">复制</button>
+                  <a class="button-secondary" href="https://raw.githubusercontent.com/justForever17/v8-agent-os-engine/main/scripts/install/bootstrap.ps1">打开脚本</a>
+                </div>
+              </article>
+
+              <article class="install-card">
+                <div class="install-title">Linux</div>
+                <pre><code>curl -fsSL https://raw.githubusercontent.com/justForever17/v8-agent-os-engine/main/scripts/install/bootstrap.sh | bash</code></pre>
+                <div class="install-actions">
+                  <button class="button-secondary copy-command" data-copy="curl -fsSL https://raw.githubusercontent.com/justForever17/v8-agent-os-engine/main/scripts/install/bootstrap.sh | bash">复制</button>
+                  <a class="button-secondary" href="https://raw.githubusercontent.com/justForever17/v8-agent-os-engine/main/scripts/install/bootstrap.sh">打开脚本</a>
+                </div>
+              </article>
+
+              <article class="install-card">
+                <div class="install-title">macOS</div>
+                <pre><code>curl -fsSL https://raw.githubusercontent.com/justForever17/v8-agent-os-engine/main/scripts/install/bootstrap.sh | bash</code></pre>
+                <div class="install-actions">
+                  <button class="button-secondary copy-command" data-copy="curl -fsSL https://raw.githubusercontent.com/justForever17/v8-agent-os-engine/main/scripts/install/bootstrap.sh | bash">复制</button>
+                  <a class="button-secondary" href="https://raw.githubusercontent.com/justForever17/v8-agent-os-engine/main/scripts/install/bootstrap.command">打开脚本</a>
+                </div>
+              </article>
+            </div>
+
+            <div class="note-strip">
+              <span class="note-label">你会得到什么</span>
+              <p>脚本会拉取最新的 engine 和 admin 仓库、安装依赖、生成本地 admin env 文件，并启动两端服务。</p>
+            </div>
+          </section>
+
+          <section class="panel" data-page="docs">
+            <div class="section-heading">
+              <div class="eyebrow">了解与扩展</div>
+              <h2>在这里快速了解架构、安装方式和扩展路径。</h2>
+              <p>直接查看核心文档，用来理解产品设计、部署方式、移动端打包和局域网远程能力。</p>
+            </div>
+
+            <div class="docs-layout">
+              <aside class="docs-nav">
+                <button
+                  class="doc-link is-active"
+                  data-doc-title="Network Supervisor Runtime"
+                  data-doc-url="https://raw.githubusercontent.com/justForever17/v8-agent-os-engine/main/docs/NETWORK_SUPERVISOR_RUNTIME_IMPLEMENTATION_PLAN.md"
+                  data-doc-open="https://github.com/justForever17/v8-agent-os-engine/blob/main/docs/NETWORK_SUPERVISOR_RUNTIME_IMPLEMENTATION_PLAN.md"
+                >
+                  <span>Network Supervisor Runtime</span>
+                  <small>发现、唤醒协议、安全与实施阶段。</small>
+                </button>
+                <button
+                  class="doc-link"
+                  data-doc-title="Engine 快速开始"
+                  data-doc-url="https://raw.githubusercontent.com/justForever17/v8-agent-os-engine/main/README.md"
+                  data-doc-url-zh="https://raw.githubusercontent.com/justForever17/v8-agent-os-engine/main/README-ZH.md"
+                  data-doc-open="https://github.com/justForever17/v8-agent-os-engine/blob/main/README-ZH.md"
+                >
+                  <span>Engine 快速开始</span>
+                  <small>执行平面、配置真相源与启动方式。</small>
+                </button>
+                <button
+                  class="doc-link"
+                  data-doc-title="手机应用打包"
+                  data-doc-url="https://raw.githubusercontent.com/justForever17/v8-agent-os-web/main/docs/MOBILE_APP_PACKAGING_GUIDE.md"
+                  data-doc-open="https://github.com/justForever17/v8-agent-os-web/blob/main/docs/MOBILE_APP_PACKAGING_GUIDE.md"
+                >
+                  <span>手机应用打包</span>
+                  <small>Capacitor 壳、APK、IPA 与部署路径。</small>
+                </button>
+                <button
+                  class="doc-link"
+                  data-doc-title="局域网远程视频"
+                  data-doc-url="https://raw.githubusercontent.com/justForever17/v8-agent-os-web/main/docs/DESKTOP_LIVE_LAN_READINESS.md"
+                  data-doc-open="https://github.com/justForever17/v8-agent-os-web/blob/main/docs/DESKTOP_LIVE_LAN_READINESS.md"
+                >
+                  <span>局域网远程视频</span>
+                  <small>当前链路、网络前提与剩余验证项。</small>
+                </button>
+              </aside>
+
+              <section class="doc-viewer">
+                <div class="doc-viewer-header">
+                  <div>
+                    <div class="doc-viewer-title" data-doc-viewer-title>Network Supervisor Runtime</div>
+                    <div class="doc-viewer-subtitle">优先显示中文，缺少中文时自动回退英文。</div>
+                  </div>
+                  <a class="button-secondary" data-doc-open-link href="https://github.com/justForever17/v8-agent-os-engine/blob/main/docs/NETWORK_SUPERVISOR_RUNTIME_IMPLEMENTATION_PLAN.md">在 GitHub 打开</a>
+                </div>
+                <div class="doc-viewer-body markdown-body" data-doc-viewer-body>正在加载文档...</div>
+              </section>
+            </div>
+          </section>
+
+          <section class="panel" data-page="repos">
+            <div class="section-heading">
+              <div class="eyebrow">GitHub</div>
+              <h2>三个产品仓库，外加一个站点仓库更合适。</h2>
+              <p>如果你想让 Cloudflare Pages 自动更新，这个静态站最好单独放到一个站点仓库里。文档和安装脚本本身不需要再单独拆一个仓库。</p>
+            </div>
+
+            <div class="repo-grid">
+              <a class="repo-card" href="https://github.com/justForever17/v8-agent-os-web">
+                <span>v8-agent-os-web</span>
+                <small>用户聊天端与手机壳入口。</small>
+              </a>
+              <a class="repo-card" href="https://github.com/justForever17/v8-agent-os-engine">
+                <span>v8-agent-os-engine</span>
+                <small>执行平面、运行时、记忆、自动化与编排核心。</small>
+              </a>
+              <a class="repo-card" href="https://github.com/justForever17/v8-agent-os-admin">
+                <span>v8-agent-os-admin</span>
+                <small>控制台、代理层、策略与观测面。</small>
+              </a>
+              <article class="repo-card repo-card-accent">
+                <span>推荐新增</span>
+                <small>把当前 <code>/pages</code> 单独放进一个站点仓库。页面再去读取三个公开仓库里的文档和脚本。</small>
+              </article>
+            </div>
+
+            <div class="sponsor-card">
+              <div>
+                <div class="eyebrow">赞助</div>
+                <h3>支持 V8 Agent OS</h3>
+                <p>如果这个项目帮你节省了时间，欢迎支持持续开发与维护。</p>
+              </div>
+              <a class="button-primary" href="https://afdian.com/a/justforever17">在爱发电支持</a>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
