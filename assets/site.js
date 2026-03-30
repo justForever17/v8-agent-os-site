@@ -1,4 +1,4 @@
-const pageOrder = ["overview", "runtimes", "install", "docs", "repos"];
+const pageOrder = ["overview", "runtimes", "install", "docs"];
 const pageTrack = document.querySelector("[data-page-track]");
 const panels = Array.from(document.querySelectorAll("[data-page]"));
 const navButtons = Array.from(document.querySelectorAll("[data-page-target]"));

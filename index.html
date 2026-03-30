@@ -8,9 +8,9 @@
       name="description"
       content="V8 Agent OS is a runtime-first agent operating system for memory, automation, MCP, skills, OpenClaw plugins, and multi-node orchestration."
     />
-    <link rel="icon" type="image/png" href="./assets/brand-mark.png?v=20260330-1" />
-    <link rel="stylesheet" href="./assets/styles.css?v=20260330-1" />
-    <script defer src="./assets/site.js?v=20260330-1"></script>
+    <link rel="icon" type="image/png" href="./assets/brand-mark.png?v=20260331-1" />
+    <link rel="stylesheet" href="./assets/styles.css?v=20260331-1" />
+    <script defer src="./assets/site.js?v=20260331-1"></script>
   </head>
   <body data-locale="en">
     <div class="site-shell">
@@ -26,19 +26,20 @@
           <button class="topnav-link" data-page-target="docs">Docs</button>
         </nav>
         <div class="topbar-actions">
-          <button
+          <a
             class="icon-link"
-            data-page-target="repos"
-            aria-label="GitHub repositories"
-            title="GitHub repositories"
-            type="button"
+            href="https://github.com/justForever17/v8-agent-os"
+            aria-label="GitHub repository"
+            title="GitHub repository"
+            target="_blank"
+            rel="noreferrer"
           >
             <svg viewBox="0 0 16 16" aria-hidden="true">
               <path
                 d="M8 0C3.58 0 0 3.67 0 8.2c0 3.63 2.29 6.7 5.47 7.79.4.08.55-.18.55-.4 0-.2-.01-.86-.01-1.57-2.01.38-2.53-.5-2.69-.97-.09-.24-.48-.97-.82-1.17-.28-.16-.68-.55-.01-.56.63-.01 1.08.59 1.23.83.72 1.24 1.87.89 2.33.68.07-.54.28-.89.5-1.09-1.78-.21-3.64-.92-3.64-4.1 0-.91.32-1.66.84-2.25-.08-.21-.36-1.07.08-2.22 0 0 .69-.23 2.26.86.66-.19 1.36-.29 2.06-.29s1.4.1 2.06.29c1.57-1.09 2.26-.86 2.26-.86.44 1.15.16 2.01.08 2.22.52.59.84 1.33.84 2.25 0 3.19-1.87 3.89-3.65 4.1.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .22.15.49.55.4A8.233 8.233 0 0 0 16 8.2C16 3.67 12.42 0 8 0Z"
               />
             </svg>
-          </button>
+          </a>
           <a class="locale-link" href="./zh/index.html">中文</a>
         </div>
       </header>
@@ -130,40 +131,40 @@
           <section class="panel" data-page="install">
             <div class="section-heading">
               <div class="eyebrow">Install</div>
-              <h2>Pull the latest stack straight from GitHub, then boot clean on 9527 / 9528 / 9530.</h2>
-              <p>One command per platform. The script comes from the public Engine repo, so your first install and your next reinstall follow the same public truth.</p>
+              <h2>Pull the official bootstrap from GitHub, then bring up Admin 9528 and Engine 9530 cleanly.</h2>
+              <p>One command per platform. The public install entry now comes from the unified <code>justForever17/v8-agent-os</code> repository, so first install and reinstall follow the same canonical path.</p>
             </div>
 
             <div class="note-strip">
               <span class="note-label">What you get</span>
-              <p>You get the newest Engine and Admin, the required dependencies, local env files, and a clean control-and-execution stack on the shared default ports: Admin 9528 and Engine 9530. The Web app is distributed separately.</p>
+              <p>You get the newest Engine and Admin from the official monorepo, the required dependencies, local env files, and a clean control-and-execution stack on the shared default ports: Admin 9528 and Engine 9530. The Web app is still distributed separately.</p>
             </div>
 
             <div class="install-grid">
               <article class="install-card">
                 <div class="install-title">Windows</div>
-                <pre><code>powershell -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/justForever17/v8-agent-os-engine/main/scripts/install/bootstrap.ps1 | iex"</code></pre>
+                <pre><code>powershell -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.ps1 | iex"</code></pre>
                 <div class="install-actions">
-                  <button class="button-secondary copy-command" data-copy="powershell -ExecutionPolicy Bypass -Command &quot;irm https://raw.githubusercontent.com/justForever17/v8-agent-os-engine/main/scripts/install/bootstrap.ps1 | iex&quot;">Copy</button>
-                  <a class="button-secondary" href="https://raw.githubusercontent.com/justForever17/v8-agent-os-engine/main/scripts/install/bootstrap.ps1">Open script</a>
+                  <button class="button-secondary copy-command" data-copy="powershell -ExecutionPolicy Bypass -Command &quot;irm https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.ps1 | iex&quot;">Copy</button>
+                  <a class="button-secondary" href="https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.ps1">Open script</a>
                 </div>
               </article>
 
               <article class="install-card">
                 <div class="install-title">Linux</div>
-                <pre><code>curl -fsSL https://raw.githubusercontent.com/justForever17/v8-agent-os-engine/main/scripts/install/bootstrap.sh | bash</code></pre>
+                <pre><code>curl -fsSL https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.sh | bash</code></pre>
                 <div class="install-actions">
-                  <button class="button-secondary copy-command" data-copy="curl -fsSL https://raw.githubusercontent.com/justForever17/v8-agent-os-engine/main/scripts/install/bootstrap.sh | bash">Copy</button>
-                  <a class="button-secondary" href="https://raw.githubusercontent.com/justForever17/v8-agent-os-engine/main/scripts/install/bootstrap.sh">Open script</a>
+                  <button class="button-secondary copy-command" data-copy="curl -fsSL https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.sh | bash">Copy</button>
+                  <a class="button-secondary" href="https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.sh">Open script</a>
                 </div>
               </article>
 
               <article class="install-card">
                 <div class="install-title">macOS</div>
-                <pre><code>curl -fsSL https://raw.githubusercontent.com/justForever17/v8-agent-os-engine/main/scripts/install/bootstrap.command | bash</code></pre>
+                <pre><code>curl -fsSL https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.sh | bash</code></pre>
                 <div class="install-actions">
-                  <button class="button-secondary copy-command" data-copy="curl -fsSL https://raw.githubusercontent.com/justForever17/v8-agent-os-engine/main/scripts/install/bootstrap.command | bash">Copy</button>
-                  <a class="button-secondary" href="https://raw.githubusercontent.com/justForever17/v8-agent-os-engine/main/scripts/install/bootstrap.command">Open script</a>
+                  <button class="button-secondary copy-command" data-copy="curl -fsSL https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.sh | bash">Copy</button>
+                  <a class="button-secondary" href="https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.command">Open script</a>
                 </div>
               </article>
             </div>
@@ -232,41 +233,6 @@
             </div>
           </section>
 
-          <section class="panel" data-page="repos">
-            <div class="section-heading">
-              <div class="eyebrow">GitHub</div>
-              <h2>Four public repos. One system with a single story.</h2>
-              <p>Open the repo that matches your job, or connect the Site repo to Cloudflare Pages and let the public face update itself.</p>
-            </div>
-
-            <div class="repo-grid">
-              <a class="repo-card" href="https://github.com/justForever17/v8-agent-os-web">
-                <span>v8-agent-os-web</span>
-                <small>The chat app, session UI, mobile shell, and public user entry.</small>
-              </a>
-              <a class="repo-card" href="https://github.com/justForever17/v8-agent-os-admin">
-                <span>v8-agent-os-admin</span>
-                <small>The control console for setup, runtime health, and policy decisions.</small>
-              </a>
-              <a class="repo-card" href="https://github.com/justForever17/v8-agent-os-engine">
-                <span>v8-agent-os-engine</span>
-                <small>The execution plane for runs, memory, automation, plugin host, and recovery.</small>
-              </a>
-              <a class="repo-card repo-card-accent" href="https://github.com/justForever17/v8-agent-os-site">
-                <span>v8-agent-os-site</span>
-                <small>The public product site designed for Cloudflare Pages auto-updates.</small>
-              </a>
-            </div>
-
-            <div class="sponsor-card">
-              <div>
-                <div class="eyebrow">Sponsor</div>
-                <h3>Help V8 Agent OS keep moving.</h3>
-                <p>If this system saves your team time, helps your agents remember more, or makes automation finally feel reliable, you can support the next stage of development here.</p>
-              </div>
-              <a class="button-primary" href="https://afdian.com/a/justforever17">Support on 爱发电</a>
-            </div>
-          </section>
         </div>
       </main>
     </div>

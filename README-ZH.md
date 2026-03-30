@@ -37,9 +37,9 @@ OpenClaw 给你的是外部连接能力。
 
 ## 站点内容从哪里来
 
-- 安装脚本来自 [`v8-agent-os-engine`](https://github.com/justForever17/v8-agent-os-engine)
-- 公共文档来自 `v8-agent-os-engine` 与 `v8-agent-os-web`
-- 仓库导航指向 V8 Agent OS 的四个公开仓库
+- 安装脚本来自官方 [`v8-agent-os`](https://github.com/justForever17/v8-agent-os) 主仓根目录
+- 公共文档来自当前对外暴露的 V8 Agent OS markdown 真相源
+- 顶部 GitHub 入口统一指向 V8 Agent OS 主仓
 
 这样既能保证站点轻量，也能保证读者看到的是最新公开内容。
 

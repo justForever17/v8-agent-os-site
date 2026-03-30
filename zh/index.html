@@ -8,9 +8,9 @@
       name="description"
       content="V8 Agent OS 是一个以 runtime 为核心的 Agent OS，把记忆、自动化、MCP、skills、OpenClaw 插件生态与多节点协作收进同一条运行主链。"
     />
-    <link rel="icon" type="image/png" href="../assets/brand-mark.png?v=20260330-1" />
-    <link rel="stylesheet" href="../assets/styles.css?v=20260330-1" />
-    <script defer src="../assets/site.js?v=20260330-1"></script>
+    <link rel="icon" type="image/png" href="../assets/brand-mark.png?v=20260331-1" />
+    <link rel="stylesheet" href="../assets/styles.css?v=20260331-1" />
+    <script defer src="../assets/site.js?v=20260331-1"></script>
   </head>
   <body data-locale="zh">
     <div class="site-shell">
@@ -26,19 +26,20 @@
           <button class="topnav-link" data-page-target="docs">文档</button>
         </nav>
         <div class="topbar-actions">
-          <button
+          <a
             class="icon-link"
-            data-page-target="repos"
+            href="https://github.com/justForever17/v8-agent-os"
             aria-label="GitHub 仓库"
             title="GitHub 仓库"
-            type="button"
+            target="_blank"
+            rel="noreferrer"
           >
             <svg viewBox="0 0 16 16" aria-hidden="true">
               <path
                 d="M8 0C3.58 0 0 3.67 0 8.2c0 3.63 2.29 6.7 5.47 7.79.4.08.55-.18.55-.4 0-.2-.01-.86-.01-1.57-2.01.38-2.53-.5-2.69-.97-.09-.24-.48-.97-.82-1.17-.28-.16-.68-.55-.01-.56.63-.01 1.08.59 1.23.83.72 1.24 1.87.89 2.33.68.07-.54.28-.89.5-1.09-1.78-.21-3.64-.92-3.64-4.1 0-.91.32-1.66.84-2.25-.08-.21-.36-1.07.08-2.22 0 0 .69-.23 2.26.86.66-.19 1.36-.29 2.06-.29s1.4.1 2.06.29c1.57-1.09 2.26-.86 2.26-.86.44 1.15.16 2.01.08 2.22.52.59.84 1.33.84 2.25 0 3.19-1.87 3.89-3.65 4.1.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .22.15.49.55.4A8.233 8.233 0 0 0 16 8.2C16 3.67 12.42 0 8 0Z"
               />
             </svg>
-          </button>
+          </a>
           <a class="locale-link" href="../index.html">EN</a>
         </div>
       </header>
@@ -130,40 +131,40 @@
           <section class="panel" data-page="install">
             <div class="section-heading">
               <div class="eyebrow">安装</div>
-              <h2>从 GitHub 拉取最新脚本</h2>
-              <p>按平台复制命令打开终端即可快速安装</p>
+              <h2>从 GitHub 拉取官方 bootstrap，然后干净地拉起 Admin 9528 和 Engine 9530。</h2>
+              <p>按平台复制命令打开终端即可快速安装。当前公开安装入口已经统一收口到 <code>justForever17/v8-agent-os</code> 主仓，首装和重装都走同一条 canonical 路径。</p>
             </div>
 
             <div class="note-strip">
               <span class="note-label">安装后你会得到</span>
-              <p>你会得到最新的 Engine 与 Admin、所需依赖、本地 env 文件，以及一套按统一默认端口启动起来的控制与执行平面：Admin 9528、Engine 9530。Web 端建议直接以独立 app 形态分发。</p>
+              <p>你会从官方 monorepo 得到最新的 Engine 与 Admin、所需依赖、本地 env 文件，以及一套按统一默认端口启动起来的控制与执行平面：Admin 9528、Engine 9530。Web 端仍建议以独立 app 形态分发。</p>
             </div>
 
             <div class="install-grid">
               <article class="install-card">
                 <div class="install-title">Windows</div>
-                <pre><code>powershell -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/justForever17/v8-agent-os-engine/main/scripts/install/bootstrap.ps1 | iex"</code></pre>
+                <pre><code>powershell -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.ps1 | iex"</code></pre>
                 <div class="install-actions">
-                  <button class="button-secondary copy-command" data-copy="powershell -ExecutionPolicy Bypass -Command &quot;irm https://raw.githubusercontent.com/justForever17/v8-agent-os-engine/main/scripts/install/bootstrap.ps1 | iex&quot;">复制</button>
-                  <a class="button-secondary" href="https://raw.githubusercontent.com/justForever17/v8-agent-os-engine/main/scripts/install/bootstrap.ps1">打开脚本</a>
+                  <button class="button-secondary copy-command" data-copy="powershell -ExecutionPolicy Bypass -Command &quot;irm https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.ps1 | iex&quot;">复制</button>
+                  <a class="button-secondary" href="https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.ps1">打开脚本</a>
                 </div>
               </article>
 
               <article class="install-card">
                 <div class="install-title">Linux</div>
-                <pre><code>curl -fsSL https://raw.githubusercontent.com/justForever17/v8-agent-os-engine/main/scripts/install/bootstrap.sh | bash</code></pre>
+                <pre><code>curl -fsSL https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.sh | bash</code></pre>
                 <div class="install-actions">
-                  <button class="button-secondary copy-command" data-copy="curl -fsSL https://raw.githubusercontent.com/justForever17/v8-agent-os-engine/main/scripts/install/bootstrap.sh | bash">复制</button>
-                  <a class="button-secondary" href="https://raw.githubusercontent.com/justForever17/v8-agent-os-engine/main/scripts/install/bootstrap.sh">打开脚本</a>
+                  <button class="button-secondary copy-command" data-copy="curl -fsSL https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.sh | bash">复制</button>
+                  <a class="button-secondary" href="https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.sh">打开脚本</a>
                 </div>
               </article>
 
               <article class="install-card">
                 <div class="install-title">macOS</div>
-                <pre><code>curl -fsSL https://raw.githubusercontent.com/justForever17/v8-agent-os-engine/main/scripts/install/bootstrap.command | bash</code></pre>
+                <pre><code>curl -fsSL https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.sh | bash</code></pre>
                 <div class="install-actions">
-                  <button class="button-secondary copy-command" data-copy="curl -fsSL https://raw.githubusercontent.com/justForever17/v8-agent-os-engine/main/scripts/install/bootstrap.command | bash">复制</button>
-                  <a class="button-secondary" href="https://raw.githubusercontent.com/justForever17/v8-agent-os-engine/main/scripts/install/bootstrap.command">打开脚本</a>
+                  <button class="button-secondary copy-command" data-copy="curl -fsSL https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.sh | bash">复制</button>
+                  <a class="button-secondary" href="https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.command">打开脚本</a>
                 </div>
               </article>
             </div>
@@ -231,41 +232,6 @@
             </div>
           </section>
 
-          <section class="panel" data-page="repos">
-            <div class="section-heading">
-              <div class="eyebrow">GitHub</div>
-              <h2>四个公开仓库，合起来才是完整的 V8 Agent OS。</h2>
-              <p>按你的角色打开对应仓库：聊天端、控制台、执行平面，或者直接连接站点仓库，让 Cloudflare Pages 自动更新公开入口。</p>
-            </div>
-
-            <div class="repo-grid">
-              <a class="repo-card" href="https://github.com/justForever17/v8-agent-os-web">
-                <span>v8-agent-os-web</span>
-                <small>聊天界面、会话体验、移动端壳与用户入口。</small>
-              </a>
-              <a class="repo-card" href="https://github.com/justForever17/v8-agent-os-admin">
-                <span>v8-agent-os-admin</span>
-                <small>配置、观测、策略与运行健康控制台。</small>
-              </a>
-              <a class="repo-card" href="https://github.com/justForever17/v8-agent-os-engine">
-                <span>v8-agent-os-engine</span>
-                <small>执行平面、记忆、自动化、插件宿主和恢复主链。</small>
-              </a>
-              <a class="repo-card repo-card-accent" href="https://github.com/justForever17/v8-agent-os-site">
-                <span>v8-agent-os-site</span>
-                <small>Cloudflare Pages 的公开产品站与文档入口。</small>
-              </a>
-            </div>
-
-            <div class="sponsor-card">
-              <div>
-                <div class="eyebrow">赞助支持</div>
-                <h3>让 V8 Agent OS 继续变强。</h3>
-                <p>如果它真的帮你节省了时间，让长期任务更稳，或者让代理终于像系统而不是像一次性对话，那么你可以在这里支持后续开发。</p>
-              </div>
-              <a class="button-primary" href="https://afdian.com/a/justforever17">在爱发电支持</a>
-            </div>
-          </section>
         </div>
       </main>
     </div>

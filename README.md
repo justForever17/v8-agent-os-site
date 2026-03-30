@@ -37,9 +37,9 @@ OpenClaw gives you reach.
 
 ## Where the site pulls truth from
 
-- install scripts come from [`v8-agent-os-engine`](https://github.com/justForever17/v8-agent-os-engine)
-- public docs come from `v8-agent-os-engine` and `v8-agent-os-web`
-- repo links point to the four public V8 Agent OS repositories
+- install scripts come from the official [`v8-agent-os`](https://github.com/justForever17/v8-agent-os) repository root
+- public docs are read from the currently exposed V8 Agent OS markdown sources
+- the top-level GitHub entry points to the unified V8 Agent OS repository
 
 That keeps the site light while the source repositories keep owning the truth.
 

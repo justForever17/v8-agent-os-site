@@ -184,9 +184,7 @@ button {
   min-height: 0;
   overflow: visible;
   border: 1px solid var(--line);
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.025), rgba(255, 255, 255, 0.01)),
-    var(--bg-soft);
+  background: transparent;
   box-shadow: var(--shadow);
 }
 
@@ -602,6 +600,11 @@ h3 {
   justify-content: space-between;
   align-items: center;
   gap: 18px;
+  background: transparent;
+}
+
+.sponsor-card::before {
+  opacity: 0;
 }
 
 .markdown-body {
