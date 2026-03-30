@@ -7,8 +7,10 @@ const docViewerTitle = document.querySelector("[data-doc-viewer-title]");
 const docViewerBody = document.querySelector("[data-doc-viewer-body]");
 const docOpenLink = document.querySelector("[data-doc-open-link]");
 const copyButtons = Array.from(document.querySelectorAll(".copy-command"));
+const marqueeLines = Array.from(document.querySelectorAll("[data-hover-marquee]"));
 const isMobileLayout = () => window.matchMedia("(max-width: 820px)").matches;
 const locale = document.body.dataset.locale === "zh" ? "zh" : "en";
+
 const i18n = {
   en: {
     loading: "Loading document...",
@@ -161,8 +163,7 @@ function getCurrentPage() {
 }
 
 function syncPageState(pageName, options = {}) {
-  const pageIndex = pageOrder.indexOf(pageName);
-  if (pageIndex === -1) {
+  if (!pageOrder.includes(pageName)) {
     return;
   }
 
@@ -174,18 +175,31 @@ function syncPageState(pageName, options = {}) {
 
   panels.forEach((panel) => {
     panel.classList.toggle("is-active", panel.dataset.page === pageName);
-    if (panel.dataset.page === pageName && isMobileLayout()) {
-      panel.scrollTop = 0;
-    }
   });
-
-  if (pageTrack && !isMobileLayout()) {
-    pageTrack.style.transform = `translateX(-${pageIndex * 20}%)`;
-  }
 
   if (!options.skipHash) {
     window.history.replaceState(null, "", `#${pageName}`);
   }
+}
+
+function getDocSources(button) {
+  const items = [];
+
+  if (locale === "zh" && button.dataset.docUrlZh) {
+    items.push({
+      url: button.dataset.docUrlZh,
+      open: button.dataset.docOpenZh || button.dataset.docOpen || "#",
+    });
+  }
+
+  if (button.dataset.docUrl) {
+    items.push({
+      url: button.dataset.docUrl,
+      open: button.dataset.docOpen || "#",
+    });
+  }
+
+  return items;
 }
 
 async function loadDocument(button) {
@@ -195,27 +209,28 @@ async function loadDocument(button) {
 
   docButtons.forEach((item) => item.classList.toggle("is-active", item === button));
   docViewerTitle.textContent = button.dataset.docTitle || "Document";
-  docOpenLink.href = button.dataset.docOpen || "#";
   docViewerBody.innerHTML = `<p>${i18n[locale].loading}</p>`;
 
-  const urls = [];
-  if (locale === "zh" && button.dataset.docUrlZh) {
-    urls.push(button.dataset.docUrlZh);
+  const sources = getDocSources(button);
+  if (!sources.length) {
+    docOpenLink.href = "#";
+    docViewerBody.innerHTML = `<p>${i18n[locale].loadFailed}</p>`;
+    return;
   }
-  if (button.dataset.docUrl) {
-    urls.push(button.dataset.docUrl);
-  }
+
+  docOpenLink.href = sources[0].open;
 
   let lastError = "Unknown error";
 
-  for (const url of urls) {
+  for (const source of sources) {
     try {
-      const response = await fetch(url, { cache: "no-store" });
+      const response = await fetch(source.url, { cache: "no-store" });
       if (!response.ok) {
         throw new Error(`Request failed with ${response.status}`);
       }
 
       const markdown = await response.text();
+      docOpenLink.href = source.open;
       docViewerBody.innerHTML = renderMarkdown(markdown);
       return;
     } catch (error) {
@@ -263,6 +278,7 @@ function bindNavigation() {
 
   window.addEventListener("resize", () => {
     syncPageState(getCurrentPage(), { skipHash: true });
+    bindHoverMarquee();
   });
 }
 
@@ -278,7 +294,31 @@ function bindDocs() {
   }
 }
 
+function bindHoverMarquee() {
+  marqueeLines.forEach((line) => {
+    const textNode = line.querySelector(".runtime-scroll-text");
+    if (!textNode || isMobileLayout()) {
+      line.dataset.overflow = "false";
+      line.style.setProperty("--overflow-shift", "0px");
+      if (textNode) {
+        textNode.style.transform = "translateX(0)";
+      }
+      return;
+    }
+
+    line.dataset.overflow = "false";
+    line.style.setProperty("--overflow-shift", "0px");
+
+    const overflow = Math.max(0, Math.ceil(textNode.scrollWidth - line.clientWidth));
+    if (overflow > 8) {
+      line.dataset.overflow = "true";
+      line.style.setProperty("--overflow-shift", `${overflow + 12}px`);
+    }
+  });
+}
+
 bindNavigation();
 bindDocs();
 bindCopyButtons();
+bindHoverMarquee();
 syncPageState(getCurrentPage(), { skipHash: true });

@@ -6,11 +6,11 @@
     <title>V8 Agent OS</title>
     <meta
       name="description"
-      content="V8 Agent OS 是一个以 runtime 为中心的 Agent OS，覆盖聊天、记忆、自动化、插件宿主、桌面执行与多节点协作。"
+      content="V8 Agent OS 是一个以 runtime 为核心的 Agent OS，把记忆、自动化、MCP、skills、OpenClaw 插件生态与多节点协作收进同一条运行主链。"
     />
-    <link rel="icon" type="image/png" href="../assets/brand-mark.png" />
-    <link rel="stylesheet" href="../assets/styles.css" />
-    <script defer src="../assets/site.js"></script>
+    <link rel="icon" type="image/png" href="../assets/brand-mark.png?v=20260330-1" />
+    <link rel="stylesheet" href="../assets/styles.css?v=20260330-1" />
+    <script defer src="../assets/site.js?v=20260330-1"></script>
   </head>
   <body data-locale="zh">
     <div class="site-shell">
@@ -24,9 +24,21 @@
           <button class="topnav-link" data-page-target="runtimes">运行时</button>
           <button class="topnav-link" data-page-target="install">安装</button>
           <button class="topnav-link" data-page-target="docs">文档</button>
-          <button class="topnav-link" data-page-target="repos">仓库</button>
         </nav>
         <div class="topbar-actions">
+          <button
+            class="icon-link"
+            data-page-target="repos"
+            aria-label="GitHub 仓库"
+            title="GitHub 仓库"
+            type="button"
+          >
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              <path
+                d="M8 0C3.58 0 0 3.67 0 8.2c0 3.63 2.29 6.7 5.47 7.79.4.08.55-.18.55-.4 0-.2-.01-.86-.01-1.57-2.01.38-2.53-.5-2.69-.97-.09-.24-.48-.97-.82-1.17-.28-.16-.68-.55-.01-.56.63-.01 1.08.59 1.23.83.72 1.24 1.87.89 2.33.68.07-.54.28-.89.5-1.09-1.78-.21-3.64-.92-3.64-4.1 0-.91.32-1.66.84-2.25-.08-.21-.36-1.07.08-2.22 0 0 .69-.23 2.26.86.66-.19 1.36-.29 2.06-.29s1.4.1 2.06.29c1.57-1.09 2.26-.86 2.26-.86.44 1.15.16 2.01.08 2.22.52.59.84 1.33.84 2.25 0 3.19-1.87 3.89-3.65 4.1.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .22.15.49.55.4A8.233 8.233 0 0 0 16 8.2C16 3.67 12.42 0 8 0Z"
+              />
+            </svg>
+          </button>
           <a class="locale-link" href="../index.html">EN</a>
         </div>
       </header>
@@ -36,18 +48,19 @@
           <section class="panel is-active" data-page="overview">
             <div class="panel-copy">
               <div class="eyebrow">Runtime-first Agent OS</div>
-              <h1>把聊天、记忆、自动化和真实任务收进同一条控制平面。</h1>
+              <h1>让 Agent 记得住、扛得住，也能把计划带到明天早上。</h1>
               <p class="lede">
-                V8 Agent OS 面向可恢复的长期任务，把执行、记忆、自动化、插件宿主工具和多节点协作放在同一条 runtime 主链上。
+                很多 Agent 产品只适合演示，不适合长期工作。
+                V8 Agent OS 想做的是另一件更难也更有价值的事：让记忆留下来，让工具有纪律，让自动化继续跑，让 runtimes 在长任务、handoff、暂停和恢复里依然说同一种语言。
               </p>
               <div class="hero-actions">
-                <button class="button-primary" data-page-target="install">立即安装</button>
-                <button class="button-secondary" data-page-target="docs">页内查看文档</button>
+                <button class="button-primary" data-page-target="install">立即安装 V8 Agent OS</button>
+                <button class="button-secondary" data-page-target="runtimes">看看这些 runtimes</button>
               </div>
               <ul class="signal-list">
-                <li>以 runtime 为核心的执行链</li>
-                <li>可恢复的长任务</li>
-                <li>Skills、MCP 与插件宿主统一协作</li>
+                <li>重要记忆不会随着会话结束一起蒸发</li>
+                <li>Skills 与 MCP 定向暴露，不让 token 烧在无关工具上</li>
+                <li>既能吃到 OpenClaw 生态，又能守住更稳的 runtime 主链</li>
               </ul>
             </div>
 
@@ -55,12 +68,12 @@
               <div class="video-shell">
                 <div class="video-chrome">
                   <span>产品演示</span>
-                  <span>视频窗口</span>
+                  <span>视频展示窗</span>
                 </div>
                 <div class="video-canvas">
                   <div class="video-pulse"></div>
                   <div class="video-caption">
-                    这里放产品演示：任务规划、handoff、自动化心跳、插件工具调用，以及 Network Supervisor 组网流转。
+                    这里应该放一段让人立刻看懂的演示：Supervisor 规划任务，Memory 找回上下文，Extensions 精准筛出 MCP 和 skills，Plugin Host 接入外部世界，长任务一路带着账本和恢复点往前走。
                   </div>
                 </div>
               </div>
@@ -69,39 +82,47 @@
 
           <section class="panel" data-page="runtimes">
             <div class="section-heading">
-              <div class="eyebrow">核心运行时</div>
-              <h2>每个 runtime 负责一类真正的工作。</h2>
-              <p>不要把所有事情都塞回聊天。让正确的 runtime 处理正确的问题。</p>
+              <div class="eyebrow">Runtime atlas</div>
+              <h2>九个 runtimes，拼成一台遇到真工作也不散架的 Agent 机器。</h2>
+              <p>V8 Agent OS 不相信一个大 prompt 能把所有事情都做好。记忆、自动化、安全、插件、桌面执行与网络协作，都应该有自己清晰的 runtime 边界。</p>
             </div>
 
             <div class="runtime-grid">
               <article class="runtime-tile">
-                <span class="runtime-name">CHAT RUNTIME</span>
-                <p>规划、回答、委派，并保持 run ledger 一致。</p>
+                <div class="runtime-line runtime-title" data-hover-marquee><span class="runtime-scroll-text">CHAT RUNTIME</span></div>
+                <div class="runtime-line runtime-body" data-hover-marquee><span class="runtime-scroll-text">负责规划、委派、回答，并把每个 run 从第一句到最后一次 handoff 串成一条线。</span></div>
               </article>
               <article class="runtime-tile">
-                <span class="runtime-name">MEMORY RUNTIME</span>
-                <p>管理偏好、知识、产物、图谱检索与 recall。</p>
+                <div class="runtime-line runtime-title" data-hover-marquee><span class="runtime-scroll-text">MEMORY RUNTIME</span></div>
+                <div class="runtime-line runtime-body" data-hover-marquee><span class="runtime-scroll-text">负责偏好、图谱、知识召回，以及会在明天继续有用的长期记忆。</span></div>
               </article>
               <article class="runtime-tile">
-                <span class="runtime-name">AUTOMATION RUNTIME</span>
-                <p>提供 cron、hooks 与 Supervisor 心跳唤醒。</p>
+                <div class="runtime-line runtime-title" data-hover-marquee><span class="runtime-scroll-text">AUTOMATION RUNTIME</span></div>
+                <div class="runtime-line runtime-body" data-hover-marquee><span class="runtime-scroll-text">负责 cron、hooks、追踪循环，以及不会丢上下文的 Supervisor 心跳唤醒。</span></div>
               </article>
               <article class="runtime-tile">
-                <span class="runtime-name">PLUGIN HOST RUNTIME</span>
-                <p>统一 OpenClaw 工具、IM 桥接与外部通道。</p>
+                <div class="runtime-line runtime-title" data-hover-marquee><span class="runtime-scroll-text">EXTENSIONS RUNTIME</span></div>
+                <div class="runtime-line runtime-body" data-hover-marquee><span class="runtime-scroll-text">把庞大的 MCP 和 skills 目录压成当前任务真正需要的那几样，不让 token 白白燃烧。</span></div>
               </article>
               <article class="runtime-tile">
-                <span class="runtime-name">COMPUTER USE RUNTIME</span>
-                <p>在护栏之下执行桌面动作与高摩擦任务。</p>
+                <div class="runtime-line runtime-title" data-hover-marquee><span class="runtime-scroll-text">PLUGIN HOST RUNTIME</span></div>
+                <div class="runtime-line runtime-body" data-hover-marquee><span class="runtime-scroll-text">接住 OpenClaw 插件、IM 桥接和外部工具通道，又不让系统越接越乱。</span></div>
               </article>
               <article class="runtime-tile">
-                <span class="runtime-name">RPA RUNTIME</span>
-                <p>承担结构化的界面自动化与重复流程任务。</p>
+                <div class="runtime-line runtime-title" data-hover-marquee><span class="runtime-scroll-text">SAFETY RUNTIME</span></div>
+                <div class="runtime-line runtime-body" data-hover-marquee><span class="runtime-scroll-text">负责审批、护栏、审计和高风险动作治理，但不把整套系统卡成假死。</span></div>
               </article>
-              <article class="runtime-tile runtime-wide">
-                <span class="runtime-name">NETWORK SUPERVISOR RUNTIME</span>
-                <p>支持局域网发现、广域网接入、定向唤醒、签名 envelope 与多 peer 协作。</p>
+              <article class="runtime-tile">
+                <div class="runtime-line runtime-title" data-hover-marquee><span class="runtime-scroll-text">COMPUTER USE RUNTIME</span></div>
+                <div class="runtime-line runtime-body" data-hover-marquee><span class="runtime-scroll-text">当任务真的需要一块屏幕时，在护栏和审计下接手桌面操作。</span></div>
+              </article>
+              <article class="runtime-tile">
+                <div class="runtime-line runtime-title" data-hover-marquee><span class="runtime-scroll-text">RPA RUNTIME</span></div>
+                <div class="runtime-line runtime-body" data-hover-marquee><span class="runtime-scroll-text">把重复、可复制的界面流程自动化到足够省心，也足够稳定。</span></div>
+              </article>
+              <article class="runtime-tile">
+                <div class="runtime-line runtime-title" data-hover-marquee><span class="runtime-scroll-text">NETWORK SUPERVISOR RUNTIME</span></div>
+                <div class="runtime-line runtime-body" data-hover-marquee><span class="runtime-scroll-text">发现 peers、唤醒远端 Supervisor，并把局域网和广域网里的多节点协作串成一张网。</span></div>
               </article>
             </div>
           </section>
@@ -109,8 +130,13 @@
           <section class="panel" data-page="install">
             <div class="section-heading">
               <div class="eyebrow">安装</div>
-              <h2>一条命令启动 V8 Agent OS。</h2>
-              <p>按平台复制命令，就能拉取最新版的 engine 与 admin 并直接启动。</p>
+              <h2>从 GitHub 拉取最新脚本</h2>
+              <p>按平台复制命令打开终端即可快速安装</p>
+            </div>
+
+            <div class="note-strip">
+              <span class="note-label">安装后你会得到</span>
+              <p>你会得到最新的 Engine 与 Admin、所需依赖、本地 env 文件，以及一套按统一默认端口启动起来的控制与执行平面：Admin 9528、Engine 9530。Web 端建议直接以独立 app 形态分发。</p>
             </div>
 
             <div class="install-grid">
@@ -134,25 +160,20 @@
 
               <article class="install-card">
                 <div class="install-title">macOS</div>
-                <pre><code>curl -fsSL https://raw.githubusercontent.com/justForever17/v8-agent-os-engine/main/scripts/install/bootstrap.sh | bash</code></pre>
+                <pre><code>curl -fsSL https://raw.githubusercontent.com/justForever17/v8-agent-os-engine/main/scripts/install/bootstrap.command | bash</code></pre>
                 <div class="install-actions">
-                  <button class="button-secondary copy-command" data-copy="curl -fsSL https://raw.githubusercontent.com/justForever17/v8-agent-os-engine/main/scripts/install/bootstrap.sh | bash">复制</button>
+                  <button class="button-secondary copy-command" data-copy="curl -fsSL https://raw.githubusercontent.com/justForever17/v8-agent-os-engine/main/scripts/install/bootstrap.command | bash">复制</button>
                   <a class="button-secondary" href="https://raw.githubusercontent.com/justForever17/v8-agent-os-engine/main/scripts/install/bootstrap.command">打开脚本</a>
                 </div>
               </article>
-            </div>
-
-            <div class="note-strip">
-              <span class="note-label">你会得到什么</span>
-              <p>脚本会拉取最新的 engine 和 admin 仓库、安装依赖、生成本地 admin env 文件，并启动两端服务。</p>
             </div>
           </section>
 
           <section class="panel" data-page="docs">
             <div class="section-heading">
-              <div class="eyebrow">了解与扩展</div>
-              <h2>在这里快速了解架构、安装方式和扩展路径。</h2>
-              <p>直接查看核心文档，用来理解产品设计、部署方式、移动端打包和局域网远程能力。</p>
+              <div class="eyebrow">文档</div>
+              <h2>如果你准备认真使用这套系统，这些文档值得先读。</h2>
+              <p>这里不放无关紧要的解释，只放真正会影响安装、扩展、部署和长期运行的关键说明。</p>
             </div>
 
             <div class="docs-layout">
@@ -164,17 +185,18 @@
                   data-doc-open="https://github.com/justForever17/v8-agent-os-engine/blob/main/docs/NETWORK_SUPERVISOR_RUNTIME_IMPLEMENTATION_PLAN.md"
                 >
                   <span>Network Supervisor Runtime</span>
-                  <small>发现、唤醒协议、安全与实施阶段。</small>
+                  <small>点到多点组网、定向唤醒、安全规范与实施计划。</small>
                 </button>
                 <button
                   class="doc-link"
                   data-doc-title="Engine 快速开始"
                   data-doc-url="https://raw.githubusercontent.com/justForever17/v8-agent-os-engine/main/README.md"
                   data-doc-url-zh="https://raw.githubusercontent.com/justForever17/v8-agent-os-engine/main/README-ZH.md"
-                  data-doc-open="https://github.com/justForever17/v8-agent-os-engine/blob/main/README-ZH.md"
+                  data-doc-open="https://github.com/justForever17/v8-agent-os-engine/blob/main/README.md"
+                  data-doc-open-zh="https://github.com/justForever17/v8-agent-os-engine/blob/main/README-ZH.md"
                 >
                   <span>Engine 快速开始</span>
-                  <small>执行平面、配置真相源与启动方式。</small>
+                  <small>执行平面、配置真相源、健康检查与启动方式。</small>
                 </button>
                 <button
                   class="doc-link"
@@ -183,7 +205,7 @@
                   data-doc-open="https://github.com/justForever17/v8-agent-os-web/blob/main/docs/MOBILE_APP_PACKAGING_GUIDE.md"
                 >
                   <span>手机应用打包</span>
-                  <small>Capacitor 壳、APK、IPA 与部署路径。</small>
+                  <small>Capacitor 壳、APK、IPA 与交付路径。</small>
                 </button>
                 <button
                   class="doc-link"
@@ -192,7 +214,7 @@
                   data-doc-open="https://github.com/justForever17/v8-agent-os-web/blob/main/docs/DESKTOP_LIVE_LAN_READINESS.md"
                 >
                   <span>局域网远程视频</span>
-                  <small>当前链路、网络前提与剩余验证项。</small>
+                  <small>当前链路、局域网条件，以及仍需完成的 smoke test。</small>
                 </button>
               </aside>
 
@@ -200,7 +222,7 @@
                 <div class="doc-viewer-header">
                   <div>
                     <div class="doc-viewer-title" data-doc-viewer-title>Network Supervisor Runtime</div>
-                    <div class="doc-viewer-subtitle">优先显示中文，缺少中文时自动回退英文。</div>
+                    <div class="doc-viewer-subtitle">这些页面会决定你能否把系统装好、跑稳，并真正交付出去。</div>
                   </div>
                   <a class="button-secondary" data-doc-open-link href="https://github.com/justForever17/v8-agent-os-engine/blob/main/docs/NETWORK_SUPERVISOR_RUNTIME_IMPLEMENTATION_PLAN.md">在 GitHub 打开</a>
                 </div>
@@ -212,34 +234,34 @@
           <section class="panel" data-page="repos">
             <div class="section-heading">
               <div class="eyebrow">GitHub</div>
-              <h2>三个产品仓库，外加一个站点仓库更合适。</h2>
-              <p>如果你想让 Cloudflare Pages 自动更新，这个静态站最好单独放到一个站点仓库里。文档和安装脚本本身不需要再单独拆一个仓库。</p>
+              <h2>四个公开仓库，合起来才是完整的 V8 Agent OS。</h2>
+              <p>按你的角色打开对应仓库：聊天端、控制台、执行平面，或者直接连接站点仓库，让 Cloudflare Pages 自动更新公开入口。</p>
             </div>
 
             <div class="repo-grid">
               <a class="repo-card" href="https://github.com/justForever17/v8-agent-os-web">
                 <span>v8-agent-os-web</span>
-                <small>用户聊天端与手机壳入口。</small>
-              </a>
-              <a class="repo-card" href="https://github.com/justForever17/v8-agent-os-engine">
-                <span>v8-agent-os-engine</span>
-                <small>执行平面、运行时、记忆、自动化与编排核心。</small>
+                <small>聊天界面、会话体验、移动端壳与用户入口。</small>
               </a>
               <a class="repo-card" href="https://github.com/justForever17/v8-agent-os-admin">
                 <span>v8-agent-os-admin</span>
-                <small>控制台、代理层、策略与观测面。</small>
+                <small>配置、观测、策略与运行健康控制台。</small>
               </a>
-              <article class="repo-card repo-card-accent">
-                <span>推荐新增</span>
-                <small>把当前 <code>/pages</code> 单独放进一个站点仓库。页面再去读取三个公开仓库里的文档和脚本。</small>
-              </article>
+              <a class="repo-card" href="https://github.com/justForever17/v8-agent-os-engine">
+                <span>v8-agent-os-engine</span>
+                <small>执行平面、记忆、自动化、插件宿主和恢复主链。</small>
+              </a>
+              <a class="repo-card repo-card-accent" href="https://github.com/justForever17/v8-agent-os-site">
+                <span>v8-agent-os-site</span>
+                <small>Cloudflare Pages 的公开产品站与文档入口。</small>
+              </a>
             </div>
 
             <div class="sponsor-card">
               <div>
-                <div class="eyebrow">赞助</div>
-                <h3>支持 V8 Agent OS</h3>
-                <p>如果这个项目帮你节省了时间，欢迎支持持续开发与维护。</p>
+                <div class="eyebrow">赞助支持</div>
+                <h3>让 V8 Agent OS 继续变强。</h3>
+                <p>如果它真的帮你节省了时间，让长期任务更稳，或者让代理终于像系统而不是像一次性对话，那么你可以在这里支持后续开发。</p>
               </div>
               <a class="button-primary" href="https://afdian.com/a/justforever17">在爱发电支持</a>
             </div>

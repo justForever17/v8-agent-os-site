@@ -6,11 +6,11 @@
     <title>V8 Agent OS</title>
     <meta
       name="description"
-      content="V8 Agent OS is a runtime-first agent operating system for chat, memory, automation, plugin hosting, computer use, and multi-node orchestration."
+      content="V8 Agent OS is a runtime-first agent operating system for memory, automation, MCP, skills, OpenClaw plugins, and multi-node orchestration."
     />
-    <link rel="icon" type="image/png" href="./assets/brand-mark.png" />
-    <link rel="stylesheet" href="./assets/styles.css" />
-    <script defer src="./assets/site.js"></script>
+    <link rel="icon" type="image/png" href="./assets/brand-mark.png?v=20260330-1" />
+    <link rel="stylesheet" href="./assets/styles.css?v=20260330-1" />
+    <script defer src="./assets/site.js?v=20260330-1"></script>
   </head>
   <body data-locale="en">
     <div class="site-shell">
@@ -24,9 +24,21 @@
           <button class="topnav-link" data-page-target="runtimes">Runtimes</button>
           <button class="topnav-link" data-page-target="install">Install</button>
           <button class="topnav-link" data-page-target="docs">Docs</button>
-          <button class="topnav-link" data-page-target="repos">Repos</button>
         </nav>
         <div class="topbar-actions">
+          <button
+            class="icon-link"
+            data-page-target="repos"
+            aria-label="GitHub repositories"
+            title="GitHub repositories"
+            type="button"
+          >
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              <path
+                d="M8 0C3.58 0 0 3.67 0 8.2c0 3.63 2.29 6.7 5.47 7.79.4.08.55-.18.55-.4 0-.2-.01-.86-.01-1.57-2.01.38-2.53-.5-2.69-.97-.09-.24-.48-.97-.82-1.17-.28-.16-.68-.55-.01-.56.63-.01 1.08.59 1.23.83.72 1.24 1.87.89 2.33.68.07-.54.28-.89.5-1.09-1.78-.21-3.64-.92-3.64-4.1 0-.91.32-1.66.84-2.25-.08-.21-.36-1.07.08-2.22 0 0 .69-.23 2.26.86.66-.19 1.36-.29 2.06-.29s1.4.1 2.06.29c1.57-1.09 2.26-.86 2.26-.86.44 1.15.16 2.01.08 2.22.52.59.84 1.33.84 2.25 0 3.19-1.87 3.89-3.65 4.1.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .22.15.49.55.4A8.233 8.233 0 0 0 16 8.2C16 3.67 12.42 0 8 0Z"
+              />
+            </svg>
+          </button>
           <a class="locale-link" href="./zh/index.html">中文</a>
         </div>
       </header>
@@ -36,31 +48,32 @@
           <section class="panel is-active" data-page="overview">
             <div class="panel-copy">
               <div class="eyebrow">Runtime-first agent OS</div>
-              <h1>One control plane for chat, memory, automation, and real work.</h1>
+              <h1>Build agents that remember, recover, and still know the plan tomorrow.</h1>
               <p class="lede">
-                V8 Agent OS keeps execution, memory, automation, plugin-host tools, and multi-node coordination on one runtime surface.
+                Most agent products shine for one demo and fade the moment real work becomes messy.
+                V8 Agent OS is built for the jobs that spill across days: memory that keeps paying off, tools that stay disciplined, automation that keeps moving, and runtimes that recover instead of improvising excuses.
               </p>
               <div class="hero-actions">
-                <button class="button-primary" data-page-target="install">Install now</button>
-                <button class="button-secondary" data-page-target="docs">Read in-page docs</button>
+                <button class="button-primary" data-page-target="install">Install V8 Agent OS</button>
+                <button class="button-secondary" data-page-target="runtimes">See the runtimes</button>
               </div>
               <ul class="signal-list">
-                <li>Runtime-led execution</li>
-                <li>Recoverable long tasks</li>
-                <li>Skills, MCP, and plugin-host routing</li>
+                <li>Long-term memory that does not disappear when the tab closes</li>
+                <li>MCP and skills routed on purpose instead of flooding the model</li>
+                <li>OpenClaw ecosystem reach on top of a steadier runtime spine</li>
               </ul>
             </div>
 
             <div class="panel-stage">
               <div class="video-shell">
                 <div class="video-chrome">
-                  <span>Product demo</span>
+                  <span>Product showcase</span>
                   <span>Video slot</span>
                 </div>
                 <div class="video-canvas">
                   <div class="video-pulse"></div>
                   <div class="video-caption">
-                    Show task planning, handoff, heartbeat wake-up, plugin-host tools, and network supervisor flow here.
+                    This is where the whole story should land in one shot: the Supervisor plans, Memory recalls the right context, Extensions expose only the tools that matter, Plugin Host reaches the outside world, and long runs keep their ledger all the way through.
                   </div>
                 </div>
               </div>
@@ -69,39 +82,47 @@
 
           <section class="panel" data-page="runtimes">
             <div class="section-heading">
-              <div class="eyebrow">Core runtimes</div>
-              <h2>Each runtime owns one job well.</h2>
-              <p>Use the right runtime instead of forcing every task through chat alone.</p>
+              <div class="eyebrow">Runtime atlas</div>
+              <h2>Nine runtimes. One machine that stays coherent when the job turns real.</h2>
+              <p>V8 Agent OS does not pretend one giant prompt can do every job well. Each runtime exists so memory, automation, safety, plugins, desktop execution, and networking can stay strong without collapsing into noise.</p>
             </div>
 
             <div class="runtime-grid">
               <article class="runtime-tile">
-                <span class="runtime-name">CHAT RUNTIME</span>
-                <p>Plan, answer, delegate, and keep the run ledger coherent.</p>
+                <div class="runtime-line runtime-title" data-hover-marquee><span class="runtime-scroll-text">CHAT RUNTIME</span></div>
+                <div class="runtime-line runtime-body" data-hover-marquee><span class="runtime-scroll-text">Plans, delegates, replies, and keeps every run coherent from the first instruction to the final handoff.</span></div>
               </article>
               <article class="runtime-tile">
-                <span class="runtime-name">MEMORY RUNTIME</span>
-                <p>Preferences, knowledge, artifacts, graph retrieval, and recall.</p>
+                <div class="runtime-line runtime-title" data-hover-marquee><span class="runtime-scroll-text">MEMORY RUNTIME</span></div>
+                <div class="runtime-line runtime-body" data-hover-marquee><span class="runtime-scroll-text">Keeps durable preferences, graph recall, and knowledge alive so useful context survives the next day.</span></div>
               </article>
               <article class="runtime-tile">
-                <span class="runtime-name">AUTOMATION RUNTIME</span>
-                <p>Cron, hooks, and heartbeat wake-ups that keep work moving.</p>
+                <div class="runtime-line runtime-title" data-hover-marquee><span class="runtime-scroll-text">AUTOMATION RUNTIME</span></div>
+                <div class="runtime-line runtime-body" data-hover-marquee><span class="runtime-scroll-text">Schedules hooks, cron jobs, follow-ups, and heartbeat wake-ups without losing the story of the work.</span></div>
               </article>
               <article class="runtime-tile">
-                <span class="runtime-name">PLUGIN HOST RUNTIME</span>
-                <p>OpenClaw tools, IM bridges, and external channels on one surface.</p>
+                <div class="runtime-line runtime-title" data-hover-marquee><span class="runtime-scroll-text">EXTENSIONS RUNTIME</span></div>
+                <div class="runtime-line runtime-body" data-hover-marquee><span class="runtime-scroll-text">Turns huge MCP and skill catalogs into the few capabilities that matter right now, without token panic.</span></div>
               </article>
               <article class="runtime-tile">
-                <span class="runtime-name">COMPUTER USE RUNTIME</span>
-                <p>Desktop actions and higher-friction execution under guardrails.</p>
+                <div class="runtime-line runtime-title" data-hover-marquee><span class="runtime-scroll-text">PLUGIN HOST RUNTIME</span></div>
+                <div class="runtime-line runtime-body" data-hover-marquee><span class="runtime-scroll-text">Absorbs OpenClaw plugins, IM bridges, and external tool channels without letting the system turn feral.</span></div>
               </article>
               <article class="runtime-tile">
-                <span class="runtime-name">RPA RUNTIME</span>
-                <p>Structured automation for repeated UI and workflow tasks.</p>
+                <div class="runtime-line runtime-title" data-hover-marquee><span class="runtime-scroll-text">SAFETY RUNTIME</span></div>
+                <div class="runtime-line runtime-body" data-hover-marquee><span class="runtime-scroll-text">Records approvals, guardrails, audits, and high-risk control without freezing the whole system.</span></div>
               </article>
-              <article class="runtime-tile runtime-wide">
-                <span class="runtime-name">NETWORK SUPERVISOR RUNTIME</span>
-                <p>LAN discovery, WAN bootstrap, directed wake, signed envelopes, and multi-peer coordination.</p>
+              <article class="runtime-tile">
+                <div class="runtime-line runtime-title" data-hover-marquee><span class="runtime-scroll-text">COMPUTER USE RUNTIME</span></div>
+                <div class="runtime-line runtime-body" data-hover-marquee><span class="runtime-scroll-text">Takes the screen when the job really needs a desktop, but stays under guardrails and review.</span></div>
+              </article>
+              <article class="runtime-tile">
+                <div class="runtime-line runtime-title" data-hover-marquee><span class="runtime-scroll-text">RPA RUNTIME</span></div>
+                <div class="runtime-line runtime-body" data-hover-marquee><span class="runtime-scroll-text">Automates repeatable UI workflows so the dull work becomes reliably boring instead of fragile.</span></div>
+              </article>
+              <article class="runtime-tile">
+                <div class="runtime-line runtime-title" data-hover-marquee><span class="runtime-scroll-text">NETWORK SUPERVISOR RUNTIME</span></div>
+                <div class="runtime-line runtime-body" data-hover-marquee><span class="runtime-scroll-text">Finds peers, wakes remote supervisors, and coordinates multi-node work across LAN and WAN.</span></div>
               </article>
             </div>
           </section>
@@ -109,8 +130,13 @@
           <section class="panel" data-page="install">
             <div class="section-heading">
               <div class="eyebrow">Install</div>
-              <h2>Install V8 Agent OS in one command.</h2>
-              <p>Pick your platform, copy the command, and start the latest engine and admin stack.</p>
+              <h2>Pull the latest stack straight from GitHub, then boot clean on 9527 / 9528 / 9530.</h2>
+              <p>One command per platform. The script comes from the public Engine repo, so your first install and your next reinstall follow the same public truth.</p>
+            </div>
+
+            <div class="note-strip">
+              <span class="note-label">What you get</span>
+              <p>You get the newest Engine and Admin, the required dependencies, local env files, and a clean control-and-execution stack on the shared default ports: Admin 9528 and Engine 9530. The Web app is distributed separately.</p>
             </div>
 
             <div class="install-grid">
@@ -134,25 +160,20 @@
 
               <article class="install-card">
                 <div class="install-title">macOS</div>
-                <pre><code>curl -fsSL https://raw.githubusercontent.com/justForever17/v8-agent-os-engine/main/scripts/install/bootstrap.sh | bash</code></pre>
+                <pre><code>curl -fsSL https://raw.githubusercontent.com/justForever17/v8-agent-os-engine/main/scripts/install/bootstrap.command | bash</code></pre>
                 <div class="install-actions">
-                  <button class="button-secondary copy-command" data-copy="curl -fsSL https://raw.githubusercontent.com/justForever17/v8-agent-os-engine/main/scripts/install/bootstrap.sh | bash">Copy</button>
+                  <button class="button-secondary copy-command" data-copy="curl -fsSL https://raw.githubusercontent.com/justForever17/v8-agent-os-engine/main/scripts/install/bootstrap.command | bash">Copy</button>
                   <a class="button-secondary" href="https://raw.githubusercontent.com/justForever17/v8-agent-os-engine/main/scripts/install/bootstrap.command">Open script</a>
                 </div>
               </article>
-            </div>
-
-            <div class="note-strip">
-              <span class="note-label">What you get</span>
-              <p>The script pulls the latest engine and admin repos, installs dependencies, creates a local admin env file, and starts both services.</p>
             </div>
           </section>
 
           <section class="panel" data-page="docs">
             <div class="section-heading">
-              <div class="eyebrow">Build and extend</div>
-              <h2>See how V8 Agent OS is designed, shipped, and extended.</h2>
-              <p>Open the core docs here when you need architecture, deployment, mobile packaging, or remote desktop guidance.</p>
+              <div class="eyebrow">Docs</div>
+              <h2>Read the pages that explain how this system actually works.</h2>
+              <p>Start here if you want the shortest path to understanding networking, mobile packaging, LAN video, and the real install flow.</p>
             </div>
 
             <div class="docs-layout">
@@ -164,16 +185,19 @@
                   data-doc-open="https://github.com/justForever17/v8-agent-os-engine/blob/main/docs/NETWORK_SUPERVISOR_RUNTIME_IMPLEMENTATION_PLAN.md"
                 >
                   <span>Network Supervisor Runtime</span>
-                  <small>Discovery, wake protocol, security, rollout.</small>
+                  <small>Point-to-multipoint networking, wake-up protocol, security, and rollout.</small>
+                  
                 </button>
                 <button
                   class="doc-link"
                   data-doc-title="Engine quick start"
                   data-doc-url="https://raw.githubusercontent.com/justForever17/v8-agent-os-engine/main/README.md"
+                  data-doc-url-zh="https://raw.githubusercontent.com/justForever17/v8-agent-os-engine/main/README-ZH.md"
                   data-doc-open="https://github.com/justForever17/v8-agent-os-engine/blob/main/README.md"
+                  data-doc-open-zh="https://github.com/justForever17/v8-agent-os-engine/blob/main/README-ZH.md"
                 >
                   <span>Engine quick start</span>
-                  <small>Execution plane, config truth, startup basics.</small>
+                  <small>Execution plane, config truth, health checks, and launch flow.</small>
                 </button>
                 <button
                   class="doc-link"
@@ -182,7 +206,7 @@
                   data-doc-open="https://github.com/justForever17/v8-agent-os-web/blob/main/docs/MOBILE_APP_PACKAGING_GUIDE.md"
                 >
                   <span>Mobile app packaging</span>
-                  <small>Capacitor shell, APK, IPA, deployment path.</small>
+                  <small>Capacitor shell, APK, IPA, build path, and delivery checklist.</small>
                 </button>
                 <button
                   class="doc-link"
@@ -191,7 +215,7 @@
                   data-doc-open="https://github.com/justForever17/v8-agent-os-web/blob/main/docs/DESKTOP_LIVE_LAN_READINESS.md"
                 >
                   <span>Remote video on LAN</span>
-                  <small>Current chain, network assumptions, remaining checks.</small>
+                  <small>Current chain, LAN conditions, and what still needs real-world smoke tests.</small>
                 </button>
               </aside>
 
@@ -199,7 +223,7 @@
                 <div class="doc-viewer-header">
                   <div>
                     <div class="doc-viewer-title" data-doc-viewer-title>Network Supervisor Runtime</div>
-                    <div class="doc-viewer-subtitle">Reader view with the latest published docs.</div>
+                    <div class="doc-viewer-subtitle">These are the pages worth reading before you trust real work to the system.</div>
                   </div>
                   <a class="button-secondary" data-doc-open-link href="https://github.com/justForever17/v8-agent-os-engine/blob/main/docs/NETWORK_SUPERVISOR_RUNTIME_IMPLEMENTATION_PLAN.md">Open on GitHub</a>
                 </div>
@@ -211,34 +235,34 @@
           <section class="panel" data-page="repos">
             <div class="section-heading">
               <div class="eyebrow">GitHub</div>
-              <h2>Three repos for product code. One site repo for automatic Cloudflare updates.</h2>
-              <p>If you want Cloudflare Pages to auto-update, put this static site in its own repo or move it into one of the published repos. The docs and install scripts do not need a separate repo.</p>
+              <h2>Four public repos. One system with a single story.</h2>
+              <p>Open the repo that matches your job, or connect the Site repo to Cloudflare Pages and let the public face update itself.</p>
             </div>
 
             <div class="repo-grid">
               <a class="repo-card" href="https://github.com/justForever17/v8-agent-os-web">
                 <span>v8-agent-os-web</span>
-                <small>User chat app and mobile shell entry.</small>
-              </a>
-              <a class="repo-card" href="https://github.com/justForever17/v8-agent-os-engine">
-                <span>v8-agent-os-engine</span>
-                <small>Execution plane, runtimes, memory, automation, orchestration.</small>
+                <small>The chat app, session UI, mobile shell, and public user entry.</small>
               </a>
               <a class="repo-card" href="https://github.com/justForever17/v8-agent-os-admin">
                 <span>v8-agent-os-admin</span>
-                <small>Control console, proxying, policies, observability.</small>
+                <small>The control console for setup, runtime health, and policy decisions.</small>
               </a>
-              <article class="repo-card repo-card-accent">
-                <span>Recommended next repo</span>
-                <small>Create a dedicated site repo for <code>/pages</code>. Let the site fetch docs and install scripts from the three published repos.</small>
-              </article>
+              <a class="repo-card" href="https://github.com/justForever17/v8-agent-os-engine">
+                <span>v8-agent-os-engine</span>
+                <small>The execution plane for runs, memory, automation, plugin host, and recovery.</small>
+              </a>
+              <a class="repo-card repo-card-accent" href="https://github.com/justForever17/v8-agent-os-site">
+                <span>v8-agent-os-site</span>
+                <small>The public product site designed for Cloudflare Pages auto-updates.</small>
+              </a>
             </div>
 
             <div class="sponsor-card">
               <div>
                 <div class="eyebrow">Sponsor</div>
-                <h3>Support V8 Agent OS</h3>
-                <p>If this project saves your team time, you can support continued development here.</p>
+                <h3>Help V8 Agent OS keep moving.</h3>
+                <p>If this system saves your team time, helps your agents remember more, or makes automation finally feel reliable, you can support the next stage of development here.</p>
               </div>
               <a class="button-primary" href="https://afdian.com/a/justforever17">Support on 爱发电</a>
             </div>
