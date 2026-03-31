@@ -1,58 +1,49 @@
 # V8 Agent OS Site
 
-> This is the **public site** repository for **V8 Agent OS**.
+Public bilingual landing site for **V8 Agent OS**.
 
-## The place where people decide whether this product is real
+This repo exists to make one feeling land fast: **V8 Agent OS is for people who are tired of re-explaining the same project, drowning in tool catalogs, and losing control once an agent starts running.**
 
-If the app repos build the machine, this repository makes people want to trust it.
+Within seconds, the site should make four things obvious:
 
-Most agent products are easy to demo and hard to believe.  
-**This site exists to show V8 Agent OS as it really is:** a runtime-first agent operating system built for memory, recovery, automation, MCP, skills, OpenClaw plugins, and multi-node coordination.
+1. V8 helps you **repeat yourself less**.
+2. V8 keeps **tool noise under control** even when the catalog is large.
+3. V8 makes long-running work **visible, steerable, and approval-friendly**.
+4. V8 can turn successful screen work into **more reusable execution** instead of leaving it as a one-off trick.
 
-## Why the site lives in its own repository
+## What this site should do
 
-Because the public face of the product deserves its own release rhythm.
+- sell the product in human language instead of maintainer language
+- make install feel direct and low-friction
+- point GitHub, docs, and install back to the unified [`v8-agent-os`](https://github.com/justForever17/v8-agent-os) repository
+- keep English and Chinese pages structurally aligned
 
-This repository owns:
+## What this site should never sound like
 
-- the bilingual landing pages
-- the runtime story
-- the installation entry points
-- the in-page doc reader
-- the public map across Web, Admin, Engine, and Site
+- a maintenance manual
+- an internal architecture review
+- a split-repo migration note
+- a feature checklist trying to out-shout OpenClaw
 
-That separation lets the product story evolve without dragging runtime code around with it.
+## Install entry
 
-## What V8 Agent OS is saying out loud here
+The public install story stays intentionally simple:
 
-| What people usually get | What V8 Agent OS is trying to deliver |
-| --- | --- |
-| a smart chat tab | a runtime-first operating surface |
-| disposable context | long-lived memory that keeps paying off |
-| giant tool lists | MCP and skills exposed only when they matter |
-| plugin reach without discipline | OpenClaw reach on top of a steadier runtime spine |
+- Windows
 
-OpenClaw gives you reach.  
-**V8 Agent OS adds memory, orchestration, safety, recovery, and runtime discipline.**
+```powershell
+powershell -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.ps1 | iex"
+```
 
-## Where the site pulls truth from
+- Linux / macOS
 
-- install scripts come from the official [`v8-agent-os`](https://github.com/justForever17/v8-agent-os) repository root
-- public docs are read from the currently exposed V8 Agent OS markdown sources
-- the top-level GitHub entry points to the unified V8 Agent OS repository
+```bash
+curl -fsSL https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.sh | bash
+```
 
-That keeps the site light while the source repositories keep owning the truth.
+Those commands pull from the repository root, install the required dependencies, and bring up Admin + Engine. Web still ships separately.
 
-## Deploy to Cloudflare Pages
-
-1. Connect this repository to Cloudflare Pages.
-2. Use:
-   - Framework preset: `None`
-   - Build command: leave empty
-   - Build output directory: `/`
-3. Deploy.
-
-## Preview locally
+## Local preview
 
 Use any static file server.
 
@@ -70,31 +61,18 @@ http://127.0.0.1:8789/
 
 | Path | Purpose |
 | --- | --- |
-| `index.html` | English product page |
-| `zh/index.html` | Chinese product page |
+| `index.html` | English landing page |
+| `zh/index.html` | Chinese landing page |
 | `assets/` | Shared styles, scripts, and brand assets |
 
-## Keep exploring
+## Keep aligned with
 
-- [README in Chinese](./README-ZH.md)
-- [V8 Agent OS Web](https://github.com/justForever17/v8-agent-os-web)
-- [V8 Agent OS Admin](https://github.com/justForever17/v8-agent-os-admin)
-- [V8 Agent OS Engine](https://github.com/justForever17/v8-agent-os-engine)
+- the public story in [`v8-agent-os`](https://github.com/justForever17/v8-agent-os)
+- the actual bootstrap scripts in the repo root
+- the current docs exposed from the unified main repository
 
----
+## Support V8 Agent OS
 
-## Sponsor V8 Agent OS
+If this project helps your team stop repeating itself, keep long-running work under control, and trust agent systems more, you can support ongoing work here:
 
-> **Help V8 Agent OS keep getting stronger**
->
-> If this project helps your team remember more, automate more, and trust agent systems more, you can support the next stage here:
->
-> [https://afdian.com/a/justforever17](https://afdian.com/a/justforever17)
-
----
-
-> “We become what we behold. We shape our tools, and thereafter our tools shape us.”
->
-> “我们眼之所见重塑了我们；我们塑造了工具，此后工具塑造了我们。”
->
-> — Marshall McLuhan
+[https://afdian.com/a/justForever17](https://afdian.com/a/justforever17)

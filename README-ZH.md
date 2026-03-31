@@ -1,56 +1,47 @@
 # V8 Agent OS Site
 
-> 这是 **V8 Agent OS 的公开站点仓库**。
+这是 **V8 Agent OS** 的中英双语公开站点仓库。
 
-## 这是让人决定“我愿不愿意认真试试它”的地方
+这个仓库存在的目的，是让陌生观众很快产生一个明确感受：**V8 Agent OS 不是又一个聊得聪明、做事却总让你重讲项目、忍受工具噪音、最后还看不清内部发生了什么的 Agent。**
 
-如果说 Web、Admin、Engine 负责把机器造出来，那么这个仓库负责让人愿意相信它。
+站点需要在很短时间里讲清四件事：
 
-很多 Agent 产品很容易演示，却很难让人真正信服。  
-**这个仓库存在的意义，就是把 V8 Agent OS 讲清楚：** 它不是又一个聊天壳，而是一套围绕 memory、automation、MCP、skills、OpenClaw 插件生态与多节点协作搭起来的 runtime-first Agent OS。
+1. V8 会让你**少重讲**。
+2. V8 会把**工具噪音压下去**。
+3. V8 让长任务**可见、可审批、可接管**。
+4. V8 能把成功过的屏幕操作慢慢收口成**更可复用的执行**。
 
-## 为什么站点要单独拆成一个仓库
+## 这个站点应该做到什么
 
-因为产品表达值得拥有自己的发布节奏。
+- 用观众能立刻复述的话解释产品
+- 保持安装入口直接、低摩擦
+- 把 GitHub、文档和安装入口统一指回 [`v8-agent-os`](https://github.com/justForever17/v8-agent-os) 主仓
+- 保持中英双语页面结构与语气一致
 
-这个仓库负责：
+## 这个站点绝不能像什么
 
-- 中英双语产品页
-- runtime 故事线
-- 安装入口
-- 页内文档阅读器
-- Web / Admin / Engine / Site 四个仓库的公共导航
+- 维护手册
+- 内部架构汇报
+- 分仓迁移说明
+- 试图靠功能清单压过 OpenClaw 的对比页
 
-单独拆出来之后，产品表达可以持续演进，而不必拖着运行时代码一起改动。
+## 安装入口
 
-## 这个站点真正要讲的是什么
+公开安装口径刻意收成最简单的一种：
 
-| 大多数人拿到的东西 | V8 Agent OS 想交付的东西 |
-| --- | --- |
-| 一个会聊天的页面 | 一套 runtime-first 的 Agent operating surface |
-| 会话一关就忘 | 能持续留下来的长期记忆 |
-| 工具越装越乱 | MCP 与 skills 定向暴露、控制 token 成本 |
-| 插件很多但系统很散 | OpenClaw 生态广度 + 更稳的 runtime 纪律 |
+- Windows
 
-OpenClaw 给你的是外部连接能力。  
-**V8 Agent OS 给你的是更像系统的内部骨架。**
+```powershell
+powershell -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.ps1 | iex"
+```
 
-## 站点内容从哪里来
+- Linux / macOS
 
-- 安装脚本来自官方 [`v8-agent-os`](https://github.com/justForever17/v8-agent-os) 主仓根目录
-- 公共文档来自当前对外暴露的 V8 Agent OS markdown 真相源
-- 顶部 GitHub 入口统一指向 V8 Agent OS 主仓
+```bash
+curl -fsSL https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.sh | bash
+```
 
-这样既能保证站点轻量，也能保证读者看到的是最新公开内容。
-
-## 部署到 Cloudflare Pages
-
-1. 把这个仓库连接到 Cloudflare Pages。
-2. 使用下面的设置：
-   - Framework preset：`None`
-   - Build command：留空
-   - Build output directory：`/`
-3. 部署即可。
+这些命令会从主仓根目录拉脚本，安装所需依赖，并拉起 Admin + Engine。Web 端仍继续独立分发。
 
 ## 本地预览
 
@@ -70,31 +61,18 @@ http://127.0.0.1:8789/
 
 | 路径 | 作用 |
 | --- | --- |
-| `index.html` | 英文产品页 |
-| `zh/index.html` | 中文产品页 |
+| `index.html` | 英文落地页 |
+| `zh/index.html` | 中文落地页 |
 | `assets/` | 共享样式、脚本和品牌资源 |
 
-## 继续了解
+## 对齐对象
 
-- [English README](./README.md)
-- [V8 Agent OS Web](https://github.com/justForever17/v8-agent-os-web)
-- [V8 Agent OS Admin](https://github.com/justForever17/v8-agent-os-admin)
-- [V8 Agent OS Engine](https://github.com/justForever17/v8-agent-os-engine)
+- [`v8-agent-os`](https://github.com/justForever17/v8-agent-os) 主仓的公开产品叙事
+- 主仓根目录里的 bootstrap 脚本
+- 当前从统一主仓对外暴露的文档页面
 
----
+## 支持 V8 Agent OS
 
-## 赞助 V8 Agent OS
+如果这个项目帮你的团队少重讲、少折腾，并且更放心地把长任务交给 Agent，欢迎在这里支持后续开发：
 
-> **支持 V8 Agent OS 继续变强**
->
-> 如果它让你的团队拥有了更稳的记忆、更顺的自动化和更像正式软件的 Agent 体验，欢迎在这里支持后续开发：
->
-> [https://afdian.com/a/justforever17](https://afdian.com/a/justforever17)
-
----
-
-> “We become what we behold. We shape our tools, and thereafter our tools shape us.”
->
-> “我们眼之所见重塑了我们；我们塑造了工具，此后工具塑造了我们。”
->
-> — Marshall McLuhan
+[https://afdian.com/a/justForever17](https://afdian.com/a/justforever17)

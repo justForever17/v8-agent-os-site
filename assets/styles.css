@@ -589,6 +589,16 @@ h3 {
   text-decoration: none;
 }
 
+.value-grid,
+.doc-grid {
+  align-items: stretch;
+}
+
+.value-card {
+  display: grid;
+  gap: 12px;
+}
+
 .repo-card-accent {
   border-color: rgba(255, 196, 107, 0.22);
   background: linear-gradient(135deg, rgba(255, 150, 50, 0.14), rgba(255, 255, 255, 0.015));
