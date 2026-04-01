@@ -3,200 +3,204 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>V8 Agent OS</title>
+    <title>V8 Agent OS - 工业级全景运行时</title>
     <meta
       name="description"
-      content="V8 Agent OS 让长期项目少重讲、少噪音、可接管，也更像一套真的能持续跑下去的 Agent 系统。"
+      content="V8 Agent OS 是一台高阶的全局治理机器。彻底解决大模型上下文爆炸、插件投毒安全隐患与常常失忆的噩梦。"
     />
-    <link rel="icon" type="image/png" href="../assets/brand-mark.png?v=20260331-1" />
-    <link rel="stylesheet" href="../assets/styles.css?v=20260331-3" />
-    <script defer src="../assets/site.js?v=20260331-2"></script>
+    <link rel="icon" type="image/png" href="../assets/brand-mark.png" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   </head>
-  <body data-locale="zh">
+  <body>
     <div class="site-shell">
       <header class="topbar">
         <a class="brand" href="./index.html">
-          <img src="../assets/brand-mark.png" alt="V8 Agent OS" />
+          <img src="../assets/brand-mark.png" alt="V8 Agent OS Logo" />
           <span>V8 Agent OS</span>
         </a>
-        <nav class="topnav" aria-label="Primary">
-          <button class="topnav-link is-active" data-page-target="overview">总览</button>
-          <button class="topnav-link" data-page-target="runtimes">为什么更顺手</button>
-          <button class="topnav-link" data-page-target="install">安装</button>
-          <button class="topnav-link" data-page-target="docs">文档</button>
-        </nav>
         <div class="topbar-actions">
-          <a
-            class="icon-link"
-            href="https://github.com/justForever17/v8-agent-os"
-            aria-label="GitHub 仓库"
-            title="GitHub 仓库"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <svg viewBox="0 0 16 16" aria-hidden="true">
-              <path
-                d="M8 0C3.58 0 0 3.67 0 8.2c0 3.63 2.29 6.7 5.47 7.79.4.08.55-.18.55-.4 0-.2-.01-.86-.01-1.57-2.01.38-2.53-.5-2.69-.97-.09-.24-.48-.97-.82-1.17-.28-.16-.68-.55-.01-.56.63-.01 1.08.59 1.23.83.72 1.24 1.87.89 2.33.68.07-.54.28-.89.5-1.09-1.78-.21-3.64-.92-3.64-4.1 0-.91.32-1.66.84-2.25-.08-.21-.36-1.07.08-2.22 0 0 .69-.23 2.26.86.66-.19 1.36-.29 2.06-.29s1.4.1 2.06.29c1.57-1.09 2.26-.86 2.26-.86.44 1.15.16 2.01.08 2.22.52.59.84 1.33.84 2.25 0 3.19-1.87 3.89-3.65 4.1.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .22.15.49.55.4A8.233 8.233 0 0 0 16 8.2C16 3.67 12.42 0 8 0Z"
-              />
-            </svg>
-          </a>
-          <a class="locale-link" href="../index.html">EN</a>
+          <a href="https://github.com/justForever17/v8-agent-os" target="_blank" rel="noreferrer">GitHub</a>
+          <a href="../index.html">EN</a>
         </div>
       </header>
 
-      <main class="deck-frame">
-        <div class="deck-track" data-page-track>
-          <section class="panel is-active" data-page="overview">
-            <div class="panel-copy">
-              <div class="eyebrow">给那些任务不会只活在一个标签页里的人</div>
-              <h1>别再一遍遍重讲项目。让系统记住上下文，只在该用时暴露工具，并在任务变复杂时仍然能被你看见和接管。</h1>
-              <p class="lede">
-                多数 Agent 都能给出一段聪明回答。更难的是，任务一旦变成真实项目，系统还能不能继续记住上下文、避免工具噪音，并让人类在中途看见、审批和接管。V8 Agent OS 就是为这条更长的工作弧线而做的。
-              </p>
-              <div class="hero-actions">
-                <button class="button-primary" data-page-target="install">立即安装 V8 Agent OS</button>
-                <a
-                  class="button-secondary"
-                  href="https://github.com/justForever17/v8-agent-os"
-                  target="_blank"
-                  rel="noreferrer"
-                >查看 GitHub</a>
-              </div>
-              <ul class="signal-list">
-                <li>记住项目，而不是每次重新认识你</li>
-                <li>只暴露此刻有用的那几样工具，而不是整面工具墙</li>
-                <li>把会点一次，慢慢长成更稳的复用执行</li>
-              </ul>
-            </div>
+      <main>
+        <section class="hero">
+          <span class="mono-label">System Boot // Industrial Grade Orchestration</span>
+          <h1 class="display">不仅仅是对话终端。<br />这是接管全景业务的 Agent OS。</h1>
+          <p class="lede">
+            当开源界还在受困于失控的插件池、暴雷的天价 API 账单与频频失忆的聊天窗时，V8 已经完成了从脆弱脚本向<strong>全局治安系统</strong>的跃升。<br />
+            分离式控制平面、防毒防爆的按需路由、深度可视化记忆操刀，以及远端跨平台实时审批，让真正的长周期自动化任务能够真正在企业环境中安稳落地。
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#install">初始化 Engine</a>
+            <a class="btn btn-secondary" href="https://github.com/justForever17/v8-agent-os" target="_blank">查阅核心源码</a>
+          </div>
+        </section>
 
-            <div class="panel-stage">
-              <div class="repo-grid value-grid">
-                <article class="repo-card value-card">
-                  <span class="note-label">少重讲</span>
-                  <h3>项目上下文会一直热着</h3>
-                  <p class="lede">projects、workspaces、scoped memory 和 durable recall 让明天从进度中段接着来，而不是又从零解释。</p>
-                </article>
-                <article class="repo-card value-card">
-                  <span class="note-label">少工具噪音</span>
-                  <h3>工具很多，不代表脑子必须更乱</h3>
-                  <p class="lede">allowed tools、reranker 和 contextual exposure 会把 MCP 与 skills 收到当前任务真正需要的那几样。</p>
-                </article>
-                <article class="repo-card value-card">
-                  <span class="note-label">任务可见可接管</span>
-                  <h3>任务在跑，你也看得见</h3>
-                  <p class="lede">workflow projection、artifacts、realtime updates、approvals 和 operations-center 让长任务变得可检查，而不是像黑盒一样神秘。</p>
-                </article>
-                <article class="repo-card repo-card-accent value-card">
-                  <span class="note-label">屏幕操作可沉淀</span>
-                  <h3>把“会点一次”慢慢长成复用执行</h3>
-                  <p class="lede">Computer Use、desktop-live 和通往 RPA 的路径，能把脆弱的屏幕操作慢慢收口成你还愿意继续复用的东西。</p>
-                </article>
+        <!-- Bento Grid: 8 大碾压级护城河 (带翻转动效展示实机截图) -->
+        <section class="bento-grid">
+          
+          <!-- 1. 记忆分层网络 -->
+          <article class="bento-card span-8">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="card-icon">[01] MEMORY_GRAPH</div>
+                <h3 class="card-title">分层记忆治理与可视化干预</h3>
+                <p class="card-desc">真正的记忆不只是丢个 <span class="text-highlight">CLAUDE.md</span> 文件导致常常失忆盲猜。V8 内置独立 Memory Agent 进行后台清洗，深度结合 RAG 与 Supervisor。人类更可在前端拓扑图，像外科医生一样精准查阅和修改每一丝知识脉络。</p>
               </div>
-              <div class="note-strip">
-                <span class="note-label">OpenClaw 对比</span>
-                <p>OpenClaw 值得尊重，因为它把生态广度这件事做得非常醒目。V8 真正想赢的，不是“也有这些”，而是把这些能力接进来后，仍然让任务少重讲、少噪音、可接管。</p>
+              <div class="flip-back">
+                <div class="card-image-wrapper">
+                  <img src="../image/memory.png" alt="Memory Graph UI" />
+                </div>
               </div>
             </div>
-          </section>
+          </article>
 
-          <section class="panel" data-page="runtimes">
-            <div class="section-heading">
-              <div class="eyebrow">为什么更顺手</div>
-              <h2>差别不在于部件更多，而在于任务一旦跨过演示时长，这些部件会不会开始互相打架。</h2>
-              <p>真正让使用体验拉开差距的，是 scoped context、选择性工具暴露、可见的 workflow 状态、人类检查点，以及能慢慢长成可复用执行的屏幕自动化。</p>
-            </div>
-
-            <div class="runtime-grid">
-              <article class="runtime-tile">
-                <div class="runtime-line runtime-title" data-hover-marquee><span class="runtime-scroll-text">长任务不容易散</span></div>
-                <div class="runtime-line runtime-body" data-hover-marquee><span class="runtime-scroll-text">project 和 workspace scope、durable workflow projection 以及可恢复 run，让任务跨过 handoff、暂停和下一次会话后，仍然像同一件事。</span></div>
-              </article>
-              <article class="runtime-tile">
-                <div class="runtime-line runtime-title" data-hover-marquee><span class="runtime-scroll-text">工具面不会越装越吵</span></div>
-                <div class="runtime-line runtime-body" data-hover-marquee><span class="runtime-scroll-text">allowed tools、reranker 和 contextual selection 让模型不必同时盯着五十个能力，只看现在真正需要的那几个。</span></div>
-              </article>
-              <article class="runtime-tile">
-                <div class="runtime-line runtime-title" data-hover-marquee><span class="runtime-scroll-text">中途能接管，不必盲猜</span></div>
-                <div class="runtime-line runtime-body" data-hover-marquee><span class="runtime-scroll-text">approvals、artifacts、realtime streams 和 operations-center 让你更容易在任务跑动时查看、审批、打断和改方向。</span></div>
-              </article>
-              <article class="runtime-tile">
-                <div class="runtime-line runtime-title" data-hover-marquee><span class="runtime-scroll-text">屏幕操作不会永远停留在试错</span></div>
-                <div class="runtime-line runtime-body" data-hover-marquee><span class="runtime-scroll-text">Computer Use、desktop-live 和通往 RPA 的路径，让成功过的界面动作可以慢慢长成更稳定的执行，而不是每次重新摸索。</span></div>
-              </article>
-            </div>
-          </section>
-
-          <section class="panel" data-page="install">
-            <div class="section-heading">
-              <div class="eyebrow">安装</div>
-              <h2>一条命令，把控制台和执行引擎一起拉起来。</h2>
-              <p>从 <code>justForever17/v8-agent-os</code> 跑 bootstrap，你会得到 Admin 9528、Engine 9530，以及一套可以开始配置模型、记忆、工具和自动化的干净入口。</p>
-            </div>
-
-            <div class="note-strip">
-              <span class="note-label">安装后你会得到</span>
-              <p>一个能看见并接管任务的控制台，一个准备好接模型、记忆、工具与自动化的执行平面，以及一套不用四处猜端口的默认启动方式。Web 端仍继续单独分发。</p>
-            </div>
-
-            <div class="install-grid">
-              <article class="install-card">
-                <div class="install-title">Windows</div>
-                <pre><code>powershell -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.ps1 | iex"</code></pre>
-                <div class="install-actions">
-                  <button class="button-secondary copy-command" data-copy="powershell -ExecutionPolicy Bypass -Command &quot;irm https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.ps1 | iex&quot;">复制</button>
-                  <a class="button-secondary" href="https://github.com/justForever17/v8-agent-os/blob/main/bootstrap.ps1" target="_blank" rel="noreferrer">查看脚本</a>
+          <!-- 2. 小模型算力路由 -->
+          <article class="bento-card span-4">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="card-icon">[02] COST_ROUTING</div>
+                <h3 class="card-title">精算级模型路由</h3>
+                <p class="card-desc">系统原生拦截并向下路由至免费的本地小模型接管杂活与摘要，将昂贵的前沿算力用在核心推理锋刃上。</p>
+              </div>
+              <div class="flip-back">
+                <div class="card-image-wrapper">
+                  <img src="../image/localmodel.png" alt="Local Model Routing" />
                 </div>
-              </article>
+              </div>
+            </div>
+          </article>
 
-              <article class="install-card">
-                <div class="install-title">Linux</div>
-                <pre><code>curl -fsSL https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.sh | bash</code></pre>
-                <div class="install-actions">
-                  <button class="button-secondary copy-command" data-copy="curl -fsSL https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.sh | bash">复制</button>
-                  <a class="button-secondary" href="https://github.com/justForever17/v8-agent-os/blob/main/bootstrap.sh" target="_blank" rel="noreferrer">查看脚本</a>
+          <!-- 8. 远程移动端运控 (新补全遗漏点) -->
+          <article class="bento-card span-6">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="card-icon">[03] REMOTE_OPS</div>
+                <h3 class="card-title">高位跨端的移动治理台</h3>
+                <p class="card-desc">Agent 系统不应限于 PC 命令行。通过 Web 远程伴生端，你可以在咖啡厅用手机随地查看后台并发任务、监控多智能体对话，还能轻触完成高风险的 <strong>安全指令越权审批</strong>。</p>
+              </div>
+              <div class="flip-back">
+                <div class="card-image-wrapper multi-phone">
+                  <img src="../image/phone1.png" alt="Remote App 1" />
+                  <img src="../image/phone2.png" alt="Remote App 2" />
+                  <img src="../image/phone3.png" alt="Remote App 3" />
                 </div>
-              </article>
+              </div>
+            </div>
+          </article>
 
-              <article class="install-card">
-                <div class="install-title">macOS</div>
-                <pre><code>curl -fsSL https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.sh | bash</code></pre>
-                <p>macOS 现在和 Linux 共用同一条 bash bootstrap，不再提供独立的 <code>.command</code> 公共安装入口。</p>
-                <div class="install-actions">
-                  <button class="button-secondary copy-command" data-copy="curl -fsSL https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.sh | bash">复制</button>
-                  <a class="button-secondary" href="https://github.com/justForever17/v8-agent-os/blob/main/bootstrap.sh" target="_blank" rel="noreferrer">查看脚本</a>
+          <!-- 3. 生态逆向劫持 -->
+          <article class="bento-card span-6">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="card-icon">[04] ECOSYSTEM_HIJACK</div>
+                <h3 class="card-title">对 OpenClaw 生态的逆向接管</h3>
+                <p class="card-desc">抛弃重启炉灶。通过黑科技 <span class="text-highlight">v8-bridge</span>，V8 原生劫持并全量兼容 OpenClaw 庞大的开源插件社区，将其化为你的前遣火力，并牢牢套上 V8 的安全约束。</p>
+              </div>
+              <div class="flip-back">
+                <div class="card-image-wrapper">
+                  <img src="../image/v8bridge.png" alt="V8 Bridge Framework" />
                 </div>
-              </article>
+              </div>
             </div>
-          </section>
+          </article>
 
-          <section class="panel" data-page="docs">
-            <div class="section-heading">
-              <div class="eyebrow">文档</div>
-              <h2>如果你想验证这不是宣传词，再往下看。</h2>
-              <p>这些入口展示的是宣传背后的真实表面：API、workflow 状态、审批、desktop-live、plugin-host 集成，以及通向更大生态的 bridge。</p>
+          <!-- 4. 防投毒审批流 -->
+          <article class="bento-card span-4">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="card-icon">[05] ZERO_TRUST_OPS</div>
+                <h3 class="card-title">白盒安全隔离审批</h3>
+                <p class="card-desc">盲猜瞎挂未知 Skills 等于向黑客开门。遇到极危指令，必须通过前端人机审核。哪怕藏着的 <span class="text-highlight">rm -rf</span> 也休想逃过你的凝视。</p>
+              </div>
+              <div class="flip-back">
+                <div class="card-image-wrapper">
+                  <img src="../image/operations-center.png" alt="Operations Center Approval" />
+                </div>
+              </div>
             </div>
+          </article>
 
-            <div class="repo-grid doc-grid">
-              <a class="doc-link" href="https://github.com/justForever17/v8-agent-os/blob/main/docs/ENGINE_API_REFERENCE.md" target="_blank" rel="noreferrer">
-                <span>Engine API 参考</span>
-                <small>approvals、artifacts、realtime/session、desktop-live、plugin-host 与配置接口的真实入口。</small>
-              </a>
-              <a class="doc-link" href="https://github.com/justForever17/v8-agent-os/blob/main/README-ZH.md" target="_blank" rel="noreferrer">
-                <span>主仓快速入口</span>
-                <small>当前到底交付了什么、怎么启动，以及产品叙事和代码事实在什么地方对齐。</small>
-              </a>
-              <a class="doc-link" href="https://github.com/justForever17/v8-agent-os/blob/main/docs/ENGINE_DEVELOPER_GUIDE_ZH.md" target="_blank" rel="noreferrer">
-                <span>Engine 开发者指南</span>
-                <small>长任务一旦变复杂后，recoverability、projection 和 runtime 故事如何继续对齐。</small>
-              </a>
-              <a class="doc-link" href="https://github.com/justForever17/v8-agent-os/blob/main/docs/NETWORK_SUPERVISOR_RUNTIME_IMPLEMENTATION_PLAN_ZH.md" target="_blank" rel="noreferrer">
-                <span>Network Supervisor Runtime</span>
-                <small>更深层的多节点协同、peer 唤醒、信任边界，以及一台机器不够时如何继续扩出去。</small>
-              </a>
+          <!-- 5. 工具按需暴露与归一化 -->
+          <article class="bento-card span-4">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="card-icon">[06] DYNAMIC_EXPOSURE</div>
+                <h3 class="card-title">MCP与SKILLS归一化预筛</h3>
+                <p class="card-desc">通过顶层 Reranker 将数百个零散的 MCP 工具与原生 SKILLS 统一步调进行“归一预筛”。不溢出 Token 显存，只留给模型当下最精准的利刃。</p>
+              </div>
+              <div class="flip-back">
+                <div class="card-image-wrapper">
+                  <img src="../image/mcpskills.png" alt="Dynamic Skill Reranking" />
+                </div>
+              </div>
             </div>
-          </section>
+          </article>
 
-        </div>
+          <!-- 6. 真实屏幕点击转 RPA -->
+          <article class="bento-card span-4">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="card-icon">[07] UI_TO_RPA</div>
+                <h3 class="card-title">脆弱动作变现为 RPA</h3>
+                <p class="card-desc">将不可靠的高时延 Computer Use 全平台（Win/Mac/Linux）动作阵列捕获，提炼转化成能无限调用的企业级 RPA 资产流水线。</p>
+              </div>
+              <div class="flip-back">
+                <div class="card-image-wrapper">
+                  <img src="../image/RPA.png" alt="Computer Use to RPA" />
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- 7. 全自主 Auto-runtime -->
+          <article class="bento-card span-12">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="card-icon">[08] AUTO_RUNTIME</div>
+                <h3 class="card-title">低耦合隔离：真正的自治运转舱</h3>
+                <p class="card-desc">告别关闭浏览器就崩盘的虚假独立。结构上强隔离的 Control Plane (Admin 9528) 与 Execution Core (Engine 9530) 让数日的复杂跑图能够在后台稳健存活、断点唤醒，以及静候多端人工指令。</p>
+              </div>
+              <div class="flip-back">
+                <div class="card-image-wrapper">
+                  <img src="../image/automation.png" alt="Auto Runtime Decoupling" />
+                </div>
+              </div>
+            </div>
+          </article>
+
+        </section>
+
+        <section id="install" class="tech-section">
+          <span class="mono-label">Deployment // Engine Bootstrap</span>
+          <h2 class="display" style="font-size: 2.2rem; margin-bottom: 12px; font-weight: 500;">一条指令，构建设施。</h2>
+          <p class="lede" style="max-width: 600px;">快速拉起双平面组件。</p>
+          
+          <div class="install-grid">
+            <div class="install-box">
+              <h3>Windows (PowerShell)</h3>
+              <div class="code-block">powershell -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.ps1 | iex"</div>
+              <button class="copy-btn" onclick="navigator.clipboard.writeText('powershell -ExecutionPolicy Bypass -Command &quot;irm https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.ps1 | iex&quot;')">Copy to Clipboard</button>
+            </div>
+            
+            <div class="install-box">
+              <h3>Linux / macOS (Bash)</h3>
+              <div class="code-block">curl -fsSL https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.sh | bash</div>
+              <button class="copy-btn" onclick="navigator.clipboard.writeText('curl -fsSL https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.sh | bash')">Copy to Clipboard</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- 修改了底部的文档链接体系 -->
+        <footer class="footer-nav">
+          <a href="https://github.com/justForever17/v8-agent-os/blob/main/docs/ENGINE_QUICK_START_ZH.md" target="_blank">快速入门</a>
+          <a href="https://github.com/justForever17/v8-agent-os/blob/main/docs/ENGINE_DEVELOPER_GUIDE_ZH.md" target="_blank">开发者文档 (Engine)</a>
+          <a href="https://github.com/justForever17/v8-agent-os/blob/main/docs/ENGINE_API_REFERENCE.md" target="_blank">API 文档 (Engine)</a>
+          <a href="https://github.com/justForever17/v8-agent-os/blob/main/docs/ENGINE_CONFIG_GUIDE_ZH.md" target="_blank">详细配置指南</a>
+        </footer>
       </main>
     </div>
   </body>
