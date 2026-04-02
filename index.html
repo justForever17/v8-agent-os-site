@@ -202,5 +202,45 @@
         </footer>
       </main>
     </div>
+    <div id="image-lightbox" class="lightbox">
+      <div class="lightbox-content">
+        <button id="lightbox-close" class="lightbox-close">&times;</button>
+        <img id="lightbox-img" class="lightbox-img" src="" alt="Expanded View" />
+      </div>
+    </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const lightbox = document.getElementById('image-lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const closeBtn = document.getElementById('lightbox-close');
+        
+        document.querySelectorAll('.card-image-wrapper img').forEach(img => {
+          img.addEventListener('click', (e) => {
+            e.stopPropagation();
+            lightboxImg.src = img.src;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+          });
+        });
+        
+        const closeLightbox = () => {
+          lightbox.classList.remove('active');
+          document.body.style.overflow = '';
+          setTimeout(() => { lightboxImg.src = ''; }, 300);
+        };
+        
+        closeBtn.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', (e) => {
+          if (e.target === lightbox || e.target.classList.contains('lightbox-content')) {
+            closeLightbox();
+          }
+        });
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+            closeLightbox();
+          }
+        });
+      });
+    </script>
   </body>
 </html>
