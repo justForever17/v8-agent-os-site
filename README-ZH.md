@@ -71,6 +71,20 @@ http://127.0.0.1:8789/
 - 主仓根目录里的 bootstrap 脚本
 - 当前从统一主仓对外暴露的文档页面
 
+## OpenClaw 4.8 接管说明
+
+如果你要把 OpenClaw 4.8 的 channels / plugin host runtime 接到 V8，不要再按旧版心智手工 patch `openclaw.json`。当前 canonical 说明在主仓：
+
+- [OpenClaw 4.8 PluginHost 接管说明](https://github.com/justForever17/v8-agent-os/blob/main/docs/OPENCLAW_4_8_PLUGIN_HOST_ADOPTION_ZH.md)
+- [openclaw-v8-bridge Quick Start（面向新机操作步骤）](https://github.com/justForever17/openclaw-v8-bridge/blob/main/README.md)
+
+这份文档专门解释：
+
+- 为什么 `openclaw.json` 会被宿主投影写回成极简壳
+- 为什么 bridge readiness 与工具树不能再只依赖 manifest / 旧配置块
+- 为什么渠道出站暂存与 V8 主工作区必须分面治理
+- 为什么给别人交付时不能只发一个 bridge 包
+
 ## 支持 V8 Agent OS
 
 如果这个项目帮你的团队少重讲、少折腾，并且更放心地把长任务交给 Agent，欢迎在这里支持后续开发：
