@@ -41,7 +41,13 @@ powershell -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.c
 curl -fsSL https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.sh | bash
 ```
 
-这些命令会从主仓根目录拉脚本，安装所需依赖，并拉起 Admin + Engine。Web 端仍继续独立分发。
+这些命令会从主仓根目录拉脚本，安装所需依赖，并拉起 Admin + Engine。公开客户端口径现在明确收口：`os-phone` 是主要远程交互面，`os-web` 是只在需要时从主仓启动的本地 trusted shell / 回归验证面，不再作为独立公开客户端分发。
+
+发布前可做一条简单叙事校验：
+
+```bash
+rg -n "companion Web[ ]App|Web still ships[ ]separately|Web 端仍继续[[:space:]]?独立分发|Web[ ]远程伴生端" index.html zh/index.html README.md README-ZH.md
+```
 
 ## 本地预览
 

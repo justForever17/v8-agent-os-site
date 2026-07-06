@@ -31,7 +31,7 @@
           <h1 class="display">不仅仅是对话终端。<br />这是接管全景业务的 Agent OS。</h1>
           <p class="lede">
             当开源界还在受困于失控的插件池、暴雷的天价 API 账单与频频失忆的聊天窗时，V8 已经完成了从脆弱脚本向<strong>全局治安系统</strong>的跃升。<br />
-            分离式控制平面、防毒防爆的按需路由、深度可视化记忆操刀，以及远端跨平台实时审批，让真正的长周期自动化任务能够真正在企业环境中安稳落地。
+            分离式控制平面、防毒防爆的按需路由、深度可视化记忆操刀，以及以 os-phone 为主的远程实时审批，让真正的长周期自动化任务能够真正在企业环境中安稳落地。
           </p>
           <div class="hero-actions">
             <a class="btn btn-primary" href="#install">初始化 Engine</a>
@@ -74,13 +74,13 @@
             </div>
           </article>
 
-          <!-- 8. 远程移动端运控 (新补全遗漏点) -->
+          <!-- 8. os-phone 远程移动端运控 -->
           <article class="bento-card span-6">
             <div class="flip-inner">
               <div class="flip-front">
                 <div class="card-icon">[03] REMOTE_OPS</div>
-                <h3 class="card-title">高位跨端的移动治理台</h3>
-                <p class="card-desc">Agent 系统不应限于 PC 命令行。通过 Web 远程伴生端，你可以在咖啡厅用手机随地查看后台并发任务、监控多智能体对话，还能轻触完成高风险的 <strong>安全指令越权审批</strong>。</p>
+                <h3 class="card-title">os-phone 远程移动治理台</h3>
+                <p class="card-desc">Agent 系统不应限于 PC 命令行。以 <span class="text-highlight">os-phone</span> 作为主要远程交互面，你可以在手机上查看后台并发任务、监控多智能体对话，还能轻触完成高风险的 <strong>安全指令越权审批</strong>。<span class="text-highlight">os-web</span> 保持为本地 trusted shell 与回归验证面。</p>
               </div>
               <div class="flip-back">
                 <div class="card-image-wrapper multi-phone">
@@ -177,7 +177,7 @@
         <section id="install" class="tech-section">
           <span class="mono-label">Deployment // Engine Bootstrap</span>
           <h2 class="display" style="font-size: 2.2rem; margin-bottom: 12px; font-weight: 500;">一条指令，构建设施。</h2>
-          <p class="lede" style="max-width: 600px;">快速拉起双平面组件。</p>
+          <p class="lede" style="max-width: 600px;">快速拉起 Admin 与 Engine。os-web 是本地 trusted shell / 回归面，不再作为独立公开客户端分发。</p>
           
           <div class="install-grid">
             <div class="install-box">
