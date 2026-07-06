@@ -41,12 +41,12 @@ powershell -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.c
 curl -fsSL https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.sh | bash
 ```
 
-Those commands pull from the repository root, install the required dependencies, and bring up Admin + Engine. The public client story is now explicit: `os-phone` is the primary remote interaction surface, while `os-web` is a local trusted shell/regression surface started from the main repo only when needed, not a standalone public client distribution.
+Those commands are presented publicly as the desktop app install entry: one product package that brings the interface shell, governance layer, and execution runtime together behind the desktop experience. The mobile app is the remote conversation and approval tool; it is not described as a browser companion, and the interface shell is not described as a separate official client distribution.
 
 Simple narrative check before publishing:
 
 ```bash
-rg -n "companion Web[ ]App|Web still ships[ ]separately|Web 端仍继续[[:space:]]?独立分发|Web[ ]远程伴生端" index.html zh/index.html README.md README-ZH.md
+rg -n "os[-]phone|os[-]web|Bootstrap[ ]Engine|Admin[ ]\\+[ ]Engine|Admin[ ]9528|Engine[ ]9530|Web still ships[ ]separately|companion Web[ ]App|Web[ ]远程伴生端" index.html zh/index.html README.md README-ZH.md
 ```
 
 ## Local preview
