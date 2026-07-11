@@ -23,11 +23,11 @@ Within seconds, the site should make four things obvious:
 - a maintenance manual
 - an internal architecture review
 - a split-repo migration note
-- a feature checklist trying to out-shout OpenClaw
+- a feature checklist trying to out-shout competitors
 
-## Install entry
+## Preview install entry
 
-The public install story stays intentionally simple:
+The public preview entry stays intentionally simple:
 
 - Windows
 
@@ -41,12 +41,12 @@ powershell -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.c
 curl -fsSL https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.sh | bash
 ```
 
-Those commands are presented publicly as the desktop app install entry: one product package that brings the interface shell, governance layer, and execution runtime together behind the desktop experience. The mobile app is the remote conversation and approval tool; it is not described as a browser companion, and the interface shell is not described as a separate official client distribution.
+Those commands are currently presented as the unsigned desktop preview entry. They do not imply a signed stable build or an auto-update guarantee. The preview brings the interface shell, governance layer, and execution runtime together behind the desktop experience. Phone remains the paired remote conversation and approval tool.
 
 Simple narrative check before publishing:
 
 ```bash
-rg -n "os[-]phone|os[-]web|Bootstrap[ ]Engine|Admin[ ]\\+[ ]Engine|Admin[ ]9528|Engine[ ]9530|Web still ships[ ]separately|companion Web[ ]App|Web[ ]远程伴生端" index.html zh/index.html README.md README-ZH.md
+python scripts/audit_public_narrative.py
 ```
 
 ## Local preview

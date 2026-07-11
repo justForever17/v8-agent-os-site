@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>V8 Agent OS - 工业级全景运行时</title>
+    <title>V8 Agent OS - 桌面优先的 Agent 工作空间</title>
     <meta
       name="description"
-      content="V8 Agent OS 是一台高阶的全局治理机器。彻底解决大模型上下文爆炸、插件投毒安全隐患与常常失忆的噩梦。"
+      content="V8 Agent OS 是本地优先的桌面 Agent 工作空间，提供 Supervisor 编排、可恢复 runtime、受治理插件、Phone 远程续接与可验证产物。"
     />
     <link rel="icon" type="image/png" href="../assets/brand-mark.png" />
     <link rel="stylesheet" href="../assets/styles.css" />
@@ -27,19 +27,19 @@
 
       <main>
         <section class="hero">
-          <span class="mono-label">System Boot // Industrial Grade Orchestration</span>
-          <h1 class="display">不仅仅是对话终端。<br />这是接管全景业务的 Agent OS。</h1>
+          <span class="mono-label">Desktop Preview // Supervisor First, Runtime Grounded</span>
+          <h1 class="display">不止于对话。<br />这是面向长期任务的桌面 Agent OS。</h1>
           <p class="lede">
-            当开源界还在受困于失控的插件池、暴雷的天价 API 账单与频频失忆的聊天窗时，V8 已经完成了从脆弱脚本向<strong>全局治安系统</strong>的跃升。<br />
-            一体化桌面端、防毒防爆的按需路由、深度可视化记忆操刀，以及移动端远程对话与审批，让真正的长周期自动化任务能够真正在企业环境中安稳落地。
+            V8 把 Supervisor 的判断放在任务前台，把执行建立在 runtime 状态、证据、产物和明确边界上。<br />
+            桌面端是主要工作区；编程、调研、多媒体、桌面操作和 RPA 各自承担专门执行，配对后的 Phone 用于远程续接任务与处理受治理的确认。
           </p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="#install">安装桌面端</a>
+            <a class="btn btn-primary" href="#install">安装桌面预览版</a>
             <a class="btn btn-secondary" href="https://github.com/justForever17/v8-agent-os" target="_blank">查阅核心源码</a>
           </div>
         </section>
 
-        <!-- Bento Grid: 8 大碾压级护城河 (带翻转动效展示实机截图) -->
+        <!-- 产品能力网格：已有截图保留，新能力先使用待替换占位 -->
         <section class="bento-grid">
           
           <!-- 1. 记忆分层网络 -->
@@ -47,8 +47,8 @@
             <div class="flip-inner">
               <div class="flip-front">
                 <div class="card-icon">[01] MEMORY_GRAPH</div>
-                <h3 class="card-title">分层记忆治理与可视化干预</h3>
-                <p class="card-desc">真正的记忆不只是丢个 <span class="text-highlight">CLAUDE.md</span> 文件导致常常失忆盲猜。V8 内置独立 Memory Agent 进行后台清洗，深度结合 RAG 与 Supervisor。人类更可在前端拓扑图，像外科医生一样精准查阅和修改每一丝知识脉络。</p>
+                <h3 class="card-title">基于证据的记忆与图谱审阅</h3>
+                <p class="card-desc">记忆保存的是证据、偏好、图关系和产物，而不是一条可以替代当前指令的命令流。维护任务与 Admin 图谱帮助用户审阅、修改并追踪本轮究竟召回了什么。</p>
               </div>
               <div class="flip-back">
                 <div class="card-image-wrapper">
@@ -63,8 +63,8 @@
             <div class="flip-inner">
               <div class="flip-front">
                 <div class="card-icon">[02] COST_ROUTING</div>
-                <h3 class="card-title">精算级模型路由</h3>
-                <p class="card-desc">系统原生拦截并向下路由至免费的本地小模型接管杂活与摘要，将昂贵的前沿算力用在核心推理锋刃上。</p>
+                <h3 class="card-title">按角色配置模型与故障回流</h3>
+                <p class="card-desc">Supervisor、子 Agent、多媒体、向量和辅助任务可以使用不同模型与供应商。健康检查和 failover 会明确暴露降级路径，而不是静默掩盖。</p>
               </div>
               <div class="flip-back">
                 <div class="card-image-wrapper">
@@ -79,8 +79,8 @@
             <div class="flip-inner">
               <div class="flip-front">
                 <div class="card-icon">[03] REMOTE_OPS</div>
-                <h3 class="card-title">移动端远程对话与审批</h3>
-                <p class="card-desc">Agent 系统不应限于 PC 命令行。桌面端是主要工作台，移动端用于远程继续对话、查看后台并发任务、监控多智能体状态，还能轻触完成高风险的 <strong>安全指令越权审批</strong>。</p>
+                <h3 class="card-title">配对 Phone 的远程任务续接</h3>
+                <p class="card-desc">桌面端始终是主要工作区。配对后的 Phone 可以继续任务、回答阻塞问题、发送语音或文件、查看产物，并在离开电脑时处理受治理的副作用确认。</p>
               </div>
               <div class="flip-back">
                 <div class="card-image-wrapper multi-phone">
@@ -92,17 +92,17 @@
             </div>
           </article>
 
-          <!-- 3. 生态逆向劫持 -->
+          <!-- 3. 插件治理 -->
           <article class="bento-card span-6">
             <div class="flip-inner">
               <div class="flip-front">
-                <div class="card-icon">[04] ECOSYSTEM_HIJACK</div>
-                <h3 class="card-title">对 OpenClaw 生态的逆向接管</h3>
-                <p class="card-desc">抛弃重启炉灶。通过黑科技 <span class="text-highlight">v8-bridge</span>，V8 原生劫持并全量兼容 OpenClaw 庞大的开源插件社区，将其化为你的前遣火力，并牢牢套上 V8 的安全约束。</p>
+                <div class="card-icon">[04] PLUGIN_MANAGER</div>
+                <h3 class="card-title">受治理的插件管理器</h3>
+                <p class="card-desc">从签名目录安装经过审核的 CLI、MCP、Skill 与 UI 组件，现已包含高德官方 CLI。<span class="text-highlight">@插件</span> 是强提示；Supervisor 也可为当前任务授权最小就绪组件，并只向直接子 Agent 传递所需子集。</p>
               </div>
               <div class="flip-back">
                 <div class="card-image-wrapper">
-                  <img src="../image/v8bridge.png" alt="V8 Bridge Framework" />
+                  <img src="../image/v8bridge.png" alt="V8 插件管理器" />
                 </div>
               </div>
             </div>
@@ -113,8 +113,8 @@
             <div class="flip-inner">
               <div class="flip-front">
                 <div class="card-icon">[05] ZERO_TRUST_OPS</div>
-                <h3 class="card-title">白盒安全隔离审批</h3>
-                <p class="card-desc">盲猜瞎挂未知 Skills 等于向黑客开门。遇到极危指令，必须通过前端人机审核。哪怕藏着的 <span class="text-highlight">rm -rf</span> 也休想逃过你的凝视。</p>
+                <h3 class="card-title">受治理的副作用与权限边界</h3>
+                <p class="card-desc">工作区边界、类型化 CLI 动作、审批、授权摘要与逐次调用校验共同约束特权操作。被阻断或降级时，系统返回原因和恢复入口，而不是伪造成功。</p>
               </div>
               <div class="flip-back">
                 <div class="card-image-wrapper">
@@ -129,8 +129,8 @@
             <div class="flip-inner">
               <div class="flip-front">
                 <div class="card-icon">[06] DYNAMIC_EXPOSURE</div>
-                <h3 class="card-title">MCP与SKILLS归一化预筛</h3>
-                <p class="card-desc">通过顶层 Reranker 将数百个零散的 MCP 工具与原生 SKILLS 统一步调进行“归一预筛”。不溢出 Token 显存，只留给模型当下最精准的利刃。</p>
+                <h3 class="card-title">按任务预筛的 Skill 与 MCP</h3>
+                <p class="card-desc">通用 Skill 和 MCP 只按当前任务进入候选面，避免把完整工具目录塞给模型。插件拥有的组件保持隔离，只有有效 task grant 才会投影。</p>
               </div>
               <div class="flip-back">
                 <div class="card-image-wrapper">
@@ -145,8 +145,8 @@
             <div class="flip-inner">
               <div class="flip-front">
                 <div class="card-icon">[07] UI_TO_RPA</div>
-                <h3 class="card-title">脆弱动作变现为 RPA</h3>
-                <p class="card-desc">将不可靠的高时延 Computer Use 全平台（Win/Mac/Linux）动作阵列捕获，提炼转化成能无限调用的企业级 RPA 资产流水线。</p>
+                <h3 class="card-title">从已验证桌面操作沉淀 RPA</h3>
+                <p class="card-desc">Computer Use 负责观察并完成一次性桌面任务；只有作用域、环境、时序和验证证据明确后，重复步骤才会被提升为可复用 RPA。</p>
               </div>
               <div class="flip-back">
                 <div class="card-image-wrapper">
@@ -161,8 +161,8 @@
             <div class="flip-inner">
               <div class="flip-front">
                 <div class="card-icon">[08] AUTO_RUNTIME</div>
-                <h3 class="card-title">低耦合隔离：真正的自治运转舱</h3>
-                <p class="card-desc">告别关闭浏览器就崩盘的虚假独立。桌面端把界面、治理层与执行运行时收进同一个产品安装包，让数日的复杂跑图能够在后台稳健存活、断点唤醒，以及静候多端人工指令。</p>
+                <h3 class="card-title">可恢复的 Runtime Episode 与 Handoff</h3>
+                <p class="card-desc">队列、租约、类型化 handoff、产物和恢复状态让复杂执行在暂停与重启后仍可检查。最终仍由 Supervisor 验收回流证据，再决定是否完成。</p>
               </div>
               <div class="flip-back">
                 <div class="card-image-wrapper">
@@ -172,12 +172,92 @@
             </div>
           </article>
 
+          <!-- 9. 跨会话接管 -->
+          <article class="bento-card span-6">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="card-icon">[09] SESSION_TAKEOVER</div>
+                <h3 class="card-title">安全的跨会话任务接管</h3>
+                <p class="card-desc">新任务可以引用旧任务的目标、确认决定、Spec 状态、产物、失败和阻塞，但不会继承旧工作区、权限、checkpoint 或 runtime episode。</p>
+              </div>
+              <div class="flip-back">
+                <div class="card-image-wrapper">
+                  <div class="feature-placeholder" role="img" aria-label="跨会话接管截图占位">
+                    <span>待补当前截图</span>
+                    <strong>跨会话任务接管</strong>
+                    <small>后续替换为 Web 与 Phone 的会话引用流程。</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- 10. Spec 与委派 -->
+          <article class="bento-card span-6">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="card-icon">[10] SPEC_DELEGATION</div>
+                <h3 class="card-title">Spec 模式与委派合同</h3>
+                <p class="card-desc">需求、设计和任务阶段保留稳定 ID 与审批。子 Agent 回流继续携带 lineage、精确写集、自检、产物和父级验收，不再被压成一句模糊摘要。</p>
+              </div>
+              <div class="flip-back">
+                <div class="card-image-wrapper">
+                  <div class="feature-placeholder" role="img" aria-label="Spec 与委派截图占位">
+                    <span>待补当前截图</span>
+                    <strong>Spec 与委派合同</strong>
+                    <small>后续替换为阶段审批与 handoff 证据。</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- 11. 多媒体创作 -->
+          <article class="bento-card span-6">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="card-icon">[11] CREATIVE_MEDIA</div>
+                <h3 class="card-title">带产物 QA 的多媒体创作</h3>
+                <p class="card-desc">六个稳定 facade 覆盖能力、计划、素材、作业、编辑和质量。recipe、provider lock、样片确认、artifact proof 与 QA 始终留在交付链上。</p>
+              </div>
+              <div class="flip-back">
+                <div class="card-image-wrapper">
+                  <div class="feature-placeholder" role="img" aria-label="多媒体创作流程截图占位">
+                    <span>待补当前截图</span>
+                    <strong>多媒体创作流程</strong>
+                    <small>后续替换为 recipe、产物与 QA 页面。</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- 12. 桌宠伴随器 -->
+          <article class="bento-card span-6">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="card-icon">[12] DESKTOP_COMPANION</div>
+                <h3 class="card-title">由 Shell 管理的桌宠伴随器</h3>
+                <p class="card-desc">桌宠通过本机鉴权控制通道跟随当前任务，在桌面应用内打开设置，保存后即时应用外观，并在强制兜底前优先执行自身的优雅关闭动画。</p>
+              </div>
+              <div class="flip-back">
+                <div class="card-image-wrapper">
+                  <div class="feature-placeholder" role="img" aria-label="桌宠伴随器截图占位">
+                    <span>待补当前截图</span>
+                    <strong>桌宠任务同步与生命周期</strong>
+                    <small>后续替换为任务跟随与托管状态页面。</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
         </section>
 
         <section id="install" class="tech-section">
-          <span class="mono-label">Deployment // Desktop App</span>
-          <h2 class="display" style="font-size: 2.2rem; margin-bottom: 12px; font-weight: 500;">一条指令，构建设施。</h2>
-          <p class="lede" style="max-width: 600px;">安装一体化桌面端。移动端是远程对话与审批工具；界面壳随桌面体验一起提供，不再作为独立正式客户端分发。</p>
+          <span class="mono-label">Deployment // Desktop Preview</span>
+          <h2 class="display" style="font-size: 2.2rem; margin-bottom: 12px; font-weight: 500;">一个桌面预览入口。</h2>
+          <p class="lede" style="max-width: 680px;">当前公开渠道是 unsigned 桌面预览版，不代表已签名 stable 或自动更新承诺。它把界面壳、治理层和执行运行时收进桌面体验；Phone 仍是配对后的远程交互面。</p>
           
           <div class="install-grid">
             <div class="install-box">
