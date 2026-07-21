@@ -98,7 +98,7 @@
               <div class="flip-front">
                 <div class="card-icon">[04] PLUGIN_MANAGER</div>
                 <h3 class="card-title">Governed Plugin Manager</h3>
-                <p class="card-desc">Install reviewed CLI, MCP, Skill, and UI components from a signed catalog, including the official AMap CLI. <span class="text-highlight">@plugin</span> is a strong hint, while the Supervisor may grant the smallest ready task component set and pass only a subset to a direct subagent.</p>
+                <p class="card-desc">Install reviewed CLI, MCP, Skill, and UI components from a signed catalog, including the official AMap CLI. <span class="text-highlight">@plugin</span> is a strong hint; the Supervisor may grant the smallest ready task set, while delegated component subsets can only shrink and stop after one grandchild layer.</p>
               </div>
               <div class="flip-back">
                 <div class="card-image-wrapper">
@@ -162,7 +162,7 @@
               <div class="flip-front">
                 <div class="card-icon">[08] AUTO_RUNTIME</div>
                 <h3 class="card-title">Durable Runtime Episodes and Handoffs</h3>
-                <p class="card-desc">Queued episodes, leases, typed handoffs, artifacts, and recovery state keep complex work inspectable across pauses and restarts. The Supervisor still verifies the returned evidence before declaring completion.</p>
+                <p class="card-desc">Queued episodes, leases, typed handoffs, artifacts, and recovery state keep complex work inspectable across pauses and restarts. Concurrent code edits stay in managed worktrees, and only a validated Supervisor delivery reaches the original project.</p>
               </div>
               <div class="flip-back">
                 <div class="card-image-wrapper">
@@ -256,20 +256,21 @@
 
         <section id="install" class="tech-section">
           <span class="mono-label">Deployment // Desktop Preview</span>
-          <h2 class="display" style="font-size: 2.2rem; margin-bottom: 12px; font-weight: 500;">One preview entry.</h2>
-          <p class="lede" style="max-width: 680px;">The current public channel is an unsigned desktop preview, not a signed stable or auto-updating release. It bundles the interface shell, governance layer, and execution runtime; Phone remains the paired remote interaction surface.</p>
+          <h2 class="display" style="font-size: 2.2rem; margin-bottom: 12px; font-weight: 500;">One honest desktop entry.</h2>
+          <p class="lede" style="max-width: 680px;">Download the unsigned Windows Desktop Preview from GitHub Releases. It is not a signed stable or auto-updating release. Phone remains a separately installed, paired remote interaction surface.</p>
           
           <div class="install-grid">
             <div class="install-box">
-              <h3>Windows (PowerShell)</h3>
-              <div class="code-block">powershell -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.ps1 | iex"</div>
-              <button class="copy-btn" onclick="navigator.clipboard.writeText('powershell -ExecutionPolicy Bypass -Command &quot;irm https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.ps1 | iex&quot;')">Copy to Clipboard</button>
+              <h3>Windows Desktop Preview</h3>
+              <div class="code-block">GitHub Releases → latest v8-os-desktop-v* asset</div>
+              <button class="copy-btn" onclick="window.open('https://github.com/justForever17/v8-agent-os/releases', '_blank', 'noopener')">Open Releases</button>
             </div>
             
             <div class="install-box">
-              <h3>Linux / macOS (Bash)</h3>
-              <div class="code-block">curl -fsSL https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.sh | bash</div>
-              <button class="copy-btn" onclick="navigator.clipboard.writeText('curl -fsSL https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.sh | bash')">Copy to Clipboard</button>
+              <h3>Source-tree desktop preview</h3>
+              <div class="code-block">.\v8os.cmd preview --rebuild</div>
+              <button class="copy-btn" onclick="navigator.clipboard.writeText('.\\v8os.cmd preview --rebuild')">Copy Command</button>
+              <p class="card-desc">Prepare the desktop profile dependencies first. Bootstrap defaults to Engine + Admin services and is not the Electron installer.</p>
             </div>
           </div>
         </section>

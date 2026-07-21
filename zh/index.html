@@ -98,7 +98,7 @@
               <div class="flip-front">
                 <div class="card-icon">[04] PLUGIN_MANAGER</div>
                 <h3 class="card-title">受治理的插件管理器</h3>
-                <p class="card-desc">从签名目录安装经过审核的 CLI、MCP、Skill 与 UI 组件，现已包含高德官方 CLI。<span class="text-highlight">@插件</span> 是强提示；Supervisor 也可为当前任务授权最小就绪组件，并只向直接子 Agent 传递所需子集。</p>
+                <p class="card-desc">从签名目录安装经过审核的 CLI、MCP、Skill 与 UI 组件，现已包含高德官方 CLI。<span class="text-highlight">@插件</span> 是强提示；Supervisor 可授权最小就绪组件，委派中的组件子集只能继续缩小，并在一层孙 Agent 后终止。</p>
               </div>
               <div class="flip-back">
                 <div class="card-image-wrapper">
@@ -162,7 +162,7 @@
               <div class="flip-front">
                 <div class="card-icon">[08] AUTO_RUNTIME</div>
                 <h3 class="card-title">可恢复的 Runtime Episode 与 Handoff</h3>
-                <p class="card-desc">队列、租约、类型化 handoff、产物和恢复状态让复杂执行在暂停与重启后仍可检查。最终仍由 Supervisor 验收回流证据，再决定是否完成。</p>
+                <p class="card-desc">队列、租约、类型化 handoff、产物和恢复状态让复杂执行在暂停与重启后仍可检查。并发代码修改留在托管 worktree 中，只有 Supervisor 验证通过的交付才进入原项目。</p>
               </div>
               <div class="flip-back">
                 <div class="card-image-wrapper">
@@ -256,20 +256,21 @@
 
         <section id="install" class="tech-section">
           <span class="mono-label">Deployment // Desktop Preview</span>
-          <h2 class="display" style="font-size: 2.2rem; margin-bottom: 12px; font-weight: 500;">一个桌面预览入口。</h2>
-          <p class="lede" style="max-width: 680px;">当前公开渠道是 unsigned 桌面预览版，不代表已签名 stable 或自动更新承诺。它把界面壳、治理层和执行运行时收进桌面体验；Phone 仍是配对后的远程交互面。</p>
+          <h2 class="display" style="font-size: 2.2rem; margin-bottom: 12px; font-weight: 500;">一个不混淆的桌面入口。</h2>
+          <p class="lede" style="max-width: 680px;">从 GitHub Releases 下载 unsigned Windows Desktop Preview。它不是已签名 stable 或自动更新版本；Phone 仍是单独安装并配对的远程交互面。</p>
           
           <div class="install-grid">
             <div class="install-box">
-              <h3>Windows (PowerShell)</h3>
-              <div class="code-block">powershell -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.ps1 | iex"</div>
-              <button class="copy-btn" onclick="navigator.clipboard.writeText('powershell -ExecutionPolicy Bypass -Command &quot;irm https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.ps1 | iex&quot;')">Copy to Clipboard</button>
+              <h3>Windows 桌面预览版</h3>
+              <div class="code-block">GitHub Releases → 最新 v8-os-desktop-v* 资产</div>
+              <button class="copy-btn" onclick="window.open('https://github.com/justForever17/v8-agent-os/releases', '_blank', 'noopener')">打开发布页</button>
             </div>
             
             <div class="install-box">
-              <h3>Linux / macOS (Bash)</h3>
-              <div class="code-block">curl -fsSL https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.sh | bash</div>
-              <button class="copy-btn" onclick="navigator.clipboard.writeText('curl -fsSL https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.sh | bash')">Copy to Clipboard</button>
+              <h3>源码树桌面预览</h3>
+              <div class="code-block">.\v8os.cmd preview --rebuild</div>
+              <button class="copy-btn" onclick="navigator.clipboard.writeText('.\\v8os.cmd preview --rebuild')">复制命令</button>
+              <p class="card-desc">请先准备 desktop profile 依赖。bootstrap 默认只启动 Engine + Admin 服务，不是 Electron 安装器。</p>
             </div>
           </div>
         </section>

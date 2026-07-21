@@ -27,21 +27,13 @@ Within seconds, the site should make four things obvious:
 
 ## Preview install entry
 
-The public preview entry stays intentionally simple:
+The public desktop entry is the Windows Desktop Preview on the main repository's [GitHub Releases](https://github.com/justForever17/v8-agent-os/releases). It is still an unsigned preview, not a signed stable build or an auto-update promise. Phone ships as a separate Android Preview APK and pairs through the desktop control center.
 
-- Windows
+The main repository's `bootstrap.ps1` / `bootstrap.sh` scripts install dependencies and start services, defaulting to Engine + Admin. They are not Electron desktop installers. The full source-tree desktop preview entry is:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.ps1 | iex"
+.\v8os.cmd preview --rebuild
 ```
-
-- Linux / macOS
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.sh | bash
-```
-
-Those commands are currently presented as the unsigned desktop preview entry. They do not imply a signed stable build or an auto-update guarantee. The preview brings the interface shell, governance layer, and execution runtime together behind the desktop experience. Phone remains the paired remote conversation and approval tool.
 
 Simple narrative check before publishing:
 
@@ -74,7 +66,7 @@ http://127.0.0.1:8789/
 ## Keep aligned with
 
 - the public story in [`v8-agent-os`](https://github.com/justForever17/v8-agent-os)
-- the actual bootstrap scripts in the repo root
+- the real responsibility boundaries between GitHub Releases, `v8os preview`, and bootstrap
 - the current docs exposed from the unified main repository
 
 ## Support V8 Agent OS

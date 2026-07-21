@@ -13,6 +13,14 @@ FORBIDDEN = {
     "overclaim_zh": re.compile(r"接管全景|全局治安|碾压|防毒防爆"),
     "explicit_at_only": re.compile(r"(only|必须|只能).{0,24}(@plugin|@插件).{0,24}(grant|授权)", re.IGNORECASE),
     "obsolete_docs": re.compile(r"docs/ENGINE_(?:QUICK_START|DEVELOPER_GUIDE|API_REFERENCE|CONFIG_GUIDE)\.md"),
+    "planner_residue": re.compile(r"\bplanner\b|规划器", re.IGNORECASE),
+    "phone_first_residue": re.compile(r"phone[- ]first|Phone (?:is|as) the (?:main|primary)|Phone 是主", re.IGNORECASE),
+    "bootstrap_as_desktop": re.compile(r"raw\.githubusercontent\.com/.+?/bootstrap\.(?:ps1|sh)", re.IGNORECASE),
+}
+
+REQUIRED = {
+    "desktop_release_entry": "https://github.com/justForever17/v8-agent-os/releases",
+    "source_preview_entry": "v8os.cmd preview --rebuild",
 }
 
 
@@ -25,6 +33,9 @@ def main() -> int:
             match = pattern.search(text)
             if match:
                 violations.append(f"{relative}:{name}:{match.group(0)}")
+        for name, snippet in REQUIRED.items():
+            if snippet not in text:
+                violations.append(f"{relative}:{name}:missing")
         card_count = text.count('class="bento-card')
         placeholder_count = text.count('class="feature-placeholder')
         if card_count != 12:

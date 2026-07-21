@@ -27,21 +27,13 @@
 
 ## 预览版安装入口
 
-公开预览入口刻意收成最简单的一种：
+公开桌面入口是主仓 [GitHub Releases](https://github.com/justForever17/v8-agent-os/releases) 中的 Windows Desktop Preview。当前仍是 unsigned preview，不代表已签名 stable 或自动更新承诺。Phone 使用独立的 Android Preview APK，并在桌面控制台中配对。
 
-- Windows
+主仓 `bootstrap.ps1` / `bootstrap.sh` 是依赖安装与服务启动脚本，默认启动 Engine + Admin，不是 Electron 桌面安装器。源码树的完整桌面预览入口是：
 
 ```powershell
-powershell -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.ps1 | iex"
+.\v8os.cmd preview --rebuild
 ```
-
-- Linux / macOS
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/justForever17/v8-agent-os/main/bootstrap.sh | bash
-```
-
-这些命令目前是 unsigned 桌面预览版入口，不代表已签名 stable 或自动更新承诺。预览版把界面壳、治理层与执行运行时收进桌面体验；Phone 仍是配对后的远程对话与审批工具。
 
 发布前可做一条简单叙事校验：
 
@@ -74,7 +66,7 @@ http://127.0.0.1:8789/
 ## 对齐对象
 
 - [`v8-agent-os`](https://github.com/justForever17/v8-agent-os) 主仓的公开产品叙事
-- 主仓根目录里的 bootstrap 脚本
+- 主仓 GitHub Releases、`v8os preview` 与 bootstrap 的真实职责边界
 - 当前从统一主仓对外暴露的文档页面
 
 ## 支持 V8 Agent OS
