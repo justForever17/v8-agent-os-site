@@ -23,6 +23,21 @@ REQUIRED = {
     "source_preview_entry": "v8os.cmd preview --rebuild",
 }
 
+REQUIRED_BY_TARGET = {
+    "index.html": (
+        "Creative Artifact Canvas",
+        "MediaKit CLI",
+        "Wrangler",
+        "Low-risk serial",
+    ),
+    "zh/index.html": (
+        "创意产物画布",
+        "MediaKit CLI",
+        "Wrangler",
+        "低风险串行",
+    ),
+}
+
 
 def main() -> int:
     violations: list[str] = []
@@ -36,6 +51,9 @@ def main() -> int:
         for name, snippet in REQUIRED.items():
             if snippet not in text:
                 violations.append(f"{relative}:{name}:missing")
+        for snippet in REQUIRED_BY_TARGET.get(relative, ()):
+            if snippet not in text:
+                violations.append(f"{relative}:current_product_fact:{snippet}:missing")
         card_count = text.count('class="bento-card')
         placeholder_count = text.count('class="feature-placeholder')
         if card_count != 12:

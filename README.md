@@ -4,12 +4,13 @@ Public bilingual landing site for **V8 Agent OS**.
 
 This repo exists to make one feeling land fast: **V8 Agent OS is for people who are tired of re-explaining the same project, drowning in tool catalogs, and losing control once an agent starts running.**
 
-Within seconds, the site should make four things obvious:
+Within seconds, the site should make five things obvious:
 
 1. V8 helps you **repeat yourself less**.
 2. V8 keeps **tool noise under control** even when the catalog is large.
 3. V8 makes long-running work **visible, steerable, and approval-friendly**.
 4. V8 can turn successful screen work into **more reusable execution** instead of leaving it as a one-off trick.
+5. V8 gives creative work a **governed canvas, reusable workspace assets, exact local editing, and delivery QA** instead of scattering media across prompts and folders.
 
 ## What this site should do
 
@@ -17,6 +18,7 @@ Within seconds, the site should make four things obvious:
 - make install feel direct and low-friction
 - point GitHub, docs, and install back to the unified [`v8-agent-os`](https://github.com/justForever17/v8-agent-os) repository
 - keep English and Chinese pages structurally aligned
+- describe only capabilities that exist in the main repository, with placeholders for new screenshots until current product captures are available
 
 ## What this site should never sound like
 
