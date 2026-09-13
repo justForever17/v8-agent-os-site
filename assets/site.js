@@ -229,10 +229,16 @@
   const showVideoError = () => { if (videoError) videoError.hidden = false; };
   video?.addEventListener("error", showVideoError);
   video?.querySelector("source")?.addEventListener("error", showVideoError);
-  video?.querySelectorAll("track").forEach(track => track.addEventListener("error", () => {
+  const showCaptionError = () => {
     const captionError = document.querySelector(".caption-error");
     if (captionError) captionError.hidden = false;
-  }));
+  };
+  video?.querySelectorAll("track").forEach(track => {
+    track.addEventListener("error", showCaptionError);
+    // Default captions can fail while the deferred application script is loading.
+    if (track.readyState === HTMLTrackElement.ERROR) showCaptionError();
+  });
+  if (video?.error) showVideoError();
   video?.addEventListener("playing", () => { if (videoError) videoError.hidden = true; });
   root.classList.add("has-js");
 })();

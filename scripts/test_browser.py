@@ -14,7 +14,7 @@ from pathlib import Path
 import shutil
 import tempfile
 import time
-from threading import Thread
+from threading import Event, Thread
 
 from playwright.sync_api import sync_playwright, expect
 from build_site import ROOT, render_headers, render_page
@@ -33,8 +33,8 @@ class Handler(SimpleHTTPRequestHandler):
         super().end_headers()
 
 
-def start_server(directory: Path):
-    server = ThreadingHTTPServer(("127.0.0.1", 0), partial(Handler, directory=str(directory)))
+def start_server(directory: Path, handler=Handler):
+    server = ThreadingHTTPServer(("127.0.0.1", 0), partial(handler, directory=str(directory)))
     Thread(target=server.serve_forever, daemon=True).start()
     return server, f"http://127.0.0.1:{server.server_port}"
 
@@ -47,7 +47,8 @@ def wait_truth(page, expression, timeout=10):
         if page.evaluate(expression):
             return
         page.wait_for_timeout(50)
-    raise AssertionError(f"Timed out waiting for observable browser state: {expression}")
+    state = page.evaluate("() => ({ready:document.readyState,enhanced:document.documentElement.classList.contains('has-js'),tracks:[...document.querySelectorAll('track')].map(t=>({state:t.readyState,mode:t.track.mode,src:t.src})),videoError:document.querySelector('video')?.error?.code})")
+    raise AssertionError(f"Timed out waiting for observable browser state: {expression}; last state={state}")
 
 
 def run(output: Path | None = None):
@@ -186,15 +187,22 @@ def media_acceptance(browser, output):
         media = {"screenshots": {"research": "", "workspace": "assets/media/workspace.png", "creative": "", "phone": ""}, "video": {"src": "https://media.example.test/launch.webm", "poster": "", "captionsZh": "https://media.example.test/zh.vtt", "captionsEn": ""}}
         (fixture / "zh/index.html").write_text(render_page("zh", media), encoding="utf-8")
         (fixture / "_headers").write_text(render_headers(media), encoding="utf-8")
-        server, base = start_server(fixture)
+        script_gate = Event()
+        script_gate.set()
+        class MediaHandler(Handler):
+            def do_GET(self):
+                if "/assets/site.js" in self.path:
+                    script_gate.wait(timeout=15)
+                super().do_GET()
+        server, base = start_server(fixture, MediaHandler)
         try:
-            for failure in (None, "video", "captions", "cors"):
+            for failure in (None, "video", "captions", "captions-early", "cors"):
                 page = browser.new_page()
                 requests = []
                 def route_media(route):
                     requests.append(route.request.url)
                     is_video = route.request.url.endswith(".webm")
-                    failed = (is_video and failure == "video") or (not is_video and failure == "captions")
+                    failed = (is_video and failure == "video") or (not is_video and failure in ("captions", "captions-early"))
                     headers = {"Accept-Ranges": "bytes"}
                     if failure != "cors":
                         headers["Access-Control-Allow-Origin"] = base
@@ -204,7 +212,17 @@ def media_acceptance(browser, output):
                         headers["Access-Control-Allow-Origin"] = "https://not-allowed.example.test"
                     route.fulfill(status=404 if failed else 200, headers=headers, content_type="video/webm" if is_video else "text/vtt", body=b"" if failed else movie if is_video else "WEBVTT\n\n00:00:00.000 --> 00:00:03.000\nBrowser caption fixture\n")
                 page.route("https://media.example.test/**", route_media)
-                page.goto(base + "/zh/", wait_until="networkidle")
+                if failure == "captions-early":
+                    script_gate.clear()
+                    try:
+                        page.goto(base + "/zh/", wait_until="commit")
+                        wait_truth(page, "() => document.querySelector('track')?.readyState === 3 && !document.documentElement.classList.contains('has-js')")
+                    finally:
+                        script_gate.set()
+                    wait_truth(page, "() => document.documentElement.classList.contains('has-js')")
+                    expect(page.locator(".caption-error")).to_be_visible()
+                else:
+                    page.goto(base + "/zh/", wait_until="networkidle")
                 assert not any(url.endswith(".webm") for url in requests), "preload=none must not fetch video on page load"
                 page.locator("video").scroll_into_view_if_needed()
                 page.locator("video").evaluate("v=>{v.muted=true;v.play().catch(()=>{});}")
@@ -212,7 +230,7 @@ def media_acceptance(browser, output):
                     expect(page.locator(".video-error")).to_be_visible()
                 else:
                     wait_truth(page, "() => { const v=document.querySelector('video'); return v.currentTime > 0 && v.videoWidth > 0 && v.readyState >= 2 && !v.error; }")
-                    if failure == "captions":
+                    if failure in ("captions", "captions-early"):
                         expect(page.locator(".caption-error")).to_be_visible()
                         expect(page.locator(".video-error")).not_to_be_visible()
                     else:
@@ -225,8 +243,9 @@ def media_acceptance(browser, output):
                         expect(page.locator("dialog")).not_to_be_visible()
                         expect(page.locator(".capture-open")).to_be_focused()
                 page.close()
-            print("Passed decoded remote-video fixture, real caption text, video/caption 404 and CORS failure feedback, and screenshot dialog (not live R2 or range seeking).")
+            print("Passed decoded remote-video fixture, real caption text, video/caption 404 including pre-script caption failure, CORS rejection and screenshot dialog (not live R2 or range seeking).")
         finally:
+            script_gate.set()
             server.shutdown()
             server.server_close()
 
