@@ -1,9 +1,12 @@
 {
   "screenshots": {
-    "workspace": "",
-    "research": "",
+    "workspace": "assets/media/workspace-20260913.webp",
+    "research": "assets/media/materials-20260913.webp",
     "creative": "",
-    "phone": ""
+    "phone": "",
+    "models": "assets/media/models-20260913.webp",
+    "projects": "assets/media/projects-20260913.webp",
+    "plugins": "assets/media/plugins-20260913.webp"
   },
   "video": {
     "src": "",

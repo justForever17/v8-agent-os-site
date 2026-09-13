@@ -57,6 +57,7 @@ html[lang="zh-CN"] .hero h1 { font-size: clamp(52px,5.7vw,82px); line-height: 1.
 .hero-note { color: #96938d; margin-top: 21px; font-size: 10px; letter-spacing: 1px; }
 .orbit-stage { position: relative; width: min(1050px,110vw); height: 460px; margin: -6px 0 -14px; left: 50%; transform: translateX(-50%); }
 .orbit-art { position: absolute; top: -42px; left: 0; width: 100%; height: auto; animation: orbit-float 11s ease-in-out infinite; }
+.orbit-product-icon { position: absolute; width: 24.4%; height: auto; left: 37.8%; top: 20.7%; filter: drop-shadow(0 16px 32px #0009); }
 .orbit-aura { position: absolute; width: 65%; height: 42%; left: 18%; top: 28%; border-radius: 50%; background: radial-gradient(ellipse,#ff9c451c,#ff70220a 45%,transparent 70%); animation: aura-breathe 8s ease-in-out infinite; }
 .orbit-label { position: absolute; color: #a8a099; font-size: 9px; letter-spacing: 2px; white-space: nowrap; }
 .orbit-top { top: 63px; left: 50%; transform: translateX(-50%); color: #dfb392; }
@@ -92,7 +93,7 @@ h2 span { color: #96938e; }
 .scenario-tab.is-active { color: #f4eee5; background: linear-gradient(#ffbd8208,#ffbd8211); }
 .scenario-tab::after { content: ""; position: absolute; bottom: -1px; height: 1px; background: #ffb17c; left: 0; right: 0; opacity: 0; transition: opacity 180ms ease; }
 .scenario-tab.is-active::after { opacity: 1; }
-.has-js .scenario:not(.is-active) { display: none; }
+.has-js [data-tab-panel]:not(.is-active) { display: none; }
 .scenario { margin-bottom: 38px; scroll-margin-top: 30px; }
 .media-frame { aspect-ratio: 16/10; width: 100%; border: 1px solid #ffffff22; background: linear-gradient(140deg,#202120,#111212 55%); border-radius: 15px; position: relative; overflow: hidden; }
 .concept-capture { padding: 0 6%; aspect-ratio: 16/8.7; box-shadow: 0 25px 90px #0004,0 1px 0 #ffffff15 inset; }
@@ -131,9 +132,17 @@ h2 span { color: #96938e; }
 .concept-result { font-size: 10px; color: #9b9890; margin: 21px 0 45px 55px; }
 .concept-result > span { color: #cca482; margin-right: 5px; }
 .media-frame figcaption { position: absolute; left: 0; bottom: 0; width: 100%; text-align: center; padding: 12px; color: #a8a096; font-size: 8px; letter-spacing: 1.4px; background: #101112cc; border-top: 1px solid #ffffff06; }
-.actual-capture { aspect-ratio: 16/10; }
-.capture-open { display: block; width: 100%; height: 100%; padding: 0; border: 0; background: #111; cursor: zoom-in; }
-.capture-open img { width: 100%; height: 100%; object-fit: contain; }
+.actual-capture { aspect-ratio: auto; background: #151617; }
+.actual-capture figcaption { position: static; line-height: 1.8; min-height: 38px; display: grid; place-items: center; }
+.capture-open { position: relative; display: block; width: 100%; padding: 0; border: 0; background: #111; cursor: zoom-in; }
+.capture-open img { width: 100%; height: auto; }
+.capture-zoom { position: absolute; bottom: 15px; right: 15px; padding: 8px 12px; background: #131516db; border: 1px solid #ffffff35; color: #fff0e4; border-radius: 6px; font-size: 10px; backdrop-filter: blur(8px); }
+.controls-gallery { text-align: left; margin-top: 66px; }
+.controls-intro { display: flex; justify-content: space-between; gap: 35px; margin-bottom: 28px; align-items: flex-end; }
+.controls-intro h3 { font-size: 22px; font-weight: 500; letter-spacing: -.4px; }
+.controls-intro p { color: var(--muted); max-width: 490px; font-size: 12px; line-height: 1.9; }
+.controls-note { margin-top: 23px; }
+.control-panel { margin-bottom: 30px; }
 .scenario-description { display: flex; align-items: flex-start; justify-content: space-between; gap: 45px; padding-top: 25px; }
 .scenario-description h3 { font-size: 17px; font-weight: 500; line-height: 1.7; letter-spacing: -.3px; width: 47%; }
 .scenario-description p { color: var(--muted); font-size: 12px; line-height: 1.85; max-width: 440px; width: 43%; }
@@ -184,7 +193,7 @@ html[lang="zh-CN"] .phone-copy h2 { font-size: clamp(32px,3.15vw,42px); }
 .phone-response > span { color: #eeae79; font-size: 16px; }
 .phone-mini-art { position: relative; margin: 21px 0 0 23px; height: 108px; border-radius: 6px; border: 1px solid #ffffff17; background: radial-gradient(ellipse at 40% 20%,#593d24,#181513); overflow: hidden; display: grid; place-items: center; }
 .phone-mini-art i { position: absolute; border: 1px solid #c48d5280; width: 160%; height: 60%; border-radius: 50%; transform: rotate(-35deg); }
-.phone-mini-art > span { font-size: 35px; color: #e9c59b; font-weight: 600; letter-spacing: -4px; }
+.phone-mini-art > img { width: 62px; height: 62px; position: relative; }
 .phone-composer { position: absolute; bottom: 43px; left: 15px; right: 15px; display: flex; align-items: center; gap: 13px; background: #ffffff07; border: 1px solid #ffffff16; padding: 12px; border-radius: 20px; font-size: 13px; }
 .phone-composer i { width: 45%; height: 2px; background: #ffffff20; }
 .phone-composer > span:last-child { margin-left: auto; color: #ebb58a; }
@@ -246,6 +255,7 @@ html[lang="zh-CN"] .download-section h2 { font-size: clamp(40px,4.8vw,64px); }
 .image-dialog::backdrop { background: #000d; }
 .image-dialog img { object-fit: contain; max-width: 90vw; max-height: 82vh; }
 .dialog-close { position: absolute; right: 10px; top: 5px; border: 0; background: transparent; font-size: 27px; width: 36px; height: 36px; }
+.dialog-original { position: absolute; left: 18px; top: 13px; color: var(--accent); font-size: 11px; }
 .is-reveal-pending { opacity: 0; transform: translateY(24px); }
 .is-revealed { opacity: 1; transform: translateY(0); transition: opacity 750ms var(--ease),transform 750ms var(--ease); }
 .motion-paused *, .motion-offscreen .orbit-art, .motion-offscreen .orbit-aura { animation-play-state: paused !important; }
@@ -349,6 +359,12 @@ html[lang="zh-CN"] .download-section h2 { font-size: clamp(40px,4.8vw,64px); }
   .artifact-arrow { font-size: 12px; }
   .concept-result { font-size: 8px; margin: 16px 0 42px; line-height: 1.7; }
   .media-frame figcaption { font-size: 6px; letter-spacing: .7px; padding: 10px 6px; }
+  .actual-capture figcaption { font-size: 8px; letter-spacing: .3px; padding: 10px 13px; }
+  .capture-zoom { font-size: 8px; padding: 6px 8px; right: 8px; bottom: 8px; }
+  .controls-gallery { margin-top: 43px; }
+  .controls-intro { display: block; margin-bottom: 20px; }
+  .controls-intro h3 { font-size: 19px; }
+  .controls-intro p { font-size: 11px; margin-top: 14px; }
   .scenario-description { flex-direction: column; gap: 10px; padding-top: 20px; }
   .scenario-description h3,.scenario-description p { width: 100%; }
   .scenario-description h3 { font-size: 15px; }

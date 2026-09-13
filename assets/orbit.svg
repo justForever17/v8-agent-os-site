@@ -1,11 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 660" fill="none">
 <defs>
  <radialGradient id="a"><stop stop-color="#ffbd7c" stop-opacity=".5"/><stop offset=".4" stop-color="#fc7137" stop-opacity=".16"/><stop offset="1" stop-color="#ee5023" stop-opacity="0"/></radialGradient>
- <radialGradient id="b" cx=".4" cy="0" r="1"><stop stop-color="#9a614a"/><stop offset=".22" stop-color="#30201a"/><stop offset=".52" stop-color="#15120f"/><stop offset="1" stop-color="#08090a"/></radialGradient>
  <linearGradient id="c" x1="200" y1="350" x2="930" y2="220" gradientUnits="userSpaceOnUse"><stop stop-color="#b9552a" stop-opacity="0"/><stop offset=".24" stop-color="#ff8751"/><stop offset=".48" stop-color="#ffe2af"/><stop offset=".7" stop-color="#ff9c5f"/><stop offset="1" stop-color="#a34824" stop-opacity="0"/></linearGradient>
- <linearGradient id="d" x1="610" y1="190" x2="610" y2="430" gradientUnits="userSpaceOnUse"><stop stop-color="#fff2d7"/><stop offset=".37" stop-color="#fac79e"/><stop offset="1" stop-color="#aa6544"/></linearGradient>
  <filter id="g"><feGaussianBlur stdDeviation="10"/></filter>
- <filter id="h"><feGaussianBlur stdDeviation="2.5"/></filter>
 </defs>
 <ellipse cx="600" cy="350" rx="490" ry="305" fill="url(#a)"/>
 <g transform="rotate(-18 600 330)">
@@ -13,12 +10,6 @@
  <ellipse cx="600" cy="330" rx="458" ry="112" stroke="url(#c)" stroke-width="1.2"/>
  <ellipse cx="600" cy="330" rx="408" ry="99" stroke="url(#c)" stroke-width=".6" opacity=".6"/>
  <ellipse cx="600" cy="330" rx="498" ry="126" stroke="#ffb786" stroke-opacity=".1" stroke-width=".6"/>
-</g>
-<circle cx="600" cy="301" r="148" fill="url(#b)"/>
-<path d="M452 301a148 148 0 0 1 296 0" stroke="url(#c)" stroke-width="1.5"/>
-<path d="M481 213a148 148 0 0 1 231-5" stroke="#ffd0a0" stroke-opacity=".75" stroke-width="3" filter="url(#h)"/>
-<g transform="translate(519 253) scale(2.15)" stroke="url(#d)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
- <path d="m3 6 14 37L31 6M58 24C39 15 44 3 56 3c16 0 14 14 0 21-17 8-19 23-2 23 19 0 19-15 4-23" stroke="#ecc09a"/>
 </g>
 <g transform="rotate(-18 600 330)">
  <path d="M142 330a458 112 0 0 0 916 0" stroke="url(#c)" stroke-width="10" filter="url(#g)"/>

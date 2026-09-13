@@ -153,12 +153,70 @@ def run(output: Path | None = None):
             touch.close()
             assert not errors, errors
             print(f"Passed {checks} bilingual viewport/no-JS/reduced-motion scenarios, mouse tilt/glow/reset and touch navigation.")
+            capture_acceptance(browser, output)
             media_acceptance(browser, output)
             browser.close()
     finally:
         server.shutdown()
         server.server_close()
         temporary.cleanup()
+
+
+def capture_acceptance(browser, output):
+    media = json.loads((ROOT / "assets/media.json").read_text(encoding="utf-8"))
+    media["video"] = dict.fromkeys(media["video"], "")
+    with tempfile.TemporaryDirectory(prefix="v8-site-captures-") as temp:
+        fixture = Path(temp)
+        shutil.copytree(ROOT / "dist", fixture, dirs_exist_ok=True)
+        for locale, relative in (("en", "index.html"), ("zh", "zh/index.html")):
+            (fixture / relative).write_text(render_page(locale, media, fixture), encoding="utf-8")
+        (fixture / "_headers").write_text(render_headers(media), encoding="utf-8")
+        server, base = start_server(fixture)
+        try:
+            for path in ("/", "/zh/"):
+                for width in (1440, 390, 320):
+                    page = browser.new_page(viewport={"width": width, "height": 950}, reduced_motion="reduce")
+                    page.goto(base + path, wait_until="networkidle")
+                    expect(page.locator('.brand img').first).to_have_attribute("src", "../assets/product-icon.png" if path == "/zh/" else "./assets/product-icon.png")
+                    for ident, source in media["screenshots"].items():
+                        if not source or ident == "phone":
+                            continue
+                        controls = ident in ("models", "projects", "plugins")
+                        other_panel = page.locator(".scenario.is-active" if controls else ".control-panel.is-active")
+                        other_id = other_panel.get_attribute("id") if other_panel.count() else None
+                        page.locator(f"#tab-{ident}").click()
+                        panel = page.locator(f"#{'control' if controls else 'scenario'}-{ident}")
+                        expect(panel).to_be_visible()
+                        if other_id:
+                            expect(page.locator(f"#{other_id}")).to_be_visible()
+                        image = panel.locator(".capture-open img")
+                        wait_truth(page, f"() => document.querySelector('#{'control' if controls else 'scenario'}-{ident} .capture-open img').naturalWidth > 0")
+                        assert image.evaluate("i=>i.naturalWidth===Number(i.getAttribute('width')) && i.naturalHeight===Number(i.getAttribute('height'))")
+                        assert image.evaluate("i=>Math.abs(i.clientWidth/i.clientHeight - i.naturalWidth/i.naturalHeight)<.025"), "Screenshot must keep its natural aspect ratio"
+                        panel.locator(".capture-open").click()
+                        expect(page.locator("dialog")).to_be_visible()
+                        expect(page.locator(".dialog-original")).to_have_attribute("href", ("../" if path == "/zh/" else "./") + source)
+                        page.keyboard.press("Escape")
+                        expect(panel.locator(".capture-open")).to_be_focused()
+                    if page.locator("#tab-models").count():
+                        page.locator("#tab-models").focus()
+                        page.keyboard.press("End")
+                        expect(page.locator("#tab-plugins")).to_be_focused()
+                        page.reload(wait_until="networkidle")
+                        expect(page.locator("#control-plugins")).to_be_visible()
+                    assert page.evaluate("document.documentElement.scrollWidth <= innerWidth+1")
+                    if output and width in (1440, 390):
+                        output.mkdir(parents=True, exist_ok=True)
+                        page.screenshot(path=str(output / f"captures-{'zh' if path=='/zh/' else 'en'}-{width}.png"), full_page=True)
+                    page.close()
+            nojs = browser.new_page(java_script_enabled=False)
+            nojs.goto(base + "/zh/")
+            expect(nojs.locator(".control-panel:visible")).to_have_count(sum(bool(media["screenshots"].get(k)) for k in ("models", "projects", "plugins")))
+            nojs.close()
+            print("Passed configured product captures, intrinsic sizing, independent tab groups, full-image links and mobile/no-JS views.")
+        finally:
+            server.shutdown()
+            server.server_close()
 
 
 def media_acceptance(browser, output):
@@ -185,7 +243,7 @@ def media_acceptance(browser, output):
         (fixture / "assets/media").mkdir(parents=True, exist_ok=True)
         (fixture / "assets/media/workspace.png").write_bytes(png)
         media = {"screenshots": {"research": "", "workspace": "assets/media/workspace.png", "creative": "", "phone": ""}, "video": {"src": "https://media.example.test/launch.webm", "poster": "", "captionsZh": "https://media.example.test/zh.vtt", "captionsEn": ""}}
-        (fixture / "zh/index.html").write_text(render_page("zh", media), encoding="utf-8")
+        (fixture / "zh/index.html").write_text(render_page("zh", media, fixture), encoding="utf-8")
         (fixture / "_headers").write_text(render_headers(media), encoding="utf-8")
         script_gate = Event()
         script_gate.set()

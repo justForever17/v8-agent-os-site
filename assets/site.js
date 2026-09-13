@@ -3,9 +3,7 @@
   "use strict";
   const root = document.documentElement;
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-  const tabs = [...document.querySelectorAll(".scenario-tab")];
-  const panels = [...document.querySelectorAll(".scenario")];
-  const tabList = document.querySelector(".scenario-tabs");
+  const panels = [...document.querySelectorAll("[data-tab-panel]")];
   const menuButton = document.querySelector(".menu-button");
   const navigation = document.querySelector(".navigation");
   const motionButton = document.querySelector(".motion-toggle");
@@ -13,8 +11,12 @@
   try { manuallyPaused = localStorage.getItem("v8-site-motion") === "paused"; } catch { /* Storage is optional. */ }
   const motionPaused = () => manuallyPaused || reducedMotion.matches;
 
-  function chooseScenario(id, moveFocus = false, updateHash = false, animate = true) {
-    const selected = tabs.find(tab => tab.dataset.scenario === id);
+  document.querySelectorAll("[data-tab-group]").forEach(group => {
+  const tabs = [...group.querySelectorAll("[data-tab]")];
+  const groupPanels = [...group.querySelectorAll("[data-tab-panel]")];
+  const tabList = group.querySelector("[data-tab-list]");
+  function choosePanel(id, moveFocus = false, updateHash = false, animate = true) {
+    const selected = tabs.find(tab => tab.dataset.tab === id);
     if (!selected) return;
     tabs.forEach(tab => {
       const active = tab === selected;
@@ -22,8 +24,8 @@
       tab.setAttribute("aria-selected", String(active));
       tab.tabIndex = active ? 0 : -1;
     });
-    panels.forEach(panel => {
-      const active = panel.id === `scenario-${id}`;
+    groupPanels.forEach(panel => {
+      const active = panel.id === id;
       panel.classList.toggle("is-active", active);
       panel.hidden = !active;
       panel.getAnimations().forEach(animation => animation.cancel());
@@ -32,30 +34,31 @@
       }
     });
     if (moveFocus) selected.focus({ preventScroll: true });
-    if (updateHash) history.replaceState(null, "", `#scenario-${id}`);
+    if (updateHash) history.replaceState(null, "", `#${id}`);
   }
   tabList?.setAttribute("role", "tablist");
   tabs.forEach((tab, index) => {
     tab.setAttribute("role", "tab");
-    tab.setAttribute("aria-controls", `scenario-${tab.dataset.scenario}`);
-    tab.addEventListener("click", event => { event.preventDefault(); chooseScenario(tab.dataset.scenario, false, true); });
+    tab.setAttribute("aria-controls", tab.dataset.tab);
+    tab.addEventListener("click", event => { event.preventDefault(); choosePanel(tab.dataset.tab, false, true); });
     tab.addEventListener("keydown", event => {
       let next;
       if (event.key === "ArrowRight") next = (index + 1) % tabs.length;
       if (event.key === "ArrowLeft") next = (index - 1 + tabs.length) % tabs.length;
       if (event.key === "Home") next = 0;
       if (event.key === "End") next = tabs.length - 1;
-      if (next !== undefined) { event.preventDefault(); chooseScenario(tabs[next].dataset.scenario, true, true, false); }
+      if (next !== undefined) { event.preventDefault(); choosePanel(tabs[next].dataset.tab, true, true, false); }
     });
   });
-  panels.forEach(panel => { panel.setAttribute("role", "tabpanel"); panel.tabIndex = 0; });
-  function readScenarioHash() {
-    const id = location.hash.replace("#scenario-", "");
-    if (tabs.some(tab => tab.dataset.scenario === id)) chooseScenario(id, false, false, false);
+  groupPanels.forEach(panel => { panel.setAttribute("role", "tabpanel"); panel.tabIndex = 0; });
+  function readPanelHash() {
+    const id = location.hash.slice(1);
+    if (tabs.some(tab => tab.dataset.tab === id)) choosePanel(id, false, false, false);
   }
-  chooseScenario(tabs[0]?.dataset.scenario, false, false, false);
-  readScenarioHash();
-  window.addEventListener("hashchange", readScenarioHash);
+  choosePanel(tabs[0]?.dataset.tab, false, false, false);
+  readPanelHash();
+  window.addEventListener("hashchange", readPanelHash);
+  });
 
   function closeMenu(restoreFocus = false) {
     navigation?.classList.remove("is-open");
@@ -215,6 +218,7 @@
     if (!dialog?.showModal) return;
     dialog.querySelector("img").src = button.dataset.image;
     dialog.querySelector("img").alt = button.querySelector("img").alt;
+    dialog.querySelector(".dialog-original").href = button.dataset.image;
     dialog.showModal();
     document.body.classList.add("dialog-open");
   }));
@@ -223,6 +227,7 @@
   dialog?.addEventListener("close", () => {
     document.body.classList.remove("dialog-open");
     dialog.querySelector("img").removeAttribute("src");
+    dialog.querySelector(".dialog-original").removeAttribute("href");
   });
   const video = document.querySelector("video");
   const videoError = document.querySelector(".video-error");

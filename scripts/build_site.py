@@ -8,12 +8,13 @@ import json
 from pathlib import Path
 import re
 import shutil
+import struct
 from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 DIST = ROOT / "dist"
 LOCALES = ("en", "zh")
-STATIC_FILES = ("assets/styles.css", "assets/site.js", "assets/mark.svg", "assets/orbit.svg", "assets/social-card.png", "assets/fonts/manrope-latin.woff2", "assets/fonts/OFL.txt", "robots.txt", "sitemap.xml", "404.html")
+STATIC_FILES = ("assets/styles.css", "assets/site.js", "assets/product-icon.png", "assets/orbit.svg", "assets/social-card.png", "assets/fonts/manrope-latin.woff2", "assets/fonts/OFL.txt", "robots.txt", "sitemap.xml", "404.html")
 
 
 def text(value: str) -> str:
@@ -30,8 +31,9 @@ def copy_text(value: str) -> str:
 
 def validate_media(media: dict) -> set[str]:
     expected = {"workspace", "research", "creative", "phone"}
-    if set(media) != {"screenshots", "video"} or set(media["screenshots"]) != expected:
-        raise ValueError("media.json must contain screenshots (workspace/research/creative/phone) and video")
+    allowed_screenshots = expected | {"models", "projects", "plugins"}
+    if set(media) != {"screenshots", "video"} or not expected <= set(media["screenshots"]) <= allowed_screenshots:
+        raise ValueError("media.json requires workspace/research/creative/phone screenshots; models/projects/plugins are optional")
     if set(media["video"]) != {"src", "poster", "captionsZh", "captionsEn"}:
         raise ValueError("video requires src, poster, captionsZh and captionsEn")
     files: set[str] = set()
@@ -73,6 +75,45 @@ def validate_media(media: dict) -> set[str]:
     return files
 
 
+def image_dimensions(path: Path) -> tuple[int, int]:
+    """Read intrinsic dimensions without an image runtime dependency."""
+    with path.open("rb") as stream:
+        header = stream.read(32)
+        if header.startswith(b"\x89PNG\r\n\x1a\n"):
+            return struct.unpack(">II", header[16:24])
+        if header[:4] == b"RIFF" and header[8:12] == b"WEBP":
+            if header[12:16] == b"VP8X":
+                return int.from_bytes(header[24:27], "little") + 1, int.from_bytes(header[27:30], "little") + 1
+            if header[12:16] == b"VP8L" and header[20] == 0x2F:
+                bits = int.from_bytes(header[21:25], "little")
+                return (bits & 0x3FFF) + 1, ((bits >> 14) & 0x3FFF) + 1
+            if header[12:16] == b"VP8 " and header[23:26] == b"\x9d\x01\x2a":
+                width, height = struct.unpack("<HH", header[26:30])
+                return width & 0x3FFF, height & 0x3FFF
+        if header[:2] == b"\xff\xd8":
+            stream.seek(2)
+            while stream.read(1) == b"\xff":
+                marker = stream.read(1)
+                while marker == b"\xff":
+                    marker = stream.read(1)
+                if not marker or marker[0] in (0xDA, 0xD9):
+                    break
+                size = int.from_bytes(stream.read(2), "big")
+                if size < 2:
+                    break
+                if marker[0] in (0xC0, 0xC1, 0xC2, 0xC3, 0xC5, 0xC6, 0xC7, 0xC9, 0xCA, 0xCB, 0xCD, 0xCE, 0xCF):
+                    _, height, width = struct.unpack(">BHH", stream.read(5))
+                    return width, height
+                stream.seek(size - 2, 1)
+    raise ValueError(f"Cannot read image dimensions: {path.name}")
+
+
+def capture_figure(source: str, alt: str, caption: str, c: dict, base: str, media_root: Path) -> str:
+    width, height = image_dimensions(media_root / source)
+    url = text(base + source)
+    return f'<figure class="media-frame actual-capture"><button type="button" class="capture-open" data-image="{url}" aria-label="{text(c["enlargeImage"] + ": " + alt)}"><img src="{url}" alt="{text(alt)}" loading="lazy" decoding="async" width="{width}" height="{height}"><span class="capture-zoom" aria-hidden="true">{text(c["enlargeImage"])} ↗</span></button><figcaption>{text(caption)}</figcaption></figure>'
+
+
 def media_url(value: str, base: str) -> str:
     parsed = urlsplit(value)
     return parsed._replace(scheme="https").geturl() if parsed.scheme == "https" else base + value
@@ -90,26 +131,36 @@ def render_headers(media: dict) -> str:
             "/assets/*\n  Cache-Control: public, max-age=3600\n")
 
 
-def render_page(locale: str, media: dict) -> str:
+def render_page(locale: str, media: dict, media_root: Path = ROOT) -> str:
     c = json.loads((ROOT / f"content/{locale}.json").read_text(encoding="utf-8"))
     base = "../" if locale == "zh" else "./"
     context = {key: copy_text(value) for key, value in c.items() if isinstance(value, str)}
     context.update({"base": base, "home": "./", "otherLocale": "../" if locale == "zh" else "./zh/", "otherLang": "en" if locale == "zh" else "zh-CN", "canonical": "https://v8agentos.top/" + ("zh/" if locale == "zh" else ""), "close": "关闭图片" if locale == "zh" else "Close image", "quickstartUrl": "https://github.com/justForever17/v8-agent-os/blob/main/" + ("docs/V8_AGENT_OS_QUICK_START_ZH.md" if locale == "zh" else "README.md#quick-start")})
-    for key, file in (("cssVersion", "assets/styles.css"), ("jsVersion", "assets/site.js")):
+    for key, file in (("cssVersion", "assets/styles.css"), ("jsVersion", "assets/site.js"), ("orbitVersion", "assets/orbit.svg"), ("socialVersion", "assets/social-card.png")):
         context[key] = hashlib.sha256((ROOT / file).read_bytes()).hexdigest()[:10]
     tabs, panels = [], []
     for index, s in enumerate(c["scenarios"]):
         ident = s["id"]
-        tabs.append(f'<a id="tab-{ident}" class="scenario-tab{" is-active" if index == 0 else ""}" href="#scenario-{ident}" data-scenario="{ident}"><span>{text(s["number"])}</span>{text(s["label"])}<span class="tab-arrow" aria-hidden="true">↗</span></a>')
+        tabs.append(f'<a id="tab-{ident}" class="scenario-tab{" is-active" if index == 0 else ""}" href="#scenario-{ident}" data-tab="scenario-{ident}"><span>{text(s["number"])}</span>{text(s["label"])}<span class="tab-arrow" aria-hidden="true">↗</span></a>')
         source = media["screenshots"][ident]
         if source:
-            visual = f'<figure class="media-frame actual-capture"><button type="button" class="capture-open" data-image="{text(base + source)}" aria-label="{text(s["alt"])}"><img src="{text(base + source)}" alt="{text(s["alt"])}" loading="lazy" decoding="async" width="1920" height="1200"></button><figcaption>{text(c["screenshotLabel"])}</figcaption></figure>'
+            caption = " · ".join(filter(None, (s.get("captureNote"), c["screenshotLabel"])))
+            visual = capture_figure(source, s["alt"], caption, c, base, media_root)
         else:
             tags = "".join(f'<span><i aria-hidden="true">{n + 1:02}</i>{text(t)}</span>' for n, t in enumerate(s["tags"]))
             visual = f'''<figure class="media-frame concept-capture concept-{ident}"><div class="concept-toolbar"><span><i></i><i></i><i></i></span><span>V8 / {text(s["artifact"])}</span><span>↗</span></div><div class="concept-content"><div class="concept-prompt"><span class="prompt-mark" aria-hidden="true">✳</span><p>{text(s["prompt"])}</p></div><div class="concept-flow">{tags}</div><div class="concept-artifact"><div class="artifact-art" aria-hidden="true"><i></i><i></i><i></i></div><div><span class="artifact-label">{text(s["artifact"])}</span><p>{text(s["detail"])}</p><div class="artifact-lines" aria-hidden="true"><i></i><i></i><i></i></div></div><span class="artifact-arrow" aria-hidden="true">↗</span></div><p class="concept-result"><span aria-hidden="true">↳</span> {text(s["result"])}</p></div><figcaption>{text(c["concept"])}</figcaption></figure>'''
-        panels.append(f'<article id="scenario-{ident}" class="scenario{" is-active" if index == 0 else ""}" aria-labelledby="tab-{ident}">{visual}<div class="scenario-description"><h3>{text(s["title"])}</h3><p>{text(s["text"])}</p></div></article>')
+        panels.append(f'<article id="scenario-{ident}" data-tab-panel class="scenario{" is-active" if index == 0 else ""}" aria-labelledby="tab-{ident}">{visual}<div class="scenario-description"><h3>{text(s["title"])}</h3><p>{text(s["text"])}</p></div></article>')
     context["scenarioTabs"] = "".join(tabs)
     context["scenarioPanels"] = "".join(panels)
+    controls = [item for item in c["controls"] if media["screenshots"].get(item["id"])]
+    control_tabs, control_panels = [], []
+    for index, item in enumerate(controls):
+        ident = item["id"]
+        active = " is-active" if index == 0 else ""
+        control_tabs.append(f'<a class="scenario-tab{active}" id="tab-{ident}" href="#control-{ident}" data-tab="control-{ident}"><span>{text(item["number"])}</span>{text(item["label"])}<span class="tab-arrow" aria-hidden="true">↗</span></a>')
+        visual = capture_figure(media["screenshots"][ident], item["alt"], c["screenshotLabel"], c, base, media_root)
+        control_panels.append(f'<article id="control-{ident}" data-tab-panel class="control-panel{active}" aria-labelledby="tab-{ident}">{visual}<div class="scenario-description"><h3>{text(item["title"])}</h3><p>{text(item["text"])}</p></div></article>')
+    context["controlsGallery"] = f'<div class="controls-gallery" data-tab-group><div class="controls-intro"><h3>{text(c["controlsLabel"])}</h3><p>{text(c["controlsText"])}</p></div><div class="scenario-tabs" data-tab-list aria-label="{text(c["controlsTabsLabel"])}">{"".join(control_tabs)}</div>{"".join(control_panels)}<p class="fine-print controls-note">{text(c["controlsNote"])}</p></div>' if controls else ""
     v = media["video"]
     if v["src"]:
         poster = f' poster="{text(media_url(v["poster"], base))}"' if v["poster"] else ""
@@ -123,7 +174,7 @@ def render_page(locale: str, media: dict) -> str:
     if phone:
         context["phoneMedia"] = f'<figure class="phone-device actual-phone"><img src="{text(base + phone)}" alt="{text(c["phoneAlt"])}" width="1080" height="2340" loading="lazy" decoding="async"><figcaption>{text(c["screenshotLabel"])}</figcaption></figure>'
     else:
-        context["phoneMedia"] = f'<figure class="phone-device"><div class="phone-status"><span>{text(c["phoneTime"])}</span><i></i><span aria-hidden="true">▰</span></div><div class="phone-body"><div class="phone-app"><img src="{base}assets/mark.svg" alt="" width="28" height="28"><span>V8 Agent OS</span><span>＋</span></div><span class="phone-project">{text(c["phoneProject"])}</span><p class="phone-user-message">{text(c["phoneMessage"])}</p><div class="phone-response"><span aria-hidden="true">✳</span><p>{text(c["phoneReply"])}</p></div><div class="phone-mini-art" aria-hidden="true"><i></i><span>V8</span></div><div class="phone-composer" aria-hidden="true"><span>＋</span><i></i><span>↑</span></div></div><figcaption>{text(c["phoneConcept"])}</figcaption></figure>'
+        context["phoneMedia"] = f'<figure class="phone-device"><div class="phone-status"><span>{text(c["phoneTime"])}</span><i></i><span aria-hidden="true">▰</span></div><div class="phone-body"><div class="phone-app"><img src="{base}assets/product-icon.png" alt="" width="28" height="28"><span>V8 Agent OS</span><span>＋</span></div><span class="phone-project">{text(c["phoneProject"])}</span><p class="phone-user-message">{text(c["phoneMessage"])}</p><div class="phone-response"><span aria-hidden="true">✳</span><p>{text(c["phoneReply"])}</p></div><div class="phone-mini-art" aria-hidden="true"><i></i><img src="{base}assets/product-icon.png" alt="" width="62" height="62"></div><div class="phone-composer" aria-hidden="true"><span>＋</span><i></i><span>↑</span></div></div><figcaption>{text(c["phoneConcept"])}</figcaption></figure>'
     context["ecosystemChips"] = "".join(f'<span><i aria-hidden="true">{symbol}</i>{text(item)}</span>' for symbol, item in zip(("◈", "⌘", "↗", "✳", "◇", "⤴"), c["ecosystemItems"]))
     context["communityTopics"] = "".join(f'<span>{text(item)}</span>' for item in c["communityLinks"])
     context["faqRows"] = "".join(f'<details><summary>{text(f["question"])}<span aria-hidden="true">+</span></summary><p>{text(f["answer"])}</p></details>' for f in c["faqs"])

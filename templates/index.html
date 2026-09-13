@@ -15,16 +15,17 @@
   <meta property="og:title" content="{{title}}">
   <meta property="og:description" content="{{description}}">
   <meta property="og:url" content="{{canonical}}">
-  <meta property="og:image" content="https://v8agentos.top/assets/social-card.png">
+  <meta property="og:image" content="https://v8agentos.top/assets/social-card.png?v={{socialVersion}}">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" href="{{base}}assets/mark.svg" type="image/svg+xml">
+  <link rel="icon" href="{{base}}assets/product-icon.png" type="image/png">
+  <link rel="apple-touch-icon" href="{{base}}assets/product-icon.png">
   <link rel="stylesheet" href="{{base}}assets/styles.css?v={{cssVersion}}">
   <script defer src="{{base}}assets/site.js?v={{jsVersion}}"></script>
 </head>
 <body data-locale="{{locale}}">
   <a class="skip-link" href="#main">{{skip}}</a>
   <header class="site-header">
-    <a class="brand" href="{{home}}" aria-label="V8 Agent OS"><img src="{{base}}assets/mark.svg" alt="" width="32" height="32"><span>V8 <span class="brand-suffix">Agent OS</span></span></a>
+    <a class="brand" href="{{home}}" aria-label="V8 Agent OS"><img src="{{base}}assets/product-icon.png" alt="" width="32" height="32"><span>V8 <span class="brand-suffix">Agent OS</span></span></a>
     <nav id="navigation" class="navigation" aria-label="{{menu}}">
       <a href="#experience">{{navProduct}}</a><a href="#philosophy">{{navVision}}</a><a href="#community">{{navCommunity}}</a>
     </nav>
@@ -42,7 +43,7 @@
       </div>
       <div class="orbit-stage" aria-hidden="true">
         <div class="orbit-aura"></div>
-        <img class="orbit-art" src="{{base}}assets/orbit.svg" alt="" width="1200" height="660" fetchpriority="high">
+        <div class="orbit-art"><img src="{{base}}assets/orbit.svg?v={{orbitVersion}}" alt="" width="1200" height="660" fetchpriority="high"><img class="orbit-product-icon" src="{{base}}assets/product-icon.png" alt="" width="256" height="256" fetchpriority="high"></div>
         <span class="orbit-label orbit-top">{{orbitTop}}</span><span class="orbit-label orbit-left">{{orbitLeft}}</span><span class="orbit-label orbit-right">{{orbitRight}}</span><span class="orbit-label orbit-bottom">{{orbitBottom}}</span>
       </div>
       <a class="scroll-cue" href="#manifesto"><span></span>{{scroll}}</a>
@@ -53,9 +54,9 @@
       <p class="section-description" data-reveal>{{manifestoText}}</p>
       <div class="manifesto-line" aria-hidden="true"></div>
     </section>
-    <section id="experience" class="experience section-shell" aria-labelledby="work-title">
+    <section id="experience" class="experience section-shell" aria-labelledby="work-title" data-tab-group>
       <div class="section-heading" data-reveal><div><p class="eyebrow">{{workLabel}}</p><h2 id="work-title">{{workTitle}}</h2></div><p class="section-description">{{workText}}</p></div>
-      <div class="scenario-tabs" aria-label="{{tabsLabel}}">{{scenarioTabs}}</div>
+      <div class="scenario-tabs" data-tab-list aria-label="{{tabsLabel}}">{{scenarioTabs}}</div>
       <div class="scenario-panels">{{scenarioPanels}}</div>
     </section>
     <section id="film" class="film-section section-shell" aria-labelledby="film-title">
@@ -75,15 +76,16 @@
     <section class="ecosystem section-shell" aria-labelledby="ecosystem-title">
       <p class="eyebrow" data-reveal>{{ecosystemLabel}}</p><h2 id="ecosystem-title" data-reveal>{{ecosystemTitle}}</h2><p class="section-description" data-reveal>{{ecosystemText}}</p>
       <div class="capability-strip" data-reveal>{{ecosystemChips}}</div><p class="fine-print">{{ecosystemNote}}</p>
+      {{controlsGallery}}
     </section>
     <section id="community" class="community section-shell" aria-labelledby="community-title">
-      <div class="community-visual" aria-hidden="true"><div class="builder-tile tile-one">✳</div><div class="builder-tile tile-two">↗</div><div class="builder-tile tile-three"><img src="{{base}}assets/mark.svg" width="80" height="80" alt=""></div><div class="builder-tile tile-four">{ }</div><div class="builder-tile tile-five">✦</div><div class="community-grid"></div></div>
+      <div class="community-visual" aria-hidden="true"><div class="builder-tile tile-one">✳</div><div class="builder-tile tile-two">↗</div><div class="builder-tile tile-three"><img src="{{base}}assets/product-icon.png" width="80" height="80" alt=""></div><div class="builder-tile tile-four">{ }</div><div class="builder-tile tile-five">✦</div><div class="community-grid"></div></div>
       <div class="community-copy" data-reveal><p class="eyebrow">{{communityLabel}}</p><h2 id="community-title">{{communityTitle}}</h2><p class="section-description">{{communityText}}</p><div class="community-topics">{{communityTopics}}</div><a class="button button-primary" href="https://github.com/justForever17/v8-agent-os/discussions" target="_blank" rel="noopener noreferrer">{{communityPrimary}} <span aria-hidden="true">↗</span></a><a class="understated-link" href="https://github.com/justForever17/v8-agent-os" target="_blank" rel="noopener noreferrer">{{communitySecondary}} <span aria-hidden="true">↗</span></a></div>
     </section>
     <section id="download" class="download-section" aria-labelledby="download-title"><div class="download-glow" aria-hidden="true"></div><div class="section-shell"><p class="eyebrow" data-reveal>{{downloadLabel}}</p><h2 id="download-title" data-reveal>{{downloadTitle}}</h2><p class="section-description" data-reveal>{{downloadText}}</p><div class="download-actions"><a class="button button-primary" href="https://github.com/justForever17/v8-agent-os/releases/latest" target="_blank" rel="noopener noreferrer">{{downloadButton}} <span aria-hidden="true">↗</span></a><a class="button button-outline" href="{{quickstartUrl}}" target="_blank" rel="noopener noreferrer">{{quickstart}} <span aria-hidden="true">↗</span></a></div><p class="platforms">{{platforms}}</p><p class="download-note">{{downloadNote}}</p></div></section>
     <section class="faq-section section-shell" aria-label="{{faqLabel}}"><p class="eyebrow">{{faqLabel}}</p><div class="faq-list">{{faqRows}}</div></section>
   </main>
-  <footer class="site-footer section-shell"><div class="footer-top"><a class="brand" href="{{home}}"><img src="{{base}}assets/mark.svg" alt="" width="28" height="28"><span>V8 Agent OS</span></a><p>{{footerLine}}</p><div class="footer-links"><a href="{{quickstartUrl}}">{{footerDocs}}</a><a href="https://github.com/justForever17/v8-agent-os">{{footerSource}}</a><a href="https://github.com/justForever17/v8-agent-os/releases">{{footerRelease}}</a><a href="https://afdian.com/a/justforever17" target="_blank" rel="noopener noreferrer">{{footerSupport}}</a></div></div><div class="footer-bottom"><span>© 2026 {{copyright}}</span><button class="motion-toggle" type="button" aria-pressed="false" data-pause="{{motionPause}}" data-resume="{{motionResume}}"><span aria-hidden="true">Ⅱ</span><span data-motion-label>{{motionPause}}</span></button></div><div class="footer-wordmark" aria-hidden="true">V8 AGENT OS</div></footer>
-  <dialog class="image-dialog" aria-label="{{screenshotLabel}}"><button class="dialog-close" type="button" aria-label="{{close}}">×</button><img alt=""></dialog>
+  <footer class="site-footer section-shell"><div class="footer-top"><a class="brand" href="{{home}}"><img src="{{base}}assets/product-icon.png" alt="" width="28" height="28"><span>V8 Agent OS</span></a><p>{{footerLine}}</p><div class="footer-links"><a href="{{quickstartUrl}}">{{footerDocs}}</a><a href="https://github.com/justForever17/v8-agent-os">{{footerSource}}</a><a href="https://github.com/justForever17/v8-agent-os/releases">{{footerRelease}}</a><a href="https://afdian.com/a/justforever17" target="_blank" rel="noopener noreferrer">{{footerSupport}}</a></div></div><div class="footer-bottom"><span>© 2026 {{copyright}}</span><button class="motion-toggle" type="button" aria-pressed="false" data-pause="{{motionPause}}" data-resume="{{motionResume}}"><span aria-hidden="true">Ⅱ</span><span data-motion-label>{{motionPause}}</span></button></div><div class="footer-wordmark" aria-hidden="true">V8 AGENT OS</div></footer>
+  <dialog class="image-dialog" aria-label="{{screenshotLabel}}"><a class="dialog-original" target="_blank" rel="noopener noreferrer">{{openOriginal}} ↗</a><button class="dialog-close" type="button" aria-label="{{close}}">×</button><img alt=""></dialog>
 </body>
 </html>

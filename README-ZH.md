@@ -24,12 +24,14 @@ python -m http.server 8789 --directory dist
 | `content/zh.json` / `content/en.json` | 中英文案 |
 | `templates/index.html` | 共用页面结构 |
 | `assets/styles.css` / `assets/site.js` | 视觉与渐进增强交互 |
-| `assets/media.json` | 四个截图位、影片、海报与中英字幕 |
+| `assets/media.json` | 场景截图、可选控制台截图（models/projects/plugins）、影片、海报与中英字幕 |
 | `scripts/build_site.py` | 生成根目录双语页面与 `_headers`，组装仅含公开文件的 `dist` |
 
 修改源文件后重新构建，不手工修改生成页面。`python scripts/build_site.py --check` 可检查生成物是否同步。根目录页面继续兼容现有 Cloudflare Pages Git 部署；配置构建时使用 `python scripts/build_site.py`，输出目录选 `dist`。
 
 素材未配置时展示有明确标注的概念图和“影片即将上线”。截图填写 `assets/media/` 下的本地路径；影片、海报与字幕也可使用 R2 的永久公共 HTTPS 链接，不能包含凭据、查询参数或片段。构建自动把媒体来源加入 CSP。R2 仍需设置相应 CORS，才能支持跨域视频与字幕。大视频不进入 Git 仓库。
+
+当前选用两张 Web 工作台与三张控制台实拍，来自 2026-09-13 本机开发构建，分别展示资料修改、实际网页预览、模型连接、项目工作区与插件配置，不作为固定发布安装包的验收证据。创作成果和 Phone 尚无合适实拍，保留标注清楚的示意。
 
 门户支持键盘切换场景、移动导航、原生 FAQ、截图放大、系统减少动态效果偏好和手动暂停动效。没有 JavaScript 时仍能阅读正文、查看全部场景并使用主要导航。Preview、模型配置与第三方费用说明保留在下载附近。
 
@@ -47,4 +49,4 @@ CI 校验生成物并只上传 `dist`。内部素材指南、行动计划与验�
 
 ## 资源说明
 
-光轨与门户插画为本项目原创。Manrope 字体自托管，许可见 `assets/fonts/OFL.txt`。产品源码、安装包和产品文档统一指向 V8 Agent OS 主仓。
+产品图标取自桌面端 `apps/v8-agent-os-shell/assets/icon.png`，光轨为门户原创插画。图标或分享封面变更后，运行 `python scripts/render_social.py`（使用 Playwright 测试依赖），再重新构建。Manrope 字体自托管，许可见 `assets/fonts/OFL.txt`。产品源码、安装包和产品文档统一指向 V8 Agent OS 主仓。
