@@ -29,7 +29,9 @@ class MediaContract(unittest.TestCase):
         headers = render_headers(self.media)
         self.assertIn("media-src 'self' https://images.example.com https://media.example.com;", headers)
         self.assertNotIn("media-src *", headers)
-        self.assertIn("script-src 'self';", headers)
+        self.assertIn("script-src 'self' https://static.cloudflareinsights.com;", headers)
+        self.assertNotIn("unsafe-eval", headers)
+        self.assertIn("https://cloudflareinsights.com;", headers)
 
     def test_private_and_ephemeral_urls_are_not_publishable(self):
         for value in ("http://media.example.com/a.mp4", "https://user:pass@media.example.com/a.mp4", "https://media.example.com/a.mp4?X-Amz-Signature=example", "https://media.example.com/a.mp4#token", "//media.example.com/a.mp4", "file:///C:/secret.mp4", "assets/media/../../private.mp4", "https://media.example.com/a.html", "https://media.example.com\n.evil/a.mp4"):

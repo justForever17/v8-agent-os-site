@@ -86,7 +86,7 @@ def render_headers(media: dict) -> str:
             "  Referrer-Policy: strict-origin-when-cross-origin\n"
             "  X-Frame-Options: DENY\n"
             "  Permissions-Policy: camera=(), microphone=(), geolocation=()\n"
-            f"  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src {media_sources} data:; media-src {media_sources}; font-src 'self'; connect-src {media_sources}; frame-ancestors 'none'; base-uri 'self'; form-action 'none'\n"
+            f"  Content-Security-Policy: default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src {media_sources} data:; media-src {media_sources}; font-src 'self'; connect-src {media_sources} https://cloudflareinsights.com; frame-ancestors 'none'; base-uri 'self'; form-action 'none'\n"
             "/assets/*\n  Cache-Control: public, max-age=3600\n")
 
 
