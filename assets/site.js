@@ -1,324 +1,238 @@
-const pageOrder = ["overview", "runtimes", "install", "docs"];
-const pageTrack = document.querySelector("[data-page-track]");
-const panels = Array.from(document.querySelectorAll("[data-page]"));
-const navButtons = Array.from(document.querySelectorAll("[data-page-target]"));
-const docButtons = Array.from(document.querySelectorAll("[data-doc-url]"));
-const docViewerTitle = document.querySelector("[data-doc-viewer-title]");
-const docViewerBody = document.querySelector("[data-doc-viewer-body]");
-const docOpenLink = document.querySelector("[data-doc-open-link]");
-const copyButtons = Array.from(document.querySelectorAll(".copy-command"));
-const marqueeLines = Array.from(document.querySelectorAll("[data-hover-marquee]"));
-const isMobileLayout = () => window.matchMedia("(max-width: 820px)").matches;
-const locale = document.body.dataset.locale === "zh" ? "zh" : "en";
+/* Progressive enhancements: content and navigation also work without JavaScript. */
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const tabs = [...document.querySelectorAll(".scenario-tab")];
+  const panels = [...document.querySelectorAll(".scenario")];
+  const tabList = document.querySelector(".scenario-tabs");
+  const menuButton = document.querySelector(".menu-button");
+  const navigation = document.querySelector(".navigation");
+  const motionButton = document.querySelector(".motion-toggle");
+  let manuallyPaused = false;
+  try { manuallyPaused = localStorage.getItem("v8-site-motion") === "paused"; } catch { /* Storage is optional. */ }
+  const motionPaused = () => manuallyPaused || reducedMotion.matches;
 
-const i18n = {
-  en: {
-    loading: "Loading document...",
-    loadFailed: "Unable to load the document right now.",
-    copied: "Copied",
-    copyFailed: "Copy failed",
-  },
-  zh: {
-    loading: "正在加载文档...",
-    loadFailed: "暂时无法加载这份文档。",
-    copied: "已复制",
-    copyFailed: "复制失败",
-  },
-};
+  function chooseScenario(id, moveFocus = false, updateHash = false, animate = true) {
+    const selected = tabs.find(tab => tab.dataset.scenario === id);
+    if (!selected) return;
+    tabs.forEach(tab => {
+      const active = tab === selected;
+      tab.classList.toggle("is-active", active);
+      tab.setAttribute("aria-selected", String(active));
+      tab.tabIndex = active ? 0 : -1;
+    });
+    panels.forEach(panel => {
+      const active = panel.id === `scenario-${id}`;
+      panel.classList.toggle("is-active", active);
+      panel.hidden = !active;
+      panel.getAnimations().forEach(animation => animation.cancel());
+      if (active && animate && !motionPaused()) {
+        panel.animate([{ opacity: .35, transform: "translateY(7px)" }, { opacity: 1, transform: "translateY(0)" }], { duration: 280, easing: "cubic-bezier(.22,1,.36,1)" });
+      }
+    });
+    if (moveFocus) selected.focus({ preventScroll: true });
+    if (updateHash) history.replaceState(null, "", `#scenario-${id}`);
+  }
+  tabList?.setAttribute("role", "tablist");
+  tabs.forEach((tab, index) => {
+    tab.setAttribute("role", "tab");
+    tab.setAttribute("aria-controls", `scenario-${tab.dataset.scenario}`);
+    tab.addEventListener("click", event => { event.preventDefault(); chooseScenario(tab.dataset.scenario, false, true); });
+    tab.addEventListener("keydown", event => {
+      let next;
+      if (event.key === "ArrowRight") next = (index + 1) % tabs.length;
+      if (event.key === "ArrowLeft") next = (index - 1 + tabs.length) % tabs.length;
+      if (event.key === "Home") next = 0;
+      if (event.key === "End") next = tabs.length - 1;
+      if (next !== undefined) { event.preventDefault(); chooseScenario(tabs[next].dataset.scenario, true, true, false); }
+    });
+  });
+  panels.forEach(panel => { panel.setAttribute("role", "tabpanel"); panel.tabIndex = 0; });
+  function readScenarioHash() {
+    const id = location.hash.replace("#scenario-", "");
+    if (tabs.some(tab => tab.dataset.scenario === id)) chooseScenario(id, false, false, false);
+  }
+  chooseScenario(tabs[0]?.dataset.scenario, false, false, false);
+  readScenarioHash();
+  window.addEventListener("hashchange", readScenarioHash);
 
-function escapeHtml(value) {
-  return value
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;");
-}
+  function closeMenu(restoreFocus = false) {
+    navigation?.classList.remove("is-open");
+    menuButton?.setAttribute("aria-expanded", "false");
+    if (restoreFocus) menuButton?.focus();
+  }
+  menuButton?.addEventListener("click", () => {
+    const open = menuButton.getAttribute("aria-expanded") !== "true";
+    navigation.classList.toggle("is-open", open);
+    menuButton.setAttribute("aria-expanded", String(open));
+  });
+  navigation?.querySelectorAll("a").forEach(link => link.addEventListener("click", () => closeMenu()));
+  document.addEventListener("click", event => {
+    if (!navigation?.contains(event.target) && !menuButton?.contains(event.target)) closeMenu();
+  });
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape" && navigation?.classList.contains("is-open")) closeMenu(true);
+  });
+  window.matchMedia("(max-width: 760px)").addEventListener("change", () => closeMenu());
 
-function renderInline(text) {
-  return escapeHtml(text)
-    .replace(/`([^`]+)`/g, "<code>$1</code>")
-    .replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g, '<a href="$2" target="_blank" rel="noreferrer">$1</a>');
-}
-
-function renderMarkdown(markdown) {
-  const lines = markdown.replace(/\r/g, "").split("\n");
-  const html = [];
-  let paragraph = [];
-  let listType = null;
-  let inCodeBlock = false;
-  let codeFenceLanguage = "";
-  let codeBuffer = [];
-
-  const flushParagraph = () => {
-    if (!paragraph.length) {
+  const revealObserver = "IntersectionObserver" in window ? new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.remove("is-reveal-pending");
+      entry.target.classList.add("is-revealed");
+      revealObserver.unobserve(entry.target);
+    });
+  }, { threshold: .08, rootMargin: "0px 0px -24px 0px" }) : null;
+  if (!motionPaused() && revealObserver) {
+    document.querySelectorAll("[data-reveal]").forEach(element => {
+      if (element.getBoundingClientRect().top > window.innerHeight) {
+        element.classList.add("is-reveal-pending");
+        revealObserver.observe(element);
+      }
+    });
+  }
+  function syncMotion() {
+    root.classList.toggle("motion-paused", motionPaused());
+    motionButton?.setAttribute("aria-pressed", String(motionPaused()));
+    const label = motionButton?.querySelector("[data-motion-label]");
+    if (label) label.textContent = motionPaused() ? motionButton.dataset.resume : motionButton.dataset.pause;
+    if (motionPaused()) {
+      revealObserver?.disconnect();
+      document.querySelectorAll(".is-reveal-pending").forEach(element => element.classList.remove("is-reveal-pending"));
+      panels.forEach(panel => panel.getAnimations().forEach(animation => animation.cancel()));
+    }
+    motionButton.disabled = reducedMotion.matches;
+    if (reducedMotion.matches && label) label.textContent = document.body.dataset.locale === "zh" ? "已遵循系统减少动态效果设置" : "System reduced motion is on";
+  }
+  motionButton?.addEventListener("click", () => {
+    manuallyPaused = !manuallyPaused;
+    try { localStorage.setItem("v8-site-motion", manuallyPaused ? "paused" : "enabled"); } catch { /* Preference still applies to this visit. */ }
+    syncMotion();
+  });
+  reducedMotion.addEventListener("change", syncMotion);
+  syncMotion();
+  let heroVisible = true;
+  let scrollFrame = 0;
+  const stage = document.querySelector(".orbit-stage");
+  const precisePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+  const pointerEnabled = () => precisePointer.matches && !motionPaused() && !document.hidden;
+  const orbitPointer = { x: 0, y: 0, targetX: 0, targetY: 0, previousTime: 0 };
+  const clamp = value => Math.max(-1, Math.min(1, value));
+  function updateStage(time = 0) {
+    scrollFrame = 0;
+    if (motionPaused() || window.innerWidth <= 760 || document.hidden) {
+      stage.style.transform = "";
+      orbitPointer.x = orbitPointer.y = orbitPointer.targetX = orbitPointer.targetY = 0;
       return;
     }
-    html.push(`<p>${renderInline(paragraph.join(" ").trim())}</p>`);
-    paragraph = [];
-  };
-
-  const flushList = () => {
-    if (!listType) {
-      return;
-    }
-    html.push(`</${listType}>`);
-    listType = null;
-  };
-
-  const flushCodeBlock = () => {
-    const code = escapeHtml(codeBuffer.join("\n"));
-    const languageClass = codeFenceLanguage ? ` class="language-${escapeHtml(codeFenceLanguage)}"` : "";
-    html.push(`<pre><code${languageClass}>${code}</code></pre>`);
-    codeBuffer = [];
-    codeFenceLanguage = "";
-  };
-
-  for (const rawLine of lines) {
-    const line = rawLine.replace(/\t/g, "  ");
-
-    if (line.startsWith("```")) {
-      flushParagraph();
-      flushList();
-      if (inCodeBlock) {
-        flushCodeBlock();
-        inCodeBlock = false;
-      } else {
-        inCodeBlock = true;
-        codeFenceLanguage = line.slice(3).trim();
-      }
-      continue;
-    }
-
-    if (inCodeBlock) {
-      codeBuffer.push(rawLine);
-      continue;
-    }
-
-    if (!line.trim()) {
-      flushParagraph();
-      flushList();
-      continue;
-    }
-
-    if (/^#{1,3}\s/.test(line)) {
-      flushParagraph();
-      flushList();
-      const level = line.match(/^#+/)[0].length;
-      html.push(`<h${level}>${renderInline(line.replace(/^#{1,3}\s+/, ""))}</h${level}>`);
-      continue;
-    }
-
-    if (/^>\s?/.test(line)) {
-      flushParagraph();
-      flushList();
-      html.push(`<blockquote>${renderInline(line.replace(/^>\s?/, ""))}</blockquote>`);
-      continue;
-    }
-
-    if (/^---+$/.test(line.trim())) {
-      flushParagraph();
-      flushList();
-      html.push("<hr />");
-      continue;
-    }
-
-    if (/^[-*]\s+/.test(line)) {
-      flushParagraph();
-      if (listType !== "ul") {
-        flushList();
-        listType = "ul";
-        html.push("<ul>");
-      }
-      html.push(`<li>${renderInline(line.replace(/^[-*]\s+/, ""))}</li>`);
-      continue;
-    }
-
-    if (/^\d+\.\s+/.test(line)) {
-      flushParagraph();
-      if (listType !== "ol") {
-        flushList();
-        listType = "ol";
-        html.push("<ol>");
-      }
-      html.push(`<li>${renderInline(line.replace(/^\d+\.\s+/, ""))}</li>`);
-      continue;
-    }
-
-    flushList();
-    paragraph.push(line.trim());
+    const alpha = 1 - Math.exp(-Math.min(64, time - orbitPointer.previousTime || 16) / 100);
+    orbitPointer.previousTime = time;
+    orbitPointer.x += (orbitPointer.targetX - orbitPointer.x) * alpha;
+    orbitPointer.y += (orbitPointer.targetY - orbitPointer.y) * alpha;
+    const progress = Math.min(1, Math.max(0, window.scrollY / window.innerHeight));
+    stage.style.transform = `translateX(calc(-50% + ${orbitPointer.x * 18}px)) translateY(${-progress * 45 + orbitPointer.y * 8}px) perspective(1200px) rotateX(${-orbitPointer.y * 4}deg) rotateY(${orbitPointer.x * 6}deg) scale(${1 + progress * .055})`;
+    if (heroVisible && Math.abs(orbitPointer.targetX - orbitPointer.x) + Math.abs(orbitPointer.targetY - orbitPointer.y) > .002) scheduleStage();
   }
-
-  flushParagraph();
-  flushList();
-
-  if (inCodeBlock) {
-    flushCodeBlock();
+  function scheduleStage() { if (!scrollFrame) scrollFrame = requestAnimationFrame(updateStage); }
+  const updateAmbient = () => { root.classList.toggle("motion-offscreen", !heroVisible || document.hidden); if (heroVisible) scheduleStage(); };
+  window.addEventListener("scroll", () => { if (heroVisible && !document.hidden) scheduleStage(); }, { passive: true });
+  window.addEventListener("resize", scheduleStage);
+  reducedMotion.addEventListener("change", scheduleStage);
+  motionButton?.addEventListener("click", scheduleStage);
+  if ("IntersectionObserver" in window) {
+    const heroObserver = new IntersectionObserver(entries => { heroVisible = entries[0].isIntersecting; updateAmbient(); });
+    heroObserver.observe(document.querySelector(".hero"));
   }
-
-  return html.join("");
-}
-
-function getCurrentPage() {
-  const hash = window.location.hash.replace(/^#/, "").trim();
-  return pageOrder.includes(hash) ? hash : "overview";
-}
-
-function syncPageState(pageName, options = {}) {
-  if (!pageOrder.includes(pageName)) {
-    return;
-  }
-
-  navButtons.forEach((button) => {
-    const isActive = button.dataset.pageTarget === pageName;
-    button.classList.toggle("is-active", isActive);
-    button.setAttribute("aria-current", isActive ? "page" : "false");
+  document.addEventListener("visibilitychange", updateAmbient);
+  const hero = document.querySelector(".hero");
+  hero.addEventListener("pointermove", event => {
+    if (!pointerEnabled() || event.pointerType !== "mouse" || window.innerWidth <= 760) return;
+    const rect = hero.getBoundingClientRect();
+    orbitPointer.targetX = clamp((event.clientX - rect.left) / rect.width * 2 - 1);
+    orbitPointer.targetY = clamp((event.clientY - rect.top) / rect.height * 2 - 1);
+    scheduleStage();
   });
+  const releaseOrbit = () => { orbitPointer.targetX = orbitPointer.targetY = 0; scheduleStage(); };
+  hero.addEventListener("pointerleave", releaseOrbit);
+  precisePointer.addEventListener("change", releaseOrbit);
 
-  panels.forEach((panel) => {
-    panel.classList.toggle("is-active", panel.dataset.page === pageName);
-  });
-
-  if (!options.skipHash) {
-    window.history.replaceState(null, "", `#${pageName}`);
-  }
-}
-
-function getDocSources(button) {
-  const items = [];
-
-  if (locale === "zh" && button.dataset.docUrlZh) {
-    items.push({
-      url: button.dataset.docUrlZh,
-      open: button.dataset.docOpenZh || button.dataset.docOpen || "#",
+  // Animate only the surface under the mouse, then stop the frame loop once settled.
+  // Hit targets stay in place; button light moves inside the existing button bounds.
+  const pointerResets = [];
+  document.querySelectorAll(".media-frame, .builder-tile, .button-primary, .header-cta").forEach(surface => {
+    const tilt = surface.matches(".media-frame, .builder-tile");
+    const baseTransform = getComputedStyle(surface).transform;
+    const glow = document.createElement("span");
+    glow.className = "pointer-glow";
+    glow.setAttribute("aria-hidden", "true");
+    surface.append(glow);
+    let frame = 0, x = 0, y = 0, targetX = 0, targetY = 0, previousTime = 0, bounds;
+    function paint(time) {
+      frame = 0;
+      if (!pointerEnabled()) { reset(); return; }
+      const alpha = 1 - Math.exp(-Math.min(64, time - previousTime || 16) / 75);
+      previousTime = time;
+      x += (targetX - x) * alpha;
+      y += (targetY - y) * alpha;
+      if (tilt) surface.style.transform = `perspective(1100px) rotateX(${-y * 2.5}deg) rotateY(${x * 3.5}deg) ${baseTransform === "none" ? "" : baseTransform}`;
+      if (Math.abs(targetX - x) + Math.abs(targetY - y) > .003) frame = requestAnimationFrame(paint);
+      else if (!surface.classList.contains("pointer-active")) surface.style.transform = "";
+    }
+    function reset() {
+      cancelAnimationFrame(frame); frame = 0;
+      x = y = targetX = targetY = 0;
+      surface.style.transform = "";
+      surface.classList.remove("pointer-active");
+    }
+    surface.addEventListener("pointerenter", event => {
+      if (!pointerEnabled() || event.pointerType !== "mouse") return;
+      bounds = surface.getBoundingClientRect();
+      surface.classList.add("pointer-active");
     });
-  }
-
-  if (button.dataset.docUrl) {
-    items.push({
-      url: button.dataset.docUrl,
-      open: button.dataset.docOpen || "#",
+    surface.addEventListener("pointermove", event => {
+      if (!pointerEnabled() || event.pointerType !== "mouse" || !bounds) return;
+      targetX = clamp((event.clientX - bounds.left) / bounds.width * 2 - 1);
+      targetY = clamp((event.clientY - bounds.top) / bounds.height * 2 - 1);
+      glow.style.transform = `translate(${event.clientX - bounds.left - 160}px,${event.clientY - bounds.top - 160}px)`;
+      if (tilt && !frame) frame = requestAnimationFrame(paint);
     });
-  }
-
-  return items;
-}
-
-async function loadDocument(button) {
-  if (!docViewerBody || !docViewerTitle || !docOpenLink) {
-    return;
-  }
-
-  docButtons.forEach((item) => item.classList.toggle("is-active", item === button));
-  docViewerTitle.textContent = button.dataset.docTitle || "Document";
-  docViewerBody.innerHTML = `<p>${i18n[locale].loading}</p>`;
-
-  const sources = getDocSources(button);
-  if (!sources.length) {
-    docOpenLink.href = "#";
-    docViewerBody.innerHTML = `<p>${i18n[locale].loadFailed}</p>`;
-    return;
-  }
-
-  docOpenLink.href = sources[0].open;
-
-  let lastError = "Unknown error";
-
-  for (const source of sources) {
-    try {
-      const response = await fetch(source.url, { cache: "no-store" });
-      if (!response.ok) {
-        throw new Error(`Request failed with ${response.status}`);
-      }
-
-      const markdown = await response.text();
-      docOpenLink.href = source.open;
-      docViewerBody.innerHTML = renderMarkdown(markdown);
-      return;
-    } catch (error) {
-      lastError = error instanceof Error ? error.message : "Unknown error";
-    }
-  }
-
-  docViewerBody.innerHTML = `<p>${i18n[locale].loadFailed}</p><p><code>${escapeHtml(lastError)}</code></p>`;
-}
-
-function bindCopyButtons() {
-  copyButtons.forEach((button) => {
-    button.addEventListener("click", async () => {
-      const text = button.dataset.copy;
-      if (!text) {
-        return;
-      }
-
-      try {
-        await navigator.clipboard.writeText(text);
-        const previous = button.textContent;
-        button.textContent = i18n[locale].copied;
-        button.classList.add("is-copied");
-        window.setTimeout(() => {
-          button.textContent = previous;
-          button.classList.remove("is-copied");
-        }, 1500);
-      } catch {
-        button.textContent = i18n[locale].copyFailed;
-      }
+    surface.addEventListener("pointerleave", () => {
+      surface.classList.remove("pointer-active");
+      targetX = targetY = 0;
+      if (tilt && !frame && pointerEnabled()) frame = requestAnimationFrame(paint);
     });
+    pointerResets.push(reset);
   });
-}
+  const resetPointers = () => { pointerResets.forEach(reset => reset()); releaseOrbit(); };
+  reducedMotion.addEventListener("change", resetPointers);
+  precisePointer.addEventListener("change", resetPointers);
+  motionButton?.addEventListener("click", resetPointers);
+  document.addEventListener("visibilitychange", () => { if (document.hidden) resetPointers(); });
 
-function bindNavigation() {
-  navButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      const target = button.dataset.pageTarget;
-      if (!target) {
-        return;
-      }
-      syncPageState(target);
-    });
+  const dialog = document.querySelector(".image-dialog");
+  document.querySelectorAll(".capture-open").forEach(button => button.addEventListener("click", () => {
+    if (!dialog?.showModal) return;
+    dialog.querySelector("img").src = button.dataset.image;
+    dialog.querySelector("img").alt = button.querySelector("img").alt;
+    dialog.showModal();
+    document.body.classList.add("dialog-open");
+  }));
+  dialog?.querySelector(".dialog-close").addEventListener("click", () => dialog.close());
+  dialog?.addEventListener("click", event => { if (event.target === dialog) dialog.close(); });
+  dialog?.addEventListener("close", () => {
+    document.body.classList.remove("dialog-open");
+    dialog.querySelector("img").removeAttribute("src");
   });
-
-  window.addEventListener("resize", () => {
-    syncPageState(getCurrentPage(), { skipHash: true });
-    bindHoverMarquee();
-  });
-}
-
-function bindDocs() {
-  docButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      loadDocument(button);
-    });
-  });
-
-  if (docButtons.length) {
-    loadDocument(docButtons[0]);
-  }
-}
-
-function bindHoverMarquee() {
-  marqueeLines.forEach((line) => {
-    const textNode = line.querySelector(".runtime-scroll-text");
-    if (!textNode || isMobileLayout()) {
-      line.dataset.overflow = "false";
-      line.style.setProperty("--overflow-shift", "0px");
-      if (textNode) {
-        textNode.style.transform = "translateX(0)";
-      }
-      return;
-    }
-
-    line.dataset.overflow = "false";
-    line.style.setProperty("--overflow-shift", "0px");
-
-    const overflow = Math.max(0, Math.ceil(textNode.scrollWidth - line.clientWidth));
-    if (overflow > 8) {
-      line.dataset.overflow = "true";
-      line.style.setProperty("--overflow-shift", `${overflow + 12}px`);
-    }
-  });
-}
-
-bindNavigation();
-bindDocs();
-bindCopyButtons();
-bindHoverMarquee();
-syncPageState(getCurrentPage(), { skipHash: true });
+  const video = document.querySelector("video");
+  const videoError = document.querySelector(".video-error");
+  const showVideoError = () => { if (videoError) videoError.hidden = false; };
+  video?.addEventListener("error", showVideoError);
+  video?.querySelector("source")?.addEventListener("error", showVideoError);
+  video?.querySelectorAll("track").forEach(track => track.addEventListener("error", () => {
+    const captionError = document.querySelector(".caption-error");
+    if (captionError) captionError.hidden = false;
+  }));
+  video?.addEventListener("playing", () => { if (videoError) videoError.hidden = true; });
+  root.classList.add("has-js");
+})();

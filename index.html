@@ -1,327 +1,89 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>V8 Agent OS - Desktop-First Agent Workspace</title>
-    <meta
-      name="description"
-      content="V8 Agent OS is a local-first desktop Agent workspace with Supervisor-led orchestration, recoverable runtimes, governed plugins, paired Phone access, a Creative Artifact Canvas, and verifiable artifacts."
-    />
-    <link rel="icon" type="image/png" href="./assets/brand-mark.png" />
-    <link rel="stylesheet" href="./assets/styles.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  </head>
-  <body>
-    <div class="site-shell">
-      
-      <header class="topbar">
-        <a class="brand" href="./index.html">
-          <img src="./assets/brand-mark.png" alt="V8 Agent OS Logo" />
-          <span>V8 Agent OS</span>
-        </a>
-        <div class="topbar-actions">
-          <a href="https://github.com/justForever17/v8-agent-os" target="_blank" rel="noreferrer">GitHub</a>
-          <a href="./zh/index.html">中文</a>
-        </div>
-      </header>
-
-      <main>
-        <section class="hero">
-          <span class="mono-label">Desktop Preview // Supervisor First, Runtime Grounded</span>
-          <h1 class="display">Beyond chat.<br />A desktop-first Agent OS for durable work.</h1>
-          <p class="lede">
-            V8 puts the Supervisor in front of every task and keeps execution grounded in runtime state, evidence, artifacts, and explicit boundaries.<br />
-            The desktop app is the main workspace; specialized modes handle coding, research, media, desktop work, and RPA, while the paired Phone app continues tasks and handles governed approvals remotely.
-          </p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="#install">Install Desktop Preview</a>
-            <a class="btn btn-secondary" href="https://github.com/justForever17/v8-agent-os" target="_blank">Read Core Source</a>
-          </div>
-        </section>
-
-        <section class="bento-grid">
-          
-          <!-- 1. MEMORY -->
-          <article class="bento-card span-8">
-            <div class="flip-inner">
-              <div class="flip-front">
-                <div class="card-icon">[01] MEMORY_GRAPH</div>
-                <h3 class="card-title">Evidence-Based Memory and Graph Review</h3>
-                <p class="card-desc">Memory is stored as evidence, preferences, graph relations, and artifacts—not as an unquestioned instruction stream. Maintenance jobs and the Admin graph let operators review, edit, and trace what is recalled.</p>
-              </div>
-              <div class="flip-back">
-                <div class="card-image-wrapper">
-                  <img src="./image/memory.png" alt="Memory Graph UI" />
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <!-- 2. ROUTING -->
-          <article class="bento-card span-4">
-            <div class="flip-inner">
-              <div class="flip-front">
-                <div class="card-icon">[02] COST_ROUTING</div>
-                <h3 class="card-title">Role-Based Model Control</h3>
-                <p class="card-desc">Assign different providers and models to the Supervisor, subagents, media work, embeddings, and utility tasks. Health checks and failover expose degraded paths instead of hiding them.</p>
-              </div>
-              <div class="flip-back">
-                <div class="card-image-wrapper">
-                  <img src="./image/localmodel.png" alt="Local Model Routing" />
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <!-- 8. MOBILE REMOTE OPS -->
-          <article class="bento-card span-6">
-            <div class="flip-inner">
-              <div class="flip-front">
-                <div class="card-icon">[03] REMOTE_OPS</div>
-                <h3 class="card-title">Paired Phone for Remote Continuity</h3>
-                <p class="card-desc">The desktop app remains the main workspace. A paired Phone can continue tasks, answer blocking questions, send voice or files, inspect artifacts, and approve governed side effects while you are away.</p>
-              </div>
-              <div class="flip-back">
-                <div class="card-image-wrapper multi-phone">
-                  <img src="./image/phone1.png" alt="Remote App 1" />
-                  <img src="./image/phone2.png" alt="Remote App 2" />
-                  <img src="./image/phone3.png" alt="Remote App 3" />
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <!-- 3. PLUGIN GOVERNANCE -->
-          <article class="bento-card span-6">
-            <div class="flip-inner">
-              <div class="flip-front">
-                <div class="card-icon">[04] PLUGIN_MANAGER</div>
-                <h3 class="card-title">Governed Plugin Manager</h3>
-                <p class="card-desc">Install reviewed CLI, MCP, Skill, and UI packages from a signed catalog. AMap, MediaKit CLI full-schema actions, and governed Wrangler browser login are available without flooding ordinary tasks; the Supervisor grants only the smallest ready component set.</p>
-              </div>
-              <div class="flip-back">
-                <div class="card-image-wrapper">
-                  <img src="./image/v8bridge.png" alt="V8 Plugin Manager" />
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <!-- 4. ZERO TRUST -->
-          <article class="bento-card span-4">
-            <div class="flip-inner">
-              <div class="flip-front">
-                <div class="card-icon">[05] ZERO_TRUST_OPS</div>
-                <h3 class="card-title">Governed Side Effects and Permissions</h3>
-                <p class="card-desc">Workspace boundaries, typed CLI actions, approvals, grant digests, and per-call revalidation keep privileged operations inspectable. Blocked or degraded paths return a recovery route instead of a fabricated success.</p>
-              </div>
-              <div class="flip-back">
-                <div class="card-image-wrapper">
-                  <img src="./image/operations-center.png" alt="Operations Center Approval" />
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <!-- 5. NO BLOAT -->
-          <article class="bento-card span-4">
-            <div class="flip-inner">
-              <div class="flip-front">
-                <div class="card-icon">[06] DYNAMIC_EXPOSURE</div>
-                <h3 class="card-title">Context-Aware Skills and MCP</h3>
-                <p class="card-desc">General Skills and MCP tools are shortlisted for the current task instead of flooding the model context. Plugin-owned components stay outside that pool until a valid task grant projects them.</p>
-              </div>
-              <div class="flip-back">
-                <div class="card-image-wrapper">
-                  <img src="./image/mcpskills.png" alt="Dynamic Skill Reranking" />
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <!-- 6. RPA -->
-          <article class="bento-card span-4">
-            <div class="flip-inner">
-              <div class="flip-front">
-                <div class="card-icon">[07] UI_TO_RPA</div>
-                <h3 class="card-title">From Verified Desktop Work to RPA</h3>
-                <p class="card-desc">Computer Use can observe and complete one-off desktop work. Repeatable steps are promoted into RPA only after scope, timing, environment, and verification evidence are explicit.</p>
-              </div>
-              <div class="flip-back">
-                <div class="card-image-wrapper">
-                  <img src="./image/RPA.png" alt="Computer Use to RPA" />
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <!-- 7. RUNTIME -->
-          <article class="bento-card span-12">
-            <div class="flip-inner">
-              <div class="flip-front">
-                <div class="card-icon">[08] AUTO_RUNTIME</div>
-                <h3 class="card-title">Durable Runtime Episodes and Handoffs</h3>
-                <p class="card-desc">Queued episodes, leases, typed handoffs, artifacts, and recovery state keep complex work inspectable across pauses and restarts. Low-risk serial changes stay in the trusted workspace; parallel, risky, or recoverable candidates use managed worktrees and require validated Supervisor delivery.</p>
-              </div>
-              <div class="flip-back">
-                <div class="card-image-wrapper">
-                  <img src="./image/automation.png" alt="Auto Runtime Decoupling" />
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <!-- 9. SESSION CONTINUITY -->
-          <article class="bento-card span-6">
-            <div class="flip-inner">
-              <div class="flip-front">
-                <div class="card-icon">[09] SESSION_TAKEOVER</div>
-                <h3 class="card-title">Safe Cross-Session Task Takeover</h3>
-                <p class="card-desc">A new task can reference earlier goals, confirmed decisions, Spec state, artifacts, failures, and blockers without inheriting the old workspace, permissions, checkpoint, or runtime episode.</p>
-              </div>
-              <div class="flip-back">
-                <div class="card-image-wrapper">
-                  <div class="feature-placeholder" role="img" aria-label="Cross-session takeover screenshot placeholder">
-                    <span>SCREENSHOT PENDING</span>
-                    <strong>Cross-session takeover</strong>
-                    <small>Replace with the current Web and Phone reference flow.</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <!-- 10. SPEC AND DELEGATION -->
-          <article class="bento-card span-6">
-            <div class="flip-inner">
-              <div class="flip-front">
-                <div class="card-icon">[10] SPEC_DELEGATION</div>
-                <h3 class="card-title">Spec Mode and Delegation Contracts</h3>
-                <p class="card-desc">Requirements, design, and task stages keep stable IDs and approvals. Delegated work preserves lineage, exact write sets, self-checks, artifacts, and parent acceptance instead of collapsing into a vague summary.</p>
-              </div>
-              <div class="flip-back">
-                <div class="card-image-wrapper">
-                  <div class="feature-placeholder" role="img" aria-label="Spec Mode and delegation screenshot placeholder">
-                    <span>SCREENSHOT PENDING</span>
-                    <strong>Spec and delegation</strong>
-                    <small>Replace with approved stages and typed handoff evidence.</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <!-- 11. CREATIVE MEDIA -->
-          <article class="bento-card span-6">
-            <div class="flip-inner">
-              <div class="flip-front">
-                <div class="card-icon">[11] CREATIVE_MEDIA</div>
-                <h3 class="card-title">Creative Artifact Canvas and QA</h3>
-                <p class="card-desc">Arrange session outputs and explicitly adopted workspace media on a governed canvas, then run provider generation or exact frame/sample editing. Six stable facades keep recipes, lineage, artifact proof, and QA in the delivery chain.</p>
-              </div>
-              <div class="flip-back">
-                <div class="card-image-wrapper">
-                  <div class="feature-placeholder" role="img" aria-label="Creative Artifact Canvas screenshot placeholder">
-                    <span>SCREENSHOT PENDING</span>
-                    <strong>Creative Artifact Canvas</strong>
-                    <small>Replace with the current canvas, workspace assets, and exact editing surface.</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <!-- 12. DESKTOP COMPANION -->
-          <article class="bento-card span-6">
-            <div class="flip-inner">
-              <div class="flip-front">
-                <div class="card-icon">[12] DESKTOP_COMPANION</div>
-                <h3 class="card-title">Shell-Managed Desktop Companion</h3>
-                <p class="card-desc">The companion follows the active task through a local authenticated control channel, opens settings inside the desktop app, applies saved appearance changes live, and uses graceful shutdown before any force fallback.</p>
-              </div>
-              <div class="flip-back">
-                <div class="card-image-wrapper">
-                  <div class="feature-placeholder" role="img" aria-label="Desktop companion screenshot placeholder">
-                    <span>SCREENSHOT PENDING</span>
-                    <strong>Desktop companion</strong>
-                    <small>Replace with task sync and managed lifecycle screens.</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </article>
-
-        </section>
-
-        <section id="install" class="tech-section">
-          <span class="mono-label">Deployment // Desktop Preview</span>
-          <h2 class="display" style="font-size: 2.2rem; margin-bottom: 12px; font-weight: 500;">One honest desktop entry.</h2>
-          <p class="lede" style="max-width: 680px;">Download the unsigned Windows Desktop Preview from GitHub Releases. It is not a signed stable or auto-updating release. Phone remains a separately installed, paired remote interaction surface.</p>
-          
-          <div class="install-grid">
-            <div class="install-box">
-              <h3>Windows Desktop Preview</h3>
-              <div class="code-block">GitHub Releases → latest v8-os-desktop-v* asset</div>
-              <button class="copy-btn" onclick="window.open('https://github.com/justForever17/v8-agent-os/releases', '_blank', 'noopener')">Open Releases</button>
-            </div>
-            
-            <div class="install-box">
-              <h3>Source-tree desktop preview</h3>
-              <div class="code-block">.\v8os.cmd preview --rebuild</div>
-              <button class="copy-btn" onclick="navigator.clipboard.writeText('.\\v8os.cmd preview --rebuild')">Copy Command</button>
-              <p class="card-desc">Prepare the desktop profile dependencies first. Bootstrap defaults to Engine + Admin services and is not the Electron installer.</p>
-            </div>
-          </div>
-        </section>
-
-        <footer class="footer-nav">
-          <a href="https://github.com/justForever17/v8-agent-os/blob/main/docs/V8_AGENT_OS_QUICK_START_ZH.md" target="_blank">Quick Start</a>
-          <a href="https://github.com/justForever17/v8-agent-os/blob/main/docs/V8_AGENT_OS_DEVELOPER_GUIDE_ZH.md" target="_blank">Developer Guide</a>
-          <a href="https://github.com/justForever17/v8-agent-os/blob/main/docs/V8_AGENT_OS_API_REFERENCE_ZH.md" target="_blank">API Reference</a>
-          <a href="https://github.com/justForever17/v8-agent-os/blob/main/docs/V8_AGENT_OS_CONFIG_GUIDE_ZH.md" target="_blank">Config Guide</a>
-        </footer>
-      </main>
-    </div>
-    <div id="image-lightbox" class="lightbox">
-      <div class="lightbox-content">
-        <button id="lightbox-close" class="lightbox-close">&times;</button>
-        <img id="lightbox-img" class="lightbox-img" src="" alt="Expanded View" />
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090a0b">
+  <title>V8 Agent OS — Big ideas. Your move.</title>
+  <meta name="description" content="Your personal AI workspace. Bring research, development and creative work around one goal, with the models and tools you choose.">
+  <link rel="canonical" href="https://v8agentos.top/">
+  <link rel="alternate" hreflang="en" href="https://v8agentos.top/">
+  <link rel="alternate" hreflang="zh-CN" href="https://v8agentos.top/zh/">
+  <link rel="alternate" hreflang="x-default" href="https://v8agentos.top/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="V8 Agent OS">
+  <meta property="og:title" content="V8 Agent OS — Big ideas. Your move.">
+  <meta property="og:description" content="Your personal AI workspace. Bring research, development and creative work around one goal, with the models and tools you choose.">
+  <meta property="og:url" content="https://v8agentos.top/">
+  <meta property="og:image" content="https://v8agentos.top/assets/social-card.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="./assets/mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./assets/styles.css?v=9d8aa30383">
+  <script defer src="./assets/site.js?v=196121e751"></script>
+</head>
+<body data-locale="en">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <a class="brand" href="./" aria-label="V8 Agent OS"><img src="./assets/mark.svg" alt="" width="32" height="32"><span>V8 <span class="brand-suffix">Agent OS</span></span></a>
+    <nav id="navigation" class="navigation" aria-label="Open navigation">
+      <a href="#experience">How it works</a><a href="#philosophy">Philosophy</a><a href="#community">Community</a>
+    </nav>
+    <div class="header-actions"><a class="language-link" href="./zh/" lang="zh-CN" aria-label="切换到中文">中文</a><a class="header-cta" href="#download">Start creating <span aria-hidden="true">↗</span></a><button class="menu-button" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="navigation"><span></span><span></span></button></div>
+  </header>
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-grain" aria-hidden="true"></div>
+      <div class="hero-copy">
+        <p class="eyebrow hero-enter"><span class="status-dot"></span>YOUR PERSONAL AI WORKSPACE · PUBLIC PREVIEW</p>
+        <h1 id="hero-title" class="hero-enter"><span>Big ideas.</span><span class="warm-type">Your move.</span></h1>
+        <p class="hero-intro hero-enter">Bring research, development and creative work around your ambition.<br>Make the models and tools you choose part of your own momentum.</p>
+        <div class="hero-actions hero-enter"><a class="button button-primary" href="#download">Get V8 Preview <span aria-hidden="true">↗</span></a><a class="button button-text" href="#experience">Explore the experience <span aria-hidden="true">↓</span></a></div>
+        <p class="hero-note hero-enter">Local first. Open source. Yours to direct.</p>
       </div>
-    </div>
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const lightbox = document.getElementById('image-lightbox');
-        const lightboxImg = document.getElementById('lightbox-img');
-        const closeBtn = document.getElementById('lightbox-close');
-        
-        document.querySelectorAll('.card-image-wrapper img').forEach(img => {
-          img.addEventListener('click', (e) => {
-            e.stopPropagation();
-            lightboxImg.src = img.src;
-            lightbox.classList.add('active');
-            document.body.style.overflow = 'hidden';
-          });
-        });
-        
-        const closeLightbox = () => {
-          lightbox.classList.remove('active');
-          document.body.style.overflow = '';
-          setTimeout(() => { lightboxImg.src = ''; }, 300);
-        };
-        
-        closeBtn.addEventListener('click', closeLightbox);
-        lightbox.addEventListener('click', (e) => {
-          if (e.target === lightbox || e.target.classList.contains('lightbox-content')) {
-            closeLightbox();
-          }
-        });
-        document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape' && lightbox.classList.contains('active')) {
-            closeLightbox();
-          }
-        });
-      });
-    </script>
-  </body>
+      <div class="orbit-stage" aria-hidden="true">
+        <div class="orbit-aura"></div>
+        <img class="orbit-art" src="./assets/orbit.svg" alt="" width="1200" height="660" fetchpriority="high">
+        <span class="orbit-label orbit-top">ONE GOAL. ROOM TO IMAGINE.</span><span class="orbit-label orbit-left">RESEARCH · DISCOVER</span><span class="orbit-label orbit-right">BUILD · CREATE</span><span class="orbit-label orbit-bottom">BUILT AROUND YOUR AMBITION</span>
+      </div>
+      <a class="scroll-cue" href="#manifesto"><span></span>SCROLL TO EXPLORE</a>
+    </section>
+    <section id="manifesto" class="manifesto section-shell">
+      <p class="eyebrow" data-reveal>FOR PEOPLE WITH SOMETHING IN MIND</p>
+      <h2 data-reveal>Think a little bigger.<br><span>Give your ideas a way forward.</span></h2>
+      <p class="section-description" data-reveal>A new product. A question worth exploring. A project you keep coming back to. V8 brings models, tools and your work together, so you can turn an idea into something real, one step at a time.</p>
+      <div class="manifesto-line" aria-hidden="true"></div>
+    </section>
+    <section id="experience" class="experience section-shell" aria-labelledby="work-title">
+      <div class="section-heading" data-reveal><div><p class="eyebrow">01 / START WITH AN IDEA</p><h2 id="work-title">Big plans.<br>Meet the first step.</h2></div><p class="section-description">Bring your goal. Let research inform the build, and creative work give it a voice. Keep your progress together, with something to refine at every step.</p></div>
+      <div class="scenario-tabs" aria-label="Explore ways to work"><a id="tab-research" class="scenario-tab is-active" href="#scenario-research" data-scenario="research"><span>01</span>Find a direction<span class="tab-arrow" aria-hidden="true">↗</span></a><a id="tab-workspace" class="scenario-tab" href="#scenario-workspace" data-scenario="workspace"><span>02</span>Build the first version<span class="tab-arrow" aria-hidden="true">↗</span></a><a id="tab-creative" class="scenario-tab" href="#scenario-creative" data-scenario="creative"><span>03</span>Make it your own<span class="tab-arrow" aria-hidden="true">↗</span></a></div>
+      <div class="scenario-panels"><article id="scenario-research" class="scenario is-active" aria-labelledby="tab-research"><figure class="media-frame concept-capture concept-research"><div class="concept-toolbar"><span><i></i><i></i><i></i></span><span>V8 / Research brief</span><span>↗</span></div><div class="concept-content"><div class="concept-prompt"><span class="prompt-mark" aria-hidden="true">✳</span><p>Explore this product idea and find the opportunities worth testing.</p></div><div class="concept-flow"><span><i aria-hidden="true">01</i>Ask a question</span><span><i aria-hidden="true">02</i>Explore the evidence</span><span><i aria-hidden="true">03</i>Find a direction</span></div><div class="concept-artifact"><div class="artifact-art" aria-hidden="true"><i></i><i></i><i></i></div><div><span class="artifact-label">Research brief</span><p>Questions &amp; context / Sources &amp; findings / Next steps</p><div class="artifact-lines" aria-hidden="true"><i></i><i></i><i></i></div></div><span class="artifact-arrow" aria-hidden="true">↗</span></div><p class="concept-result"><span aria-hidden="true">↳</span> Take the insight into your next step.</p></div><figcaption>ILLUSTRATIVE WORKFLOW · NOT A PRODUCT CAPTURE</figcaption></figure><div class="scenario-description"><h3>Turn curiosity into an informed next move.</h3><p>Research a real question, gather sources and connect your findings. Give the next decision a stronger foundation.</p></div></article><article id="scenario-workspace" class="scenario" aria-labelledby="tab-workspace"><figure class="media-frame concept-capture concept-workspace"><div class="concept-toolbar"><span><i></i><i></i><i></i></span><span>V8 / Product prototype</span><span>↗</span></div><div class="concept-content"><div class="concept-prompt"><span class="prompt-mark" aria-hidden="true">✳</span><p>Turn this idea into a product prototype I can demonstrate.</p></div><div class="concept-flow"><span><i aria-hidden="true">01</i>Shape the goal</span><span><i aria-hidden="true">02</i>Build the project</span><span><i aria-hidden="true">03</i>Explore the result</span></div><div class="concept-artifact"><div class="artifact-art" aria-hidden="true"><i></i><i></i><i></i></div><div><span class="artifact-label">Product prototype</span><p>Project files / Pages &amp; interactions / Demo preparation</p><div class="artifact-lines" aria-hidden="true"><i></i><i></i><i></i></div></div><span class="artifact-arrow" aria-hidden="true">↗</span></div><p class="concept-result"><span aria-hidden="true">↳</span> From a thought to a first version you can show.</p></div><figcaption>ILLUSTRATIVE WORKFLOW · NOT A PRODUCT CAPTURE</figcaption></figure><div class="scenario-description"><h3>Give the idea in your head a version you can open.</h3><p>Move development forward with your goals and existing materials. Review the changes and results in your project, then keep improving.</p></div></article><article id="scenario-creative" class="scenario" aria-labelledby="tab-creative"><figure class="media-frame concept-capture concept-creative"><div class="concept-toolbar"><span><i></i><i></i><i></i></span><span>V8 / Creative canvas</span><span>↗</span></div><div class="concept-content"><div class="concept-prompt"><span class="prompt-mark" aria-hidden="true">✳</span><p>Use these materials to create a set of visuals for my new product.</p></div><div class="concept-flow"><span><i aria-hidden="true">01</i>Bring your materials</span><span><i aria-hidden="true">02</i>Explore a direction</span><span><i aria-hidden="true">03</i>Refine the work</span></div><div class="concept-artifact"><div class="artifact-art" aria-hidden="true"><i></i><i></i><i></i></div><div><span class="artifact-label">Creative canvas</span><p>Source materials / Visual exploration / Editing &amp; delivery</p><div class="artifact-lines" aria-hidden="true"><i></i><i></i><i></i></div></div><span class="artifact-arrow" aria-hidden="true">↗</span></div><p class="concept-result"><span aria-hidden="true">↳</span> Bring your perspective into everything you make.</p></div><figcaption>ILLUSTRATIVE WORKFLOW · NOT A PRODUCT CAPTURE</figcaption></figure><div class="scenario-description"><h3>Give your work a voice of its own.</h3><p>Bring materials onto the canvas, explore a creative direction and edit the results. Let the work take shape around your ideas.</p></div></article></div>
+    </section>
+    <section id="film" class="film-section section-shell" aria-labelledby="film-title">
+      <div class="film-frame" data-reveal>
+        <div class="film-placeholder"><div class="film-orbit" aria-hidden="true"></div><div class="film-topline"><span>THE V8 FILM</span><span>COMING SOON</span></div><div class="film-center"><span class="film-emblem" aria-hidden="true">V8</span><h2 id="film-title">An idea.<br>A first creation.</h2></div><p class="film-coming"><span class="status-dot"></span>The product film is coming soon</p></div>
+      </div>
+      <div class="film-caption"><p>See how one goal brings research, development and creative work together.</p><span>V8 AGENT OS / THE FILM</span></div>
+    </section>
+    <section id="philosophy" class="philosophy section-shell" aria-labelledby="vision-title">
+      <div class="section-heading" data-reveal><div><p class="eyebrow">02 / BUILT AROUND YOU</p><h2 id="vision-title">More room to act.<br><span>Still yours to direct.</span></h2></div><span class="section-symbol" aria-hidden="true">✳</span></div>
+      <div class="principles"><article class="principle" data-reveal><span class="principle-number">01</span><div><h3>One ambition. Capabilities in concert.</h3><p>V8 works toward your goal, acting directly or bringing in specialist capabilities when needed. Research, code and creative work all have a shared purpose.</p></div><span class="principle-word" aria-hidden="true">PURPOSE</span></article><article class="principle" data-reveal><span class="principle-number">02</span><div><h3>Keep the work. Build on what you know.</h3><p>Project context, materials and artifacts stay together in your workspace. Pick up with the ground you have already covered, and give the next idea a better starting point.</p></div><span class="principle-word" aria-hidden="true">CONTINUITY</span></article><article class="principle" data-reveal><span class="principle-number">03</span><div><h3>Your system. Your way of working.</h3><p>Choose your models, connect useful tools and expand when you need to. See the process, add direction and stay in charge of the decisions that matter.</p></div><span class="principle-word" aria-hidden="true">OWNERSHIP</span></article></div>
+    </section>
+    <section class="phone-section section-shell" aria-labelledby="phone-title">
+      <div class="phone-copy" data-reveal><p class="eyebrow">03 / IDEAS TRAVEL WITH YOU</p><h2 id="phone-title">Step away from the desk.<br>Stay close to the idea.</h2><p class="section-description">Let your computer do the work. Use your paired phone to check progress, add a thought or respond to a decision. Come back to the desk and keep refining.</p><ul class="phone-benefits"><li>Follow project progress</li><li>Add ideas and materials</li><li>Respond to key decisions</li></ul><p class="fine-print">Android Phone Preview · Requires a connection to your running desktop</p></div>
+      <div class="phone-stage" data-reveal><div class="phone-orbits" aria-hidden="true"><i></i><i></i><i></i></div><figure class="phone-device"><div class="phone-status"><span>09:41</span><i></i><span aria-hidden="true">▰</span></div><div class="phone-body"><div class="phone-app"><img src="./assets/mark.svg" alt="" width="28" height="28"><span>V8 Agent OS</span><span>＋</span></div><span class="phone-project">My next creation</span><p class="phone-user-message">I have another idea.</p><div class="phone-response"><span aria-hidden="true">✳</span><p>Bring that thought back to the project. Keep shaping it together.</p></div><div class="phone-mini-art" aria-hidden="true"><i></i><span>V8</span></div><div class="phone-composer" aria-hidden="true"><span>＋</span><i></i><span>↑</span></div></div><figcaption>ILLUSTRATIVE MOBILE EXPERIENCE</figcaption></figure></div>
+    </section>
+    <section class="ecosystem section-shell" aria-labelledby="ecosystem-title">
+      <p class="eyebrow" data-reveal>OPEN BY DESIGN</p><h2 id="ecosystem-title" data-reveal>Bring a world of capabilities<br>into your way of working.</h2><p class="section-description" data-reveal>From models and development tools to creative services and everyday apps. Open connections give your personal workspace room to grow.</p>
+      <div class="capability-strip" data-reveal><span><i aria-hidden="true">◈</i>Model choice</span><span><i aria-hidden="true">⌘</i>Developer tools</span><span><i aria-hidden="true">↗</i>Research &amp; search</span><span><i aria-hidden="true">✳</i>Creative services</span><span><i aria-hidden="true">◇</i>Skills</span><span><i aria-hidden="true">⤴</i>MCP</span></div><p class="fine-print">Available capabilities depend on your models, installed plugins and configuration.</p>
+    </section>
+    <section id="community" class="community section-shell" aria-labelledby="community-title">
+      <div class="community-visual" aria-hidden="true"><div class="builder-tile tile-one">✳</div><div class="builder-tile tile-two">↗</div><div class="builder-tile tile-three"><img src="./assets/mark.svg" width="80" height="80" alt=""></div><div class="builder-tile tile-four">{ }</div><div class="builder-tile tile-five">✦</div><div class="community-grid"></div></div>
+      <div class="community-copy" data-reveal><p class="eyebrow">V8 BUILDERS</p><h2 id="community-title">Your next step.<br>Someone else&#x27;s inspiration.</h2><p class="section-description">Share what you make. Exchange what works. Help each other take an idea further. The next possibilities for V8 will come from the people using it.</p><div class="community-topics"><span>Show what you made</span><span>Share what you learned</span><span>Shape what comes next</span></div><a class="button button-primary" href="https://github.com/justForever17/v8-agent-os/discussions" target="_blank" rel="noopener noreferrer">Join the community <span aria-hidden="true">↗</span></a><a class="understated-link" href="https://github.com/justForever17/v8-agent-os" target="_blank" rel="noopener noreferrer">Contribute on GitHub <span aria-hidden="true">↗</span></a></div>
+    </section>
+    <section id="download" class="download-section" aria-labelledby="download-title"><div class="download-glow" aria-hidden="true"></div><div class="section-shell"><p class="eyebrow" data-reveal>YOUR NEXT CHAPTER</p><h2 id="download-title" data-reveal>Your next big idea.<br>Starts with you.</h2><p class="section-description" data-reveal>Bring V8 to your computer. Start with a real project.</p><div class="download-actions"><a class="button button-primary" href="https://github.com/justForever17/v8-agent-os/releases/latest" target="_blank" rel="noopener noreferrer">Choose a desktop preview <span aria-hidden="true">↗</span></a><a class="button button-outline" href="https://github.com/justForever17/v8-agent-os/blob/main/README.md#quick-start" target="_blank" rel="noopener noreferrer">Follow the quick start <span aria-hidden="true">↗</span></a></div><p class="platforms">Windows · macOS · Linux</p><p class="download-note">Currently an unsigned Preview. Your operating system may ask you to confirm installation. Model configuration is required; third-party models and services may have separate charges. Choose the release asset for your platform.</p></div></section>
+    <section class="faq-section section-shell" aria-label="BEFORE YOU START"><p class="eyebrow">BEFORE YOU START</p><div class="faq-list"><details><summary>Who is V8 Agent OS for?<span aria-hidden="true">+</span></summary><p>Independent developers, creators and small teams who want to use AI for real projects. Start with a clear research, development or creative task and build your own way of working from there.</p></details><details><summary>Does it replace my computer&#x27;s operating system?<span aria-hidden="true">+</span></summary><p>V8 is a desktop AI workspace running on Windows, macOS or Linux. Install and configure the app to get started. You do not need to replace your existing operating system.</p></details><details><summary>Does local first mean completely offline?<span aria-hidden="true">+</span></summary><p>Your computer is the center of your project work. When you use cloud models, search or creative services, relevant data is sent to the services you configure. Network use and data flows depend on those capabilities. Not every task can run offline.</p></details><details><summary>What do I need, and what does it cost?<span aria-hidden="true">+</span></summary><p>You need a supported computer, a project folder and a working model connection. V8 source code is MIT licensed. Model APIs and third-party services are billed by their providers; the open-source software does not include free model credits. The quick start walks through initial setup.</p></details><details><summary>Can the phone run desktop tasks on its own?<span aria-hidden="true">+</span></summary><p>Phone is a paired remote interface. Your desktop needs to stay running and reachable. You can follow tasks, add materials and respond to decisions; the phone does not replace the desktop runtime.</p></details><details><summary>What stage is the product at?<span aria-hidden="true">+</span></summary><p>Desktop and Android Phone previews are available, with capabilities and installation experience still evolving. Concept illustrations on this page explain ways of working. The product film will appear here when available. See GitHub Releases for current platform assets and updates.</p></details></div></section>
+  </main>
+  <footer class="site-footer section-shell"><div class="footer-top"><a class="brand" href="./"><img src="./assets/mark.svg" alt="" width="28" height="28"><span>V8 Agent OS</span></a><p>Give your ideas a way forward.</p><div class="footer-links"><a href="https://github.com/justForever17/v8-agent-os/blob/main/README.md#quick-start">Documentation</a><a href="https://github.com/justForever17/v8-agent-os">Source code</a><a href="https://github.com/justForever17/v8-agent-os/releases">Releases</a><a href="https://afdian.com/a/justforever17" target="_blank" rel="noopener noreferrer">Support V8</a></div></div><div class="footer-bottom"><span>© 2026 V8 Agent OS · Built for independent creation.</span><button class="motion-toggle" type="button" aria-pressed="false" data-pause="Pause page animations" data-resume="Enable page animations"><span aria-hidden="true">Ⅱ</span><span data-motion-label>Pause page animations</span></button></div><div class="footer-wordmark" aria-hidden="true">V8 AGENT OS</div></footer>
+  <dialog class="image-dialog" aria-label="V8 Agent OS product capture"><button class="dialog-close" type="button" aria-label="Close image">×</button><img alt=""></dialog>
+</body>
 </html>

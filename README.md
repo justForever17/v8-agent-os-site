@@ -1,78 +1,48 @@
-# V8 Agent OS Site
+# V8 Agent OS — Product portal
 
-Public bilingual landing site for **V8 Agent OS**.
+**Big ideas. Your move.** The bilingual product portal for [V8 Agent OS](https://github.com/justForever17/v8-agent-os), a personal AI workspace for research, development and creative work.
 
-This repo exists to make one feeling land fast: **V8 Agent OS is for people who are tired of re-explaining the same project, drowning in tool catalogs, and losing control once an agent starts running.**
+[Website](https://v8agentos.top/) · [中文](README-ZH.md) · [Community](https://github.com/justForever17/v8-agent-os/discussions) · [Download Preview](https://github.com/justForever17/v8-agent-os/releases/latest)
 
-Within seconds, the site should make five things obvious:
+## Develop
 
-1. V8 helps you **repeat yourself less**.
-2. V8 keeps **tool noise under control** even when the catalog is large.
-3. V8 makes long-running work **visible, steerable, and approval-friendly**.
-4. V8 can turn successful screen work into **more reusable execution** instead of leaving it as a one-off trick.
-5. V8 gives creative work a **governed canvas, reusable workspace assets, exact local editing, and delivery QA** instead of scattering media across prompts and folders.
+Python 3.12+ builds the site using the standard library. No frontend framework or runtime CDN is required.
 
-## What this site should do
-
-- sell the product in human language instead of maintainer language
-- make install feel direct and low-friction
-- point GitHub, docs, and install back to the unified [`v8-agent-os`](https://github.com/justForever17/v8-agent-os) repository
-- keep English and Chinese pages structurally aligned
-- describe only capabilities that exist in the main repository, with placeholders for new screenshots until current product captures are available
-
-## What this site should never sound like
-
-- a maintenance manual
-- an internal architecture review
-- a split-repo migration note
-- a feature checklist trying to out-shout competitors
-
-## Preview install entry
-
-The public desktop entry is the Windows Desktop Preview on the main repository's [GitHub Releases](https://github.com/justForever17/v8-agent-os/releases). It is still an unsigned preview, not a signed stable build or an auto-update promise. Phone ships as a separate Android Preview APK and pairs through the desktop control center.
-
-The main repository's `bootstrap.ps1` / `bootstrap.sh` scripts install dependencies and start services, defaulting to Engine + Admin. They are not Electron desktop installers. The full source-tree desktop preview entry is:
-
-```powershell
-.\v8os.cmd preview --rebuild
-```
-
-Simple narrative check before publishing:
-
-```bash
+```sh
+python scripts/build_site.py
 python scripts/audit_public_narrative.py
+python scripts/test_media.py
+python -m http.server 8789 --directory dist
 ```
 
-## Local preview
+Open `http://127.0.0.1:8789/` or `/zh/`.
 
-Use any static file server.
+## Sources
 
-```bash
-python -m http.server 8789
+- `content/en.json` and `content/zh.json`: language-specific copy.
+- `templates/index.html`: shared semantic page structure.
+- `assets/styles.css` and `assets/site.js`: visual design and progressive enhancement.
+- `assets/media.json`: screenshot paths and optional public R2 video, poster and caption URLs.
+- `scripts/build_site.py`: generates the committed `index.html`, `zh/index.html`, and `_headers`; assembles a public-only `dist` directory.
+
+Edit the sources, then rebuild. `python scripts/build_site.py --check` verifies the committed output is current. The committed root pages remain compatible with the existing Cloudflare Pages Git integration. When configuring a build, use `python scripts/build_site.py` and output directory `dist`.
+
+Empty media settings render clearly identified concept illustrations and a coming-soon film section. Screenshots accept local paths under `assets/media/`. Film settings accept local files or permanent public HTTPS URLs without credentials, query parameters or fragments. R2 origins are added to the generated Content Security Policy; configure CORS on your bucket for playback and captions. Large videos belong in R2, not Git.
+
+The site includes native navigation and FAQ without JavaScript, keyboard-operable scenario tabs, optional screenshot enlargement, reduced-motion support and a page animation pause control. Preview status, model configuration and third-party charges are explained near downloads.
+
+## Browser acceptance
+
+```sh
+pip install -r scripts/requirements-test.txt
+python -m playwright install chromium
+python scripts/test_browser.py
 ```
 
-Then open:
+Tests cover desktop/mobile layouts, both languages, tabs, navigation, FAQ, no-JavaScript use, reduced motion, decoded video and captions using isolated transport fixtures, media failure states and the screenshot dialog. Actual user-provided R2 links still require live playback verification.
 
-```text
-http://127.0.0.1:8789/
-```
+CI checks the generated output and uploads only `dist`. Private preparation documents and acceptance captures are stored outside this repository and are not part of the public site.
 
-## Repository layout
+## Credits
 
-| Path | Purpose |
-| --- | --- |
-| `index.html` | English landing page |
-| `zh/index.html` | Chinese landing page |
-| `assets/` | Shared styles, scripts, and brand assets |
-
-## Keep aligned with
-
-- the public story in [`v8-agent-os`](https://github.com/justForever17/v8-agent-os)
-- the real responsibility boundaries between GitHub Releases, `v8os preview`, and bootstrap
-- the current docs exposed from the unified main repository
-
-## Support V8 Agent OS
-
-If this project helps your team stop repeating itself, keep long-running work under control, and trust agent systems more, you can support ongoing work here:
-
-[https://afdian.com/a/justForever17](https://afdian.com/a/justforever17)
+Original V8 orbit illustration and portal artwork. Manrope is self-hosted under the SIL Open Font License; see `assets/fonts/OFL.txt`. Product source and release assets are maintained in the main V8 Agent OS repository.

@@ -1,328 +1,89 @@
 <!doctype html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>V8 Agent OS - 桌面优先的 Agent 工作空间</title>
-    <meta
-      name="description"
-      content="V8 Agent OS 是本地优先的桌面 Agent 工作空间，提供 Supervisor 编排、可恢复 runtime、受治理插件、Phone 远程续接、创意产物画布与可验证产物。"
-    />
-    <link rel="icon" type="image/png" href="../assets/brand-mark.png" />
-    <link rel="stylesheet" href="../assets/styles.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  </head>
-  <body>
-    <div class="site-shell">
-      <header class="topbar">
-        <a class="brand" href="./index.html">
-          <img src="../assets/brand-mark.png" alt="V8 Agent OS Logo" />
-          <span>V8 Agent OS</span>
-        </a>
-        <div class="topbar-actions">
-          <a href="https://github.com/justForever17/v8-agent-os" target="_blank" rel="noreferrer">GitHub</a>
-          <a href="../index.html">EN</a>
-        </div>
-      </header>
-
-      <main>
-        <section class="hero">
-          <span class="mono-label">Desktop Preview // Supervisor First, Runtime Grounded</span>
-          <h1 class="display">不止于对话。<br />这是面向长期任务的桌面 Agent OS。</h1>
-          <p class="lede">
-            V8 把 Supervisor 的判断放在任务前台，把执行建立在 runtime 状态、证据、产物和明确边界上。<br />
-            桌面端是主要工作区；编程、调研、多媒体、桌面操作和 RPA 各自承担专门执行，配对后的 Phone 用于远程续接任务与处理受治理的确认。
-          </p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="#install">安装桌面预览版</a>
-            <a class="btn btn-secondary" href="https://github.com/justForever17/v8-agent-os" target="_blank">查阅核心源码</a>
-          </div>
-        </section>
-
-        <!-- 产品能力网格：已有截图保留，新能力先使用待替换占位 -->
-        <section class="bento-grid">
-          
-          <!-- 1. 记忆分层网络 -->
-          <article class="bento-card span-8">
-            <div class="flip-inner">
-              <div class="flip-front">
-                <div class="card-icon">[01] MEMORY_GRAPH</div>
-                <h3 class="card-title">基于证据的记忆与图谱审阅</h3>
-                <p class="card-desc">记忆保存的是证据、偏好、图关系和产物，而不是一条可以替代当前指令的命令流。维护任务与 Admin 图谱帮助用户审阅、修改并追踪本轮究竟召回了什么。</p>
-              </div>
-              <div class="flip-back">
-                <div class="card-image-wrapper">
-                  <img src="../image/memory.png" alt="Memory Graph UI" />
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <!-- 2. 小模型算力路由 -->
-          <article class="bento-card span-4">
-            <div class="flip-inner">
-              <div class="flip-front">
-                <div class="card-icon">[02] COST_ROUTING</div>
-                <h3 class="card-title">按角色配置模型与故障回流</h3>
-                <p class="card-desc">Supervisor、子 Agent、多媒体、向量和辅助任务可以使用不同模型与供应商。健康检查和 failover 会明确暴露降级路径，而不是静默掩盖。</p>
-              </div>
-              <div class="flip-back">
-                <div class="card-image-wrapper">
-                  <img src="../image/localmodel.png" alt="Local Model Routing" />
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <!-- 8. 移动端远程运控 -->
-          <article class="bento-card span-6">
-            <div class="flip-inner">
-              <div class="flip-front">
-                <div class="card-icon">[03] REMOTE_OPS</div>
-                <h3 class="card-title">配对 Phone 的远程任务续接</h3>
-                <p class="card-desc">桌面端始终是主要工作区。配对后的 Phone 可以继续任务、回答阻塞问题、发送语音或文件、查看产物，并在离开电脑时处理受治理的副作用确认。</p>
-              </div>
-              <div class="flip-back">
-                <div class="card-image-wrapper multi-phone">
-                  <img src="../image/phone1.png" alt="Remote App 1" />
-                  <img src="../image/phone2.png" alt="Remote App 2" />
-                  <img src="../image/phone3.png" alt="Remote App 3" />
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <!-- 3. 插件治理 -->
-          <article class="bento-card span-6">
-            <div class="flip-inner">
-              <div class="flip-front">
-                <div class="card-icon">[04] PLUGIN_MANAGER</div>
-                <h3 class="card-title">受治理的插件管理器</h3>
-                <p class="card-desc">从签名目录安装经过审核的 CLI、MCP、Skill 与 UI 能力包。高德、MediaKit CLI 全量 schema 动作和受治理的 Wrangler 浏览器登录均可按需使用；Supervisor 只授权最小就绪组件。</p>
-              </div>
-              <div class="flip-back">
-                <div class="card-image-wrapper">
-                  <img src="../image/v8bridge.png" alt="V8 插件管理器" />
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <!-- 4. 防投毒审批流 -->
-          <article class="bento-card span-4">
-            <div class="flip-inner">
-              <div class="flip-front">
-                <div class="card-icon">[05] ZERO_TRUST_OPS</div>
-                <h3 class="card-title">受治理的副作用与权限边界</h3>
-                <p class="card-desc">工作区边界、类型化 CLI 动作、审批、授权摘要与逐次调用校验共同约束特权操作。被阻断或降级时，系统返回原因和恢复入口，而不是伪造成功。</p>
-              </div>
-              <div class="flip-back">
-                <div class="card-image-wrapper">
-                  <img src="../image/operations-center.png" alt="Operations Center Approval" />
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <!-- 5. 工具按需暴露与归一化 -->
-          <article class="bento-card span-4">
-            <div class="flip-inner">
-              <div class="flip-front">
-                <div class="card-icon">[06] DYNAMIC_EXPOSURE</div>
-                <h3 class="card-title">按任务预筛的 Skill 与 MCP</h3>
-                <p class="card-desc">通用 Skill 和 MCP 只按当前任务进入候选面，避免把完整工具目录塞给模型。插件拥有的组件保持隔离，只有有效 task grant 才会投影。</p>
-              </div>
-              <div class="flip-back">
-                <div class="card-image-wrapper">
-                  <img src="../image/mcpskills.png" alt="Dynamic Skill Reranking" />
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <!-- 6. 真实屏幕点击转 RPA -->
-          <article class="bento-card span-4">
-            <div class="flip-inner">
-              <div class="flip-front">
-                <div class="card-icon">[07] UI_TO_RPA</div>
-                <h3 class="card-title">从已验证桌面操作沉淀 RPA</h3>
-                <p class="card-desc">Computer Use 负责观察并完成一次性桌面任务；只有作用域、环境、时序和验证证据明确后，重复步骤才会被提升为可复用 RPA。</p>
-              </div>
-              <div class="flip-back">
-                <div class="card-image-wrapper">
-                  <img src="../image/RPA.png" alt="Computer Use to RPA" />
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <!-- 7. 全自主 Auto-runtime -->
-          <article class="bento-card span-12">
-            <div class="flip-inner">
-              <div class="flip-front">
-                <div class="card-icon">[08] AUTO_RUNTIME</div>
-                <h3 class="card-title">可恢复的 Runtime Episode 与 Handoff</h3>
-                <p class="card-desc">队列、租约、类型化 handoff、产物和恢复状态让复杂执行在暂停与重启后仍可检查。低风险串行修改留在可信工作区；并行、风险隔离或恢复候选才进入托管 worktree，并由 Supervisor 验证交付。</p>
-              </div>
-              <div class="flip-back">
-                <div class="card-image-wrapper">
-                  <img src="../image/automation.png" alt="Auto Runtime Decoupling" />
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <!-- 9. 跨会话接管 -->
-          <article class="bento-card span-6">
-            <div class="flip-inner">
-              <div class="flip-front">
-                <div class="card-icon">[09] SESSION_TAKEOVER</div>
-                <h3 class="card-title">安全的跨会话任务接管</h3>
-                <p class="card-desc">新任务可以引用旧任务的目标、确认决定、Spec 状态、产物、失败和阻塞，但不会继承旧工作区、权限、checkpoint 或 runtime episode。</p>
-              </div>
-              <div class="flip-back">
-                <div class="card-image-wrapper">
-                  <div class="feature-placeholder" role="img" aria-label="跨会话接管截图占位">
-                    <span>待补当前截图</span>
-                    <strong>跨会话任务接管</strong>
-                    <small>后续替换为 Web 与 Phone 的会话引用流程。</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <!-- 10. Spec 与委派 -->
-          <article class="bento-card span-6">
-            <div class="flip-inner">
-              <div class="flip-front">
-                <div class="card-icon">[10] SPEC_DELEGATION</div>
-                <h3 class="card-title">Spec 模式与委派合同</h3>
-                <p class="card-desc">需求、设计和任务阶段保留稳定 ID 与审批。子 Agent 回流继续携带 lineage、精确写集、自检、产物和父级验收，不再被压成一句模糊摘要。</p>
-              </div>
-              <div class="flip-back">
-                <div class="card-image-wrapper">
-                  <div class="feature-placeholder" role="img" aria-label="Spec 与委派截图占位">
-                    <span>待补当前截图</span>
-                    <strong>Spec 与委派合同</strong>
-                    <small>后续替换为阶段审批与 handoff 证据。</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <!-- 11. 多媒体创作 -->
-          <article class="bento-card span-6">
-            <div class="flip-inner">
-              <div class="flip-front">
-                <div class="card-icon">[11] CREATIVE_MEDIA</div>
-                <h3 class="card-title">创意产物画布与交付 QA</h3>
-                <p class="card-desc">在受治理画布中组织会话产物和已采用的工作区素材，再发起 provider 生成或精确帧/采样编辑。六个稳定 facade 让 recipe、血缘、artifact proof 与 QA 留在交付链上。</p>
-              </div>
-              <div class="flip-back">
-                <div class="card-image-wrapper">
-                  <div class="feature-placeholder" role="img" aria-label="创意产物画布截图占位">
-                    <span>待补当前截图</span>
-                    <strong>创意产物画布</strong>
-                    <small>后续替换为当前画布、工作区素材与精确编辑页面。</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <!-- 12. 桌宠伴随器 -->
-          <article class="bento-card span-6">
-            <div class="flip-inner">
-              <div class="flip-front">
-                <div class="card-icon">[12] DESKTOP_COMPANION</div>
-                <h3 class="card-title">由 Shell 管理的桌宠伴随器</h3>
-                <p class="card-desc">桌宠通过本机鉴权控制通道跟随当前任务，在桌面应用内打开设置，保存后即时应用外观，并在强制兜底前优先执行自身的优雅关闭动画。</p>
-              </div>
-              <div class="flip-back">
-                <div class="card-image-wrapper">
-                  <div class="feature-placeholder" role="img" aria-label="桌宠伴随器截图占位">
-                    <span>待补当前截图</span>
-                    <strong>桌宠任务同步与生命周期</strong>
-                    <small>后续替换为任务跟随与托管状态页面。</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </article>
-
-        </section>
-
-        <section id="install" class="tech-section">
-          <span class="mono-label">Deployment // Desktop Preview</span>
-          <h2 class="display" style="font-size: 2.2rem; margin-bottom: 12px; font-weight: 500;">一个不混淆的桌面入口。</h2>
-          <p class="lede" style="max-width: 680px;">从 GitHub Releases 下载 unsigned Windows Desktop Preview。它不是已签名 stable 或自动更新版本；Phone 仍是单独安装并配对的远程交互面。</p>
-          
-          <div class="install-grid">
-            <div class="install-box">
-              <h3>Windows 桌面预览版</h3>
-              <div class="code-block">GitHub Releases → 最新 v8-os-desktop-v* 资产</div>
-              <button class="copy-btn" onclick="window.open('https://github.com/justForever17/v8-agent-os/releases', '_blank', 'noopener')">打开发布页</button>
-            </div>
-            
-            <div class="install-box">
-              <h3>源码树桌面预览</h3>
-              <div class="code-block">.\v8os.cmd preview --rebuild</div>
-              <button class="copy-btn" onclick="navigator.clipboard.writeText('.\\v8os.cmd preview --rebuild')">复制命令</button>
-              <p class="card-desc">请先准备 desktop profile 依赖。bootstrap 默认只启动 Engine + Admin 服务，不是 Electron 安装器。</p>
-            </div>
-          </div>
-        </section>
-
-        <!-- 修改了底部的文档链接体系 -->
-        <footer class="footer-nav">
-          <a href="https://github.com/justForever17/v8-agent-os/blob/main/docs/V8_AGENT_OS_QUICK_START_ZH.md" target="_blank">快速入门</a>
-          <a href="https://github.com/justForever17/v8-agent-os/blob/main/docs/V8_AGENT_OS_DEVELOPER_GUIDE_ZH.md" target="_blank">开发者文档</a>
-          <a href="https://github.com/justForever17/v8-agent-os/blob/main/docs/V8_AGENT_OS_API_REFERENCE_ZH.md" target="_blank">API 文档</a>
-          <a href="https://github.com/justForever17/v8-agent-os/blob/main/docs/V8_AGENT_OS_CONFIG_GUIDE_ZH.md" target="_blank">详细配置指南</a>
-        </footer>
-      </main>
-    </div>
-    <div id="image-lightbox" class="lightbox">
-      <div class="lightbox-content">
-        <button id="lightbox-close" class="lightbox-close">&times;</button>
-        <img id="lightbox-img" class="lightbox-img" src="" alt="Expanded View" />
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090a0b">
+  <title>V8 Agent OS — 让一个人，也能做成更大的事</title>
+  <meta name="description" content="你的个人 AI 工作系统。让研究、开发与创作围绕同一个目标展开，连接你选择的模型与工具，在自己的电脑上推进真实项目。">
+  <link rel="canonical" href="https://v8agentos.top/zh/">
+  <link rel="alternate" hreflang="en" href="https://v8agentos.top/">
+  <link rel="alternate" hreflang="zh-CN" href="https://v8agentos.top/zh/">
+  <link rel="alternate" hreflang="x-default" href="https://v8agentos.top/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="V8 Agent OS">
+  <meta property="og:title" content="V8 Agent OS — 让一个人，也能做成更大的事">
+  <meta property="og:description" content="你的个人 AI 工作系统。让研究、开发与创作围绕同一个目标展开，连接你选择的模型与工具，在自己的电脑上推进真实项目。">
+  <meta property="og:url" content="https://v8agentos.top/zh/">
+  <meta property="og:image" content="https://v8agentos.top/assets/social-card.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="../assets/mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/styles.css?v=9d8aa30383">
+  <script defer src="../assets/site.js?v=196121e751"></script>
+</head>
+<body data-locale="zh">
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <header class="site-header">
+    <a class="brand" href="./" aria-label="V8 Agent OS"><img src="../assets/mark.svg" alt="" width="32" height="32"><span>V8 <span class="brand-suffix">Agent OS</span></span></a>
+    <nav id="navigation" class="navigation" aria-label="打开导航">
+      <a href="#experience">工作方式</a><a href="#philosophy">产品理念</a><a href="#community">共创社区</a>
+    </nav>
+    <div class="header-actions"><a class="language-link" href="../" lang="en" aria-label="Switch to English">EN</a><a class="header-cta" href="#download">开始创造 <span aria-hidden="true">↗</span></a><button class="menu-button" type="button" aria-label="打开导航" aria-expanded="false" aria-controls="navigation"><span></span><span></span></button></div>
+  </header>
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-grain" aria-hidden="true"></div>
+      <div class="hero-copy">
+        <p class="eyebrow hero-enter"><span class="status-dot"></span>个人 AI 工作系统 · 公开预览版</p>
+        <h1 id="hero-title" class="hero-enter"><span>让一个人，</span><span class="warm-type">也能做成更大的事。</span></h1>
+        <p class="hero-intro hero-enter">让研究、开发与创作，围绕你的目标展开。<br>把选择的模型和工具，变成自己的行动力。</p>
+        <div class="hero-actions hero-enter"><a class="button button-primary" href="#download">下载 V8 预览版 <span aria-hidden="true">↗</span></a><a class="button button-text" href="#experience">探索工作方式 <span aria-hidden="true">↓</span></a></div>
+        <p class="hero-note hero-enter">本地优先。开放源码。由你掌握方向。</p>
       </div>
-    </div>
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const lightbox = document.getElementById('image-lightbox');
-        const lightboxImg = document.getElementById('lightbox-img');
-        const closeBtn = document.getElementById('lightbox-close');
-        
-        document.querySelectorAll('.card-image-wrapper img').forEach(img => {
-          img.addEventListener('click', (e) => {
-            e.stopPropagation();
-            lightboxImg.src = img.src;
-            lightbox.classList.add('active');
-            document.body.style.overflow = 'hidden';
-          });
-        });
-        
-        const closeLightbox = () => {
-          lightbox.classList.remove('active');
-          document.body.style.overflow = '';
-          setTimeout(() => { lightboxImg.src = ''; }, 300);
-        };
-        
-        closeBtn.addEventListener('click', closeLightbox);
-        lightbox.addEventListener('click', (e) => {
-          if (e.target === lightbox || e.target.classList.contains('lightbox-content')) {
-            closeLightbox();
-          }
-        });
-        document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape' && lightbox.classList.contains('active')) {
-            closeLightbox();
-          }
-        });
-      });
-    </script>
-  </body>
+      <div class="orbit-stage" aria-hidden="true">
+        <div class="orbit-aura"></div>
+        <img class="orbit-art" src="../assets/orbit.svg" alt="" width="1200" height="660" fetchpriority="high">
+        <span class="orbit-label orbit-top">一个目标，无限想象。</span><span class="orbit-label orbit-left">研究 · 洞察</span><span class="orbit-label orbit-right">开发 · 创作</span><span class="orbit-label orbit-bottom">BUILT AROUND YOUR AMBITION</span>
+      </div>
+      <a class="scroll-cue" href="#manifesto"><span></span>向下探索</a>
+    </section>
+    <section id="manifesto" class="manifesto section-shell">
+      <p class="eyebrow" data-reveal>为有想法的你而来</p>
+      <h2 data-reveal>你负责想得更远。<br><span>让 AI，成为向前的力量。</span></h2>
+      <p class="section-description" data-reveal>一个新产品，一份深入的研究，一次酝酿已久的创作。V8 将模型、工具和项目连接起来，让你在同一个工作空间里，把想法一步步变成成果。</p>
+      <div class="manifesto-line" aria-hidden="true"></div>
+    </section>
+    <section id="experience" class="experience section-shell" aria-labelledby="work-title">
+      <div class="section-heading" data-reveal><div><p class="eyebrow">01 / 从想法出发</p><h2 id="work-title">大计划。<br>从第一步开始。</h2></div><p class="section-description">把目标带进来，让研究、开发与创作接上彼此。每一步都有去处，每一份成果都能继续打磨。</p></div>
+      <div class="scenario-tabs" aria-label="探索工作场景"><a id="tab-research" class="scenario-tab is-active" href="#scenario-research" data-scenario="research"><span>01</span>找到方向<span class="tab-arrow" aria-hidden="true">↗</span></a><a id="tab-workspace" class="scenario-tab" href="#scenario-workspace" data-scenario="workspace"><span>02</span>做出第一版<span class="tab-arrow" aria-hidden="true">↗</span></a><a id="tab-creative" class="scenario-tab" href="#scenario-creative" data-scenario="creative"><span>03</span>表达你的想法<span class="tab-arrow" aria-hidden="true">↗</span></a></div>
+      <div class="scenario-panels"><article id="scenario-research" class="scenario is-active" aria-labelledby="tab-research"><figure class="media-frame concept-capture concept-research"><div class="concept-toolbar"><span><i></i><i></i><i></i></span><span>V8 / 研究简报</span><span>↗</span></div><div class="concept-content"><div class="concept-prompt"><span class="prompt-mark" aria-hidden="true">✳</span><p>帮我研究这个产品方向，找到值得验证的机会。</p></div><div class="concept-flow"><span><i aria-hidden="true">01</i>研究问题</span><span><i aria-hidden="true">02</i>整理线索</span><span><i aria-hidden="true">03</i>形成判断</span></div><div class="concept-artifact"><div class="artifact-art" aria-hidden="true"><i></i><i></i><i></i></div><div><span class="artifact-label">研究简报</span><p>问题与背景 / 来源与发现 / 下一步建议</p><div class="artifact-lines" aria-hidden="true"><i></i><i></i><i></i></div></div><span class="artifact-arrow" aria-hidden="true">↗</span></div><p class="concept-result"><span aria-hidden="true">↳</span> 带着洞察，进入下一步。</p></div><figcaption>工作方式示意 · 非产品实拍</figcaption></figure><div class="scenario-description"><h3>把好奇，变成有依据的判断。</h3><p>围绕真实问题展开调研，整理来源与发现，让下一步决定有据可依。</p></div></article><article id="scenario-workspace" class="scenario" aria-labelledby="tab-workspace"><figure class="media-frame concept-capture concept-workspace"><div class="concept-toolbar"><span><i></i><i></i><i></i></span><span>V8 / 产品原型</span><span>↗</span></div><div class="concept-content"><div class="concept-prompt"><span class="prompt-mark" aria-hidden="true">✳</span><p>把这个想法做成一个可以演示的产品原型。</p></div><div class="concept-flow"><span><i aria-hidden="true">01</i>梳理目标</span><span><i aria-hidden="true">02</i>推进开发</span><span><i aria-hidden="true">03</i>查看成果</span></div><div class="concept-artifact"><div class="artifact-art" aria-hidden="true"><i></i><i></i><i></i></div><div><span class="artifact-label">产品原型</span><p>项目文件 / 页面与交互 / 演示准备</p><div class="artifact-lines" aria-hidden="true"><i></i><i></i><i></i></div></div><span class="artifact-arrow" aria-hidden="true">↗</span></div><p class="concept-result"><span aria-hidden="true">↳</span> 从一个念头，到可以展示的第一版。</p></div><figcaption>工作方式示意 · 非产品实拍</figcaption></figure><div class="scenario-description"><h3>让脑海里的构想，有一个能打开的版本。</h3><p>带着目标与已有资料推进开发，在项目里查看修改、运行结果，再继续完善。</p></div></article><article id="scenario-creative" class="scenario" aria-labelledby="tab-creative"><figure class="media-frame concept-capture concept-creative"><div class="concept-toolbar"><span><i></i><i></i><i></i></span><span>V8 / 创作画布</span><span>↗</span></div><div class="concept-content"><div class="concept-prompt"><span class="prompt-mark" aria-hidden="true">✳</span><p>用这些素材，为我的新产品准备一组展示内容。</p></div><div class="concept-flow"><span><i aria-hidden="true">01</i>带入素材</span><span><i aria-hidden="true">02</i>探索表达</span><span><i aria-hidden="true">03</i>打磨作品</span></div><div class="concept-artifact"><div class="artifact-art" aria-hidden="true"><i></i><i></i><i></i></div><div><span class="artifact-label">创作画布</span><p>参考素材 / 视觉探索 / 编辑与交付</p><div class="artifact-lines" aria-hidden="true"><i></i><i></i><i></i></div></div><span class="artifact-arrow" aria-hidden="true">↗</span></div><p class="concept-result"><span aria-hidden="true">↳</span> 把你的风格，带到每一份作品里。</p></div><figcaption>工作方式示意 · 非产品实拍</figcaption></figure><div class="scenario-description"><h3>让作品，拥有自己的表达。</h3><p>在画布里组织素材、提出创作方向，再围绕结果继续编辑，让内容与想法逐渐成形。</p></div></article></div>
+    </section>
+    <section id="film" class="film-section section-shell" aria-labelledby="film-title">
+      <div class="film-frame" data-reveal>
+        <div class="film-placeholder"><div class="film-orbit" aria-hidden="true"></div><div class="film-topline"><span>THE V8 FILM</span><span>敬请期待</span></div><div class="film-center"><span class="film-emblem" aria-hidden="true">V8</span><h2 id="film-title">从一个想法，<br>到第一个作品。</h2></div><p class="film-coming"><span class="status-dot"></span>产品影片即将上线</p></div>
+      </div>
+      <div class="film-caption"><p>看见一个目标，如何连接研究、开发与创作。</p><span>V8 AGENT OS / THE FILM</span></div>
+    </section>
+    <section id="philosophy" class="philosophy section-shell" aria-labelledby="vision-title">
+      <div class="section-heading" data-reveal><div><p class="eyebrow">02 / 以你为中心</p><h2 id="vision-title">更大的行动力。<br><span>依然是你的方向。</span></h2></div><span class="section-symbol" aria-hidden="true">✳</span></div>
+      <div class="principles"><article class="principle" data-reveal><span class="principle-number">01</span><div><h3>目标在前，能力随行。</h3><p>V8 理解你想完成什么，直接行动，或在需要时协同专业能力。研究、代码与创意，都为同一个目标服务。</p></div><span class="principle-word" aria-hidden="true">PURPOSE</span></article><article class="principle" data-reveal><span class="principle-number">02</span><div><h3>让工作，积累成自己的底气。</h3><p>项目背景、资料与产物留在工作空间。带着已经走过的路继续前进，让下一次创作有更好的起点。</p></div><span class="principle-word" aria-hidden="true">CONTINUITY</span></article><article class="principle" data-reveal><span class="principle-number">03</span><div><h3>你的系统，你的选择。</h3><p>选择适合自己的模型，连接常用工具，按需要扩展能力。查看过程、补充方向，把关键决定留在自己手里。</p></div><span class="principle-word" aria-hidden="true">OWNERSHIP</span></article></div>
+    </section>
+    <section class="phone-section section-shell" aria-labelledby="phone-title">
+      <div class="phone-copy" data-reveal><p class="eyebrow">03 / 灵感，无需等你回到桌前</p><h2 id="phone-title">人可以离开桌面。<br>想法，继续向前。</h2><p class="section-description">让电脑承担工作，用配对后的手机查看进展、补充一句想法，或回应下一步确认。回到桌前，再接着打磨。</p><ul class="phone-benefits"><li>查看项目进展</li><li>补充灵感与素材</li><li>回应关键确认</li></ul><p class="fine-print">Android Phone Preview · 需与运行中的桌面端配对连接</p></div>
+      <div class="phone-stage" data-reveal><div class="phone-orbits" aria-hidden="true"><i></i><i></i><i></i></div><figure class="phone-device"><div class="phone-status"><span>09:41</span><i></i><span aria-hidden="true">▰</span></div><div class="phone-body"><div class="phone-app"><img src="../assets/mark.svg" alt="" width="28" height="28"><span>V8 Agent OS</span><span>＋</span></div><span class="phone-project">我的下一个作品</span><p class="phone-user-message">我有一个新想法。</p><div class="phone-response"><span aria-hidden="true">✳</span><p>把你的补充带回项目，继续一起打磨。</p></div><div class="phone-mini-art" aria-hidden="true"><i></i><span>V8</span></div><div class="phone-composer" aria-hidden="true"><span>＋</span><i></i><span>↑</span></div></div><figcaption>移动体验示意</figcaption></figure></div>
+    </section>
+    <section class="ecosystem section-shell" aria-labelledby="ecosystem-title">
+      <p class="eyebrow" data-reveal>OPEN BY DESIGN</p><h2 id="ecosystem-title" data-reveal>把世界的能力，<br>接进自己的工作方式。</h2><p class="section-description" data-reveal>从模型到工具，从专业技能到日常应用。V8 以开放的连接方式，让你的工作系统有继续生长的空间。</p>
+      <div class="capability-strip" data-reveal><span><i aria-hidden="true">◈</i>模型选择</span><span><i aria-hidden="true">⌘</i>开发工具</span><span><i aria-hidden="true">↗</i>研究与检索</span><span><i aria-hidden="true">✳</i>创作服务</span><span><i aria-hidden="true">◇</i>Skills</span><span><i aria-hidden="true">⤴</i>MCP</span></div><p class="fine-print">扩展能力依实际模型、插件安装与配置而定。</p>
+    </section>
+    <section id="community" class="community section-shell" aria-labelledby="community-title">
+      <div class="community-visual" aria-hidden="true"><div class="builder-tile tile-one">✳</div><div class="builder-tile tile-two">↗</div><div class="builder-tile tile-three"><img src="../assets/mark.svg" width="80" height="80" alt=""></div><div class="builder-tile tile-four">{ }</div><div class="builder-tile tile-five">✦</div><div class="community-grid"></div></div>
+      <div class="community-copy" data-reveal><p class="eyebrow">V8 BUILDERS</p><h2 id="community-title">你的下一步，<br>也许正是别人的灵感。</h2><p class="section-description">分享做出的作品，交流走通的方法，一起把想法的边界推远一点。V8 的下一种可能，由使用它的人共同创造。</p><div class="community-topics"><span>展示你的作品</span><span>交流使用经验</span><span>提出下一种可能</span></div><a class="button button-primary" href="https://github.com/justForever17/v8-agent-os/discussions" target="_blank" rel="noopener noreferrer">进入共创社区 <span aria-hidden="true">↗</span></a><a class="understated-link" href="https://github.com/justForever17/v8-agent-os" target="_blank" rel="noopener noreferrer">参与开源项目 <span aria-hidden="true">↗</span></a></div>
+    </section>
+    <section id="download" class="download-section" aria-labelledby="download-title"><div class="download-glow" aria-hidden="true"></div><div class="section-shell"><p class="eyebrow" data-reveal>YOUR NEXT CHAPTER</p><h2 id="download-title" data-reveal>下一个大想法。<br>从你开始。</h2><p class="section-description" data-reveal>把 V8 带到自己的电脑，开始第一个真实项目。</p><div class="download-actions"><a class="button button-primary" href="https://github.com/justForever17/v8-agent-os/releases/latest" target="_blank" rel="noopener noreferrer">选择桌面预览版 <span aria-hidden="true">↗</span></a><a class="button button-outline" href="https://github.com/justForever17/v8-agent-os/blob/main/docs/V8_AGENT_OS_QUICK_START_ZH.md" target="_blank" rel="noopener noreferrer">跟随快速入门 <span aria-hidden="true">↗</span></a></div><p class="platforms">Windows · macOS · Linux</p><p class="download-note">当前为未签名 Preview，安装时可能需要系统确认。使用前需配置模型；第三方模型与服务可能单独收费。请按平台选择发布页中的安装包。</p></div></section>
+    <section class="faq-section section-shell" aria-label="开始之前"><p class="eyebrow">开始之前</p><div class="faq-list"><details><summary>V8 Agent OS 适合谁？<span aria-hidden="true">+</span></summary><p>适合希望用 AI 推进真实项目的独立开发者、创作者与小团队。你可以从一个明确的研究、开发或创作任务开始，逐步建立自己的工作方式。</p></details><details><summary>它是一个需要重新安装电脑的操作系统吗？<span aria-hidden="true">+</span></summary><p>V8 是运行在 Windows、macOS 或 Linux 上的桌面 AI 工作系统。安装应用即可开始配置，不需要替换电脑原有的操作系统。</p></details><details><summary>本地优先，意味着完全离线吗？<span aria-hidden="true">+</span></summary><p>项目工作以你的电脑为中心。调用云端模型、搜索或创作服务时，相关数据会发送至你配置的服务；实际网络与数据流向取决于所选能力。本地优先不代表所有任务都能离线完成。</p></details><details><summary>我需要准备什么？使用会产生费用吗？<span aria-hidden="true">+</span></summary><p>准备一台受支持的电脑、一个用于项目的文件夹，以及可用的模型连接。V8 源码采用 MIT 许可；模型 API 和第三方服务的费用由相应提供方收取，软件开源不包含免费模型额度。快速入门会带你完成首次配置。</p></details><details><summary>手机可以独立执行电脑上的任务吗？<span aria-hidden="true">+</span></summary><p>Phone 是配对后的远程交互入口。电脑端需要保持运行，手机需要能够连接到它。你可以跟进任务、补充资料和处理确认；手机不替代桌面端运行系统。</p></details><details><summary>当前版本是什么状态？<span aria-hidden="true">+</span></summary><p>当前提供桌面与 Android Phone 预览版，能力与安装体验仍在持续完善。页面中的概念图用于解释工作方式；产品影片上线后将在本页展示。具体平台资产与更新以 GitHub Releases 为准。</p></details></div></section>
+  </main>
+  <footer class="site-footer section-shell"><div class="footer-top"><a class="brand" href="./"><img src="../assets/mark.svg" alt="" width="28" height="28"><span>V8 Agent OS</span></a><p>让想法，拥有行动力。</p><div class="footer-links"><a href="https://github.com/justForever17/v8-agent-os/blob/main/docs/V8_AGENT_OS_QUICK_START_ZH.md">文档</a><a href="https://github.com/justForever17/v8-agent-os">开源代码</a><a href="https://github.com/justForever17/v8-agent-os/releases">版本更新</a><a href="https://afdian.com/a/justforever17" target="_blank" rel="noopener noreferrer">支持项目</a></div></div><div class="footer-bottom"><span>© 2026 V8 Agent OS · 为独立创造而构建。</span><button class="motion-toggle" type="button" aria-pressed="false" data-pause="暂停页面动效" data-resume="开启页面动效"><span aria-hidden="true">Ⅱ</span><span data-motion-label>暂停页面动效</span></button></div><div class="footer-wordmark" aria-hidden="true">V8 AGENT OS</div></footer>
+  <dialog class="image-dialog" aria-label="V8 Agent OS 实际界面"><button class="dialog-close" type="button" aria-label="关闭图片">×</button><img alt=""></dialog>
+</body>
 </html>

@@ -1,73 +1,88 @@
-from __future__ import annotations
-
-import re
+"""Check public navigation, generated files and publication boundaries, not a fixed layout."""
+from html.parser import HTMLParser
+import json
 from pathlib import Path
+import re
+import sys
+from urllib.parse import unquote, urlsplit
+
+from build_site import ROOT, STATIC_FILES, build, validate_media
 
 
-ROOT = Path(__file__).resolve().parents[1]
-TARGETS = (ROOT / "index.html", ROOT / "zh" / "index.html")
-FORBIDDEN = {
-    "openclaw": re.compile(r"openclaw|clawhub", re.IGNORECASE),
-    "bridge_claim": re.compile(r"v8[- ]bridge|ecosystem_hijack|hijack|assimil", re.IGNORECASE),
-    "overclaim_en": re.compile(r"global security system|rogue plugins|takes over real business", re.IGNORECASE),
-    "overclaim_zh": re.compile(r"接管全景|全局治安|碾压|防毒防爆"),
-    "explicit_at_only": re.compile(r"(only|必须|只能).{0,24}(@plugin|@插件).{0,24}(grant|授权)", re.IGNORECASE),
-    "obsolete_docs": re.compile(r"docs/ENGINE_(?:QUICK_START|DEVELOPER_GUIDE|API_REFERENCE|CONFIG_GUIDE)\.md"),
-    "planner_residue": re.compile(r"\bplanner\b|规划器", re.IGNORECASE),
-    "phone_first_residue": re.compile(r"phone[- ]first|Phone (?:is|as) the (?:main|primary)|Phone 是主", re.IGNORECASE),
-    "bootstrap_as_desktop": re.compile(r"raw\.githubusercontent\.com/.+?/bootstrap\.(?:ps1|sh)", re.IGNORECASE),
-}
+class Page(HTMLParser):
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.ids = []
+        self.links = []
+        self.images = []
+        self.headings = 0
+        self.html_lang = ""
+        self.videos = []
 
-REQUIRED = {
-    "desktop_release_entry": "https://github.com/justForever17/v8-agent-os/releases",
-    "source_preview_entry": "v8os.cmd preview --rebuild",
-}
-
-REQUIRED_BY_TARGET = {
-    "index.html": (
-        "Creative Artifact Canvas",
-        "MediaKit CLI",
-        "Wrangler",
-        "Low-risk serial",
-    ),
-    "zh/index.html": (
-        "创意产物画布",
-        "MediaKit CLI",
-        "Wrangler",
-        "低风险串行",
-    ),
-}
+    def handle_starttag(self, tag, attrs):
+        a = dict(attrs)
+        if "id" in a:
+            self.ids.append(a["id"])
+        if tag == "html":
+            self.html_lang = a.get("lang", "")
+        if tag == "h1":
+            self.headings += 1
+        if tag == "video":
+            self.videos.append(a)
+        if tag == "img":
+            self.images.append(a)
+        for key in ("href", "src", "poster"):
+            if key in a:
+                self.links.append(a[key])
+        if tag == "a" and a.get("target") == "_blank":
+            assert "noopener" in a.get("rel", ""), "External tab missing noopener"
 
 
-def main() -> int:
-    violations: list[str] = []
-    for path in TARGETS:
-        text = path.read_text(encoding="utf-8")
-        relative = path.relative_to(ROOT).as_posix()
-        for name, pattern in FORBIDDEN.items():
-            match = pattern.search(text)
-            if match:
-                violations.append(f"{relative}:{name}:{match.group(0)}")
-        for name, snippet in REQUIRED.items():
-            if snippet not in text:
-                violations.append(f"{relative}:{name}:missing")
-        for snippet in REQUIRED_BY_TARGET.get(relative, ()):
-            if snippet not in text:
-                violations.append(f"{relative}:current_product_fact:{snippet}:missing")
-        card_count = text.count('class="bento-card')
-        placeholder_count = text.count('class="feature-placeholder')
-        if card_count != 12:
-            violations.append(f"{relative}:card_count:{card_count}")
-        if placeholder_count != 4:
-            violations.append(f"{relative}:placeholder_count:{placeholder_count}")
-    if violations:
-        print("Public narrative audit failed:")
-        for item in violations:
-            print(f"- {item}")
-        return 1
-    print("Public narrative audit: clean")
-    return 0
+def audit():
+    build(check=True)
+    media = json.loads((ROOT / "assets/media.json").read_text(encoding="utf-8"))
+    for relative, language in (("index.html", "en"), ("zh/index.html", "zh-CN")):
+        source = (ROOT / relative).read_text(encoding="utf-8")
+        page = Page()
+        page.feed(source)
+        assert page.html_lang == language and page.headings == 1, f"{relative}: language or heading structure"
+        assert len(page.ids) == len(set(page.ids)), f"{relative}: duplicate IDs"
+        assert not re.search(r"\{\{\w+\}\}", source), f"{relative}: unrendered template"
+        for image in page.images:
+            assert "alt" in image, f"{relative}: image needs alt text"
+        for url in page.links:
+            assert url, f"{relative}: empty resource URL"
+            parts = urlsplit(url)
+            if parts.scheme or parts.netloc:
+                assert parts.scheme == "https", f"{relative}: public links must be HTTPS"
+                continue
+            if not parts.path and parts.fragment:
+                assert unquote(parts.fragment) in page.ids, f"{relative}: broken anchor {url}"
+                continue
+            target = (ROOT / relative).parent / unquote(parts.path)
+            if parts.path.endswith("/"):
+                target /= "index.html"
+            assert target.is_file(), f"{relative}: missing local target {url}"
+        assert "https://github.com/justForever17/v8-agent-os/discussions" in page.links
+        assert "https://github.com/justForever17/v8-agent-os/releases/latest" in page.links
+        if not media["video"]["src"]:
+            assert not page.videos and "film-placeholder" in source, "Empty video must not present a broken player"
+        else:
+            assert len(page.videos) == 1
+            v = page.videos[0]
+            assert v.get("preload") == "none" and "autoplay" not in v and "controls" in v
+            assert v.get("crossorigin") == "anonymous", "Remote captions require anonymous CORS"
+        assert ".codex-tmp" not in source and "portal-private" not in source, "Private material linked from public HTML"
+    if (ROOT / "dist").is_dir():
+        expected = {"index.html", "zh/index.html", "_headers", *STATIC_FILES, *validate_media(media)}
+        actual = {p.relative_to(ROOT / "dist").as_posix() for p in (ROOT / "dist").rglob("*") if p.is_file()}
+        assert actual == expected, f"Publication file list differs: extra={actual - expected}; missing={expected - actual}"
+    print("Public site audit passed: navigation, media states, bilingual output and publication file list.")
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    try:
+        audit()
+    except (AssertionError, ValueError, OSError) as exc:
+        print(f"Public site audit failed: {exc}", file=sys.stderr)
+        sys.exit(1)

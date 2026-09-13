@@ -1,0 +1,169 @@
+"""Build bilingual static pages and a publication directory with an explicit file list."""
+from __future__ import annotations
+
+import argparse
+import hashlib
+import html
+import json
+from pathlib import Path
+import re
+import shutil
+from urllib.parse import urlsplit
+
+ROOT = Path(__file__).resolve().parents[1]
+DIST = ROOT / "dist"
+LOCALES = ("en", "zh")
+STATIC_FILES = ("assets/styles.css", "assets/site.js", "assets/mark.svg", "assets/orbit.svg", "assets/social-card.png", "assets/fonts/manrope-latin.woff2", "assets/fonts/OFL.txt", "robots.txt", "sitemap.xml", "404.html")
+
+
+def text(value: str) -> str:
+    return html.escape(value, quote=True)
+
+
+def copy_text(value: str) -> str:
+    # Only these presentational tags are supported in our own copy files.
+    escaped = text(value)
+    for tag in ("<br>", "<span>", "</span>"):
+        escaped = escaped.replace(text(tag), tag)
+    return escaped
+
+
+def validate_media(media: dict) -> set[str]:
+    expected = {"workspace", "research", "creative", "phone"}
+    if set(media) != {"screenshots", "video"} or set(media["screenshots"]) != expected:
+        raise ValueError("media.json must contain screenshots (workspace/research/creative/phone) and video")
+    if set(media["video"]) != {"src", "poster", "captionsZh", "captionsEn"}:
+        raise ValueError("video requires src, poster, captionsZh and captionsEn")
+    files: set[str] = set()
+    for group, entries in media.items():
+        for key, value in entries.items():
+            if not isinstance(value, str):
+                raise ValueError(f"{group}.{key} must be a path string or empty string")
+            if not value:
+                continue
+            if any(ord(char) <= 32 for char in value):
+                raise ValueError(f"{group}.{key}: media paths must not contain whitespace or control characters")
+            allowed = {".webp", ".png", ".jpg", ".jpeg"}
+            if group == "video" and key == "src":
+                allowed = {".mp4", ".webm"}
+            elif key.startswith("captions"):
+                allowed = {".vtt"}
+            parsed = urlsplit(value)
+            if parsed.scheme or parsed.netloc:
+                if group != "video" or parsed.scheme != "https" or not parsed.hostname or parsed.username or parsed.password or parsed.query or parsed.fragment:
+                    raise ValueError(f"{group}.{key}: use a permanent public HTTPS media URL without credentials, query or fragment")
+                if not re.fullmatch(r"[a-zA-Z0-9.-]+(?::443)?", parsed.netloc) or Path(parsed.path).suffix.lower() not in allowed:
+                    raise ValueError(f"{group}.{key}: invalid public media URL or extension")
+                continue
+            path = ROOT / value
+            if "\\" in value or not value.startswith("assets/media/") or any(part in (".", "..") for part in value.split("/")):
+                raise ValueError(f"{group}.{key}: use a relative path under assets/media/")
+            if not path.resolve().is_relative_to((ROOT / "assets/media").resolve()) or not path.is_file():
+                raise ValueError(f"{group}.{key}: file missing or outside assets/media: {value}")
+            if key.startswith("captions"):
+                if not path.read_text(encoding="utf-8-sig").startswith("WEBVTT"):
+                    raise ValueError(f"{key}: subtitle file must start with WEBVTT")
+            if path.suffix.lower() not in allowed:
+                raise ValueError(f"{group}.{key}: unsupported extension {path.suffix}")
+            if path.stat().st_size > 25 * 1024 * 1024:
+                raise ValueError(f"{group}.{key}: local file exceeds Pages 25 MiB limit; use an R2 public URL for video")
+            files.add(value)
+    if not media["video"]["src"] and any(media["video"].values()):
+        raise ValueError("Configure video.src together with its poster/captions, or leave all video fields empty")
+    return files
+
+
+def media_url(value: str, base: str) -> str:
+    parsed = urlsplit(value)
+    return parsed._replace(scheme="https").geturl() if parsed.scheme == "https" else base + value
+
+
+def render_headers(media: dict) -> str:
+    origins = sorted({f"https://{urlsplit(value).netloc.lower()}" for value in media["video"].values() if urlsplit(value).scheme == "https"})
+    media_sources = " ".join(["'self'", *origins])
+    return ("/*\n"
+            "  X-Content-Type-Options: nosniff\n"
+            "  Referrer-Policy: strict-origin-when-cross-origin\n"
+            "  X-Frame-Options: DENY\n"
+            "  Permissions-Policy: camera=(), microphone=(), geolocation=()\n"
+            f"  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src {media_sources} data:; media-src {media_sources}; font-src 'self'; connect-src {media_sources}; frame-ancestors 'none'; base-uri 'self'; form-action 'none'\n"
+            "/assets/*\n  Cache-Control: public, max-age=3600\n")
+
+
+def render_page(locale: str, media: dict) -> str:
+    c = json.loads((ROOT / f"content/{locale}.json").read_text(encoding="utf-8"))
+    base = "../" if locale == "zh" else "./"
+    context = {key: copy_text(value) for key, value in c.items() if isinstance(value, str)}
+    context.update({"base": base, "home": "./", "otherLocale": "../" if locale == "zh" else "./zh/", "otherLang": "en" if locale == "zh" else "zh-CN", "canonical": "https://v8agentos.top/" + ("zh/" if locale == "zh" else ""), "close": "关闭图片" if locale == "zh" else "Close image", "quickstartUrl": "https://github.com/justForever17/v8-agent-os/blob/main/" + ("docs/V8_AGENT_OS_QUICK_START_ZH.md" if locale == "zh" else "README.md#quick-start")})
+    for key, file in (("cssVersion", "assets/styles.css"), ("jsVersion", "assets/site.js")):
+        context[key] = hashlib.sha256((ROOT / file).read_bytes()).hexdigest()[:10]
+    tabs, panels = [], []
+    for index, s in enumerate(c["scenarios"]):
+        ident = s["id"]
+        tabs.append(f'<a id="tab-{ident}" class="scenario-tab{" is-active" if index == 0 else ""}" href="#scenario-{ident}" data-scenario="{ident}"><span>{text(s["number"])}</span>{text(s["label"])}<span class="tab-arrow" aria-hidden="true">↗</span></a>')
+        source = media["screenshots"][ident]
+        if source:
+            visual = f'<figure class="media-frame actual-capture"><button type="button" class="capture-open" data-image="{text(base + source)}" aria-label="{text(s["alt"])}"><img src="{text(base + source)}" alt="{text(s["alt"])}" loading="lazy" decoding="async" width="1920" height="1200"></button><figcaption>{text(c["screenshotLabel"])}</figcaption></figure>'
+        else:
+            tags = "".join(f'<span><i aria-hidden="true">{n + 1:02}</i>{text(t)}</span>' for n, t in enumerate(s["tags"]))
+            visual = f'''<figure class="media-frame concept-capture concept-{ident}"><div class="concept-toolbar"><span><i></i><i></i><i></i></span><span>V8 / {text(s["artifact"])}</span><span>↗</span></div><div class="concept-content"><div class="concept-prompt"><span class="prompt-mark" aria-hidden="true">✳</span><p>{text(s["prompt"])}</p></div><div class="concept-flow">{tags}</div><div class="concept-artifact"><div class="artifact-art" aria-hidden="true"><i></i><i></i><i></i></div><div><span class="artifact-label">{text(s["artifact"])}</span><p>{text(s["detail"])}</p><div class="artifact-lines" aria-hidden="true"><i></i><i></i><i></i></div></div><span class="artifact-arrow" aria-hidden="true">↗</span></div><p class="concept-result"><span aria-hidden="true">↳</span> {text(s["result"])}</p></div><figcaption>{text(c["concept"])}</figcaption></figure>'''
+        panels.append(f'<article id="scenario-{ident}" class="scenario{" is-active" if index == 0 else ""}" aria-labelledby="tab-{ident}">{visual}<div class="scenario-description"><h3>{text(s["title"])}</h3><p>{text(s["text"])}</p></div></article>')
+    context["scenarioTabs"] = "".join(tabs)
+    context["scenarioPanels"] = "".join(panels)
+    v = media["video"]
+    if v["src"]:
+        poster = f' poster="{text(media_url(v["poster"], base))}"' if v["poster"] else ""
+        tracks = "".join(f'<track kind="captions" src="{text(media_url(v[key], base))}" srclang="{lang}" label="{label}"{" default" if lang == locale else ""}>' for key, lang, label in (("captionsZh", "zh", "中文"), ("captionsEn", "en", "English")) if v[key])
+        mime = "video/mp4" if Path(urlsplit(v["src"]).path).suffix.lower() == ".mp4" else "video/webm"
+        context["filmMedia"] = f'<h2 id="film-title" class="sr-only">{text(c["filmPlay"])}</h2><video controls playsinline preload="none" crossorigin="anonymous"{poster} aria-label="{text(c["filmPlay"])}"><source src="{text(media_url(v["src"], base))}" type="{mime}">{tracks}<a href="{text(media_url(v["src"], base))}">{text(c["filmPlay"])}</a></video><p class="video-error" role="status" hidden>{text(c["filmError"])}</p><p class="caption-error" role="status" hidden>{text(c["captionError"])}</p>'
+    else:
+        context["filmMedia"] = f'<div class="film-placeholder"><div class="film-orbit" aria-hidden="true"></div><div class="film-topline"><span>{text(c["filmLabel"])}</span><span>{text(c["filmStatus"])}</span></div><div class="film-center"><span class="film-emblem" aria-hidden="true">V8</span><h2 id="film-title">{copy_text(c["filmTitle"])}</h2></div><p class="film-coming"><span class="status-dot"></span>{text(c["filmSoon"])}</p></div>'
+    context["principleRows"] = "".join(f'<article class="principle" data-reveal><span class="principle-number">{text(p["number"])}</span><div><h3>{text(p["title"])}</h3><p>{text(p["text"])}</p></div><span class="principle-word" aria-hidden="true">{text(p["word"])}</span></article>' for p in c["principles"])
+    phone = media["screenshots"]["phone"]
+    if phone:
+        context["phoneMedia"] = f'<figure class="phone-device actual-phone"><img src="{text(base + phone)}" alt="{text(c["phoneAlt"])}" width="1080" height="2340" loading="lazy" decoding="async"><figcaption>{text(c["screenshotLabel"])}</figcaption></figure>'
+    else:
+        context["phoneMedia"] = f'<figure class="phone-device"><div class="phone-status"><span>{text(c["phoneTime"])}</span><i></i><span aria-hidden="true">▰</span></div><div class="phone-body"><div class="phone-app"><img src="{base}assets/mark.svg" alt="" width="28" height="28"><span>V8 Agent OS</span><span>＋</span></div><span class="phone-project">{text(c["phoneProject"])}</span><p class="phone-user-message">{text(c["phoneMessage"])}</p><div class="phone-response"><span aria-hidden="true">✳</span><p>{text(c["phoneReply"])}</p></div><div class="phone-mini-art" aria-hidden="true"><i></i><span>V8</span></div><div class="phone-composer" aria-hidden="true"><span>＋</span><i></i><span>↑</span></div></div><figcaption>{text(c["phoneConcept"])}</figcaption></figure>'
+    context["ecosystemChips"] = "".join(f'<span><i aria-hidden="true">{symbol}</i>{text(item)}</span>' for symbol, item in zip(("◈", "⌘", "↗", "✳", "◇", "⤴"), c["ecosystemItems"]))
+    context["communityTopics"] = "".join(f'<span>{text(item)}</span>' for item in c["communityLinks"])
+    context["faqRows"] = "".join(f'<details><summary>{text(f["question"])}<span aria-hidden="true">+</span></summary><p>{text(f["answer"])}</p></details>' for f in c["faqs"])
+    template = (ROOT / "templates/index.html").read_text(encoding="utf-8")
+    return re.sub(r"\{\{(\w+)\}\}", lambda m: context[m[1]], template)
+
+
+def build(check: bool = False) -> None:
+    media = json.loads((ROOT / "assets/media.json").read_text(encoding="utf-8"))
+    media_files = validate_media(media)
+    contents = {"index.html": render_page("en", media), "zh/index.html": render_page("zh", media), "_headers": render_headers(media)}
+    for relative, rendered in contents.items():
+        path = ROOT / relative
+        if check:
+            if not path.is_file() or path.read_text(encoding="utf-8") != rendered:
+                raise ValueError(f"Generated page out of date: {relative}; run python scripts/build_site.py")
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(rendered, encoding="utf-8", newline="\n")
+    for relative in STATIC_FILES:
+        if not (ROOT / relative).is_file():
+            raise ValueError(f"Missing public asset: {relative}")
+    if not check:
+        if DIST.is_symlink() or DIST.resolve().parent != ROOT.resolve():
+            raise ValueError("Refusing to replace a dist directory outside the site")
+        if DIST.exists():
+            shutil.rmtree(DIST)
+        DIST.mkdir()
+        for relative in (*contents, *STATIC_FILES, *sorted(media_files)):
+            destination = DIST / relative
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(ROOT / relative, destination)
+    print(f"{'Checked' if check else 'Built'} 2 locales; {len(media_files)} configured media files; public files only.")
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--check", action="store_true", help="Check committed HTML matches the sources without writing files")
+    args = parser.parse_args()
+    try:
+        build(args.check)
+    except (ValueError, KeyError, TypeError, OSError) as exc:
+        parser.exit(1, f"Site build failed: {exc}\n")
