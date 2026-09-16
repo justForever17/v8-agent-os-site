@@ -201,6 +201,7 @@ def capture_acceptance(browser, output):
                         assert image.evaluate("i=>Math.abs(i.clientWidth/i.clientHeight - i.naturalWidth/i.naturalHeight)<.025"), "Screenshot must keep its natural aspect ratio"
                         panel.locator(".capture-open").click()
                         expect(page.locator("dialog")).to_be_visible()
+                        assert page.locator("dialog").evaluate("d => d.scrollWidth <= d.clientWidth + 1"), "Enlarged image must fit the dialog without horizontal scrolling"
                         expect(page.locator(".dialog-original")).to_have_attribute("href", ("../" if path == "/zh/" else "./") + source)
                         page.keyboard.press("Escape")
                         expect(panel.locator(".capture-open")).to_be_focused()

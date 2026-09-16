@@ -278,7 +278,7 @@ html[lang="zh-CN"] .download-section h2 { font-size: clamp(40px,4.8vw,64px); }
 .footer-wordmark { font-size: clamp(50px,12.3vw,173px); text-align: center; color: #c9ad8910; font-weight: 700; letter-spacing: -.075em; line-height: 1.6; white-space: nowrap; user-select: none; }
 .image-dialog { border: 1px solid #ffffff25; background: #101112; padding: 45px 12px 12px; border-radius: 12px; max-width: 94vw; max-height: 94vh; }
 .image-dialog::backdrop { background: #000d; }
-.image-dialog img { object-fit: contain; max-width: 90vw; max-height: 82vh; }
+.image-dialog img { object-fit: contain; max-width: 100%; max-height: 82vh; }
 .dialog-close { position: absolute; right: 10px; top: 5px; border: 0; background: transparent; font-size: 27px; width: 36px; height: 36px; }
 .dialog-original { position: absolute; left: 18px; top: 13px; color: var(--accent); font-size: 11px; }
 .is-reveal-pending { opacity: 0; transform: translateY(24px); }
