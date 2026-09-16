@@ -24,7 +24,7 @@ python -m http.server 8789 --directory dist
 | `content/zh.json` / `content/en.json` | 中英文案 |
 | `templates/index.html` | 共用页面结构 |
 | `assets/styles.css` / `assets/site.js` | 视觉与渐进增强交互 |
-| `assets/media.json` | 场景截图、可选控制台截图（models/projects/plugins）、影片、海报与中英字幕 |
+| `assets/media.json` | 场景截图、控制台截图（models/projects/plugins）、记忆星图（memory-overview/memory-project/memory-global）、terminal、影片、海报与中英字幕 |
 | `scripts/build_site.py` | 生成根目录双语页面与 `_headers`，组装仅含公开文件的 `dist` |
 
 修改源文件后重新构建，不手工修改生成页面。`python scripts/build_site.py --check` 可检查生成物是否同步。根目录页面继续兼容现有 Cloudflare Pages Git 部署；配置构建时使用 `python scripts/build_site.py`，输出目录选 `dist`。
@@ -32,6 +32,8 @@ python -m http.server 8789 --directory dist
 素材未配置时展示有明确标注的概念图和“影片即将上线”。截图填写 `assets/media/` 下的本地路径；影片、海报与字幕也可使用 R2 的永久公共 HTTPS 链接，不能包含凭据、查询参数或片段。构建自动把媒体来源加入 CSP。R2 仍需设置相应 CORS，才能支持跨域视频与字幕。大视频不进入 Git 仓库。
 
 当前选用三张 Web 工作台与三张控制台实拍，来自 2026-09-13 本机开发构建，分别展示资料修改、网页预览、画布素材连接与版本迭代、模型连接、项目工作区和插件配置，不作为固定发布安装包的验收证据。画布图用于说明工作过程，其中生成内容仅作内部配色参考。Phone 仍保留标注清楚的示意。
+
+记忆星图与 Web 终端章节另选用四张对应 `v8-os-v2026.09.16.1` 的组件验收画面。星图使用隔离环境中的示例数据，终端展示合成负载回放，页面图注保留这些区别。这些素材不代表真实用户数据、生产规模指标或干净安装验收。仅选定图片进入公开站点，来源清单与运行证据留在站点仓库之外。
 
 门户支持键盘切换场景、移动导航、原生 FAQ、截图放大、系统减少动态效果偏好和手动暂停动效。没有 JavaScript 时仍能阅读正文、查看全部场景并使用主要导航。Preview、模型配置与第三方费用说明保留在下载附近。
 

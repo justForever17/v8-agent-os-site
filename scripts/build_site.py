@@ -31,9 +31,9 @@ def copy_text(value: str) -> str:
 
 def validate_media(media: dict) -> set[str]:
     expected = {"workspace", "research", "creative", "phone"}
-    allowed_screenshots = expected | {"models", "projects", "plugins"}
+    allowed_screenshots = expected | {"models", "projects", "plugins", "memory-overview", "memory-project", "memory-global", "terminal"}
     if set(media) != {"screenshots", "video"} or not expected <= set(media["screenshots"]) <= allowed_screenshots:
-        raise ValueError("media.json requires workspace/research/creative/phone screenshots; models/projects/plugins are optional")
+        raise ValueError("media.json requires workspace/research/creative/phone screenshots; console, memory and terminal captures are optional")
     if set(media["video"]) != {"src", "poster", "captionsZh", "captionsEn"}:
         raise ValueError("video requires src, poster, captionsZh and captionsEn")
     files: set[str] = set()
@@ -161,6 +161,28 @@ def render_page(locale: str, media: dict, media_root: Path = ROOT) -> str:
         visual = capture_figure(media["screenshots"][ident], item["alt"], c["screenshotLabel"], c, base, media_root)
         control_panels.append(f'<article id="control-{ident}" data-tab-panel class="control-panel{active}" aria-labelledby="tab-{ident}">{visual}<div class="scenario-description"><h3>{text(item["title"])}</h3><p>{text(item["text"])}</p></div></article>')
     context["controlsGallery"] = f'<div class="controls-gallery" data-tab-group><div class="controls-intro"><h3>{text(c["controlsLabel"])}</h3><p>{text(c["controlsText"])}</p></div><div class="scenario-tabs" data-tab-list aria-label="{text(c["controlsTabsLabel"])}">{"".join(control_tabs)}</div>{"".join(control_panels)}<p class="fine-print controls-note">{text(c["controlsNote"])}</p></div>' if controls else ""
+    memory_items = [item for item in c["memoryViews"] if media["screenshots"].get(item["id"])]
+    memory_tabs, memory_panels = [], []
+    for index, item in enumerate(memory_items):
+        ident = item["id"]
+        active = " is-active" if index == 0 else ""
+        memory_tabs.append(f'<a class="scenario-tab{active}" id="tab-{ident}" href="#{ident}" data-tab="{ident}"><span>{index + 1:02}</span>{text(item["label"])}<span class="tab-arrow" aria-hidden="true">↗</span></a>')
+        visual = capture_figure(media["screenshots"][ident], item["alt"], c["memoryCaption"], c, base, media_root)
+        memory_panels.append(f'<article id="{ident}" data-tab-panel class="memory-panel{active}" aria-labelledby="tab-{ident}">{visual}<div class="memory-description"><h3>{text(item["title"])}</h3><p>{text(item["text"])}</p></div></article>')
+    context["memoryGallery"] = f'''<section id="memory" class="memory-section section-shell" aria-labelledby="memory-title" data-tab-group>
+      <div class="section-heading" data-reveal><div><p class="eyebrow">{text(c["memoryLabel"])}</p><h2 id="memory-title">{copy_text(c["memoryTitle"])}</h2></div><p class="section-description">{text(c["memoryText"])}</p></div>
+      <div class="memory-layout"><div class="memory-index"><div class="memory-tabs" data-tab-list aria-label="{text(c["memoryTabsLabel"])}">{"".join(memory_tabs)}</div><p class="fine-print">{text(c["memoryNote"])}</p></div><div class="memory-panels">{"".join(memory_panels)}</div></div>
+    </section>''' if memory_items else ""
+    terminal = media["screenshots"].get("terminal")
+    if terminal:
+        visual = capture_figure(terminal, c["terminalAlt"], c["terminalCaption"], c, base, media_root)
+        points = "".join(f'<li><span>{index + 1:02}</span>{text(item)}</li>' for index, item in enumerate(c["terminalPoints"]))
+        context["terminalSection"] = f'''<section id="continuity" class="terminal-section section-shell" aria-labelledby="terminal-title">
+          <div class="terminal-copy" data-reveal><p class="eyebrow">{text(c["terminalLabel"])}</p><h2 id="terminal-title">{copy_text(c["terminalTitle"])}</h2><p class="section-description">{text(c["terminalText"])}</p></div>
+          <div class="terminal-detail"><ul class="terminal-points">{points}</ul><details class="terminal-evidence"><summary>{text(c["terminalReveal"])}<span aria-hidden="true">+</span></summary><div id="terminal-capture">{visual}<p class="fine-print terminal-note">{text(c["terminalNote"])}</p></div></details></div>
+        </section>'''
+    else:
+        context["terminalSection"] = ""
     v = media["video"]
     if v["src"]:
         poster = f' poster="{text(media_url(v["poster"], base))}"' if v["poster"] else ""

@@ -22,7 +22,7 @@ Open `http://127.0.0.1:8789/` or `/zh/`.
 - `content/en.json` and `content/zh.json`: language-specific copy.
 - `templates/index.html`: shared semantic page structure.
 - `assets/styles.css` and `assets/site.js`: visual design and progressive enhancement.
-- `assets/media.json`: scenario screenshot paths, optional console captures (`models`, `projects`, `plugins`), and public R2 video, poster and caption URLs.
+- `assets/media.json`: scenario screenshot paths, optional console captures (`models`, `projects`, `plugins`), memory views (`memory-overview`, `memory-project`, `memory-global`), `terminal`, and public R2 video, poster and caption URLs.
 - `scripts/build_site.py`: generates the committed `index.html`, `zh/index.html`, and `_headers`; assembles a public-only `dist` directory.
 
 Edit the sources, then rebuild. `python scripts/build_site.py --check` verifies the committed output is current. The committed root pages remain compatible with the existing Cloudflare Pages Git integration. When configuring a build, use `python scripts/build_site.py` and output directory `dist`.
@@ -30,6 +30,8 @@ Edit the sources, then rebuild. `python scripts/build_site.py --check` verifies 
 Empty media settings render clearly identified concept illustrations and a coming-soon film section. Screenshots accept local paths under `assets/media/`. Film settings accept local files or permanent public HTTPS URLs without credentials, query parameters or fragments. R2 origins are added to the generated Content Security Policy; configure CORS on your bucket for playback and captions. Large videos belong in R2, not Git.
 
 The current selection includes three real workbench captures and three console captures from a local development build on September 13, 2026. They illustrate material revision, a webpage preview, connected canvas materials and output versions, model connections, project folders and plugin configuration. They are not release-package acceptance evidence. The canvas capture illustrates the workflow; its generated image is an internal color reference only. Phone remains a labeled illustration.
+
+The memory constellation and Web terminal sections use four component acceptance captures associated with `v8-os-v2026.09.16.1`. Memory views contain isolated sample data; the terminal shows a synthetic-load replay. Captions preserve these distinctions. The images are not real user data, a production-scale benchmark or proof of clean package installation. Only the selected images are published; source manifests and runtime evidence remain outside this site repository.
 
 The site includes native navigation and FAQ without JavaScript, keyboard-operable scenario tabs, optional screenshot enlargement, reduced-motion support and a page animation pause control. Preview status, model configuration and third-party charges are explained near downloads.
 
