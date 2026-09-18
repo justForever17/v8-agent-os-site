@@ -14,6 +14,8 @@ from urllib.parse import urlsplit
 ROOT = Path(__file__).resolve().parents[1]
 DIST = ROOT / "dist"
 LOCALES = ("en", "zh")
+RELEASE_TAG = "v8-os-v2026.09.17.3"
+RELEASE_URL = f"https://github.com/justForever17/v8-agent-os/releases/tag/{RELEASE_TAG}"
 STATIC_FILES = ("assets/styles.css", "assets/site.js", "assets/product-icon.png", "assets/orbit.svg", "assets/social-card.png", "assets/fonts/manrope-latin.woff2", "assets/fonts/OFL.txt", "robots.txt", "sitemap.xml", "404.html")
 
 
@@ -31,9 +33,9 @@ def copy_text(value: str) -> str:
 
 def validate_media(media: dict) -> set[str]:
     expected = {"workspace", "research", "creative", "phone"}
-    allowed_screenshots = expected | {"models", "projects", "plugins", "memory-overview", "memory-project", "memory-global", "terminal"}
+    allowed_screenshots = expected | {"models", "projects", "plugins", "memory-overview", "memory-project", "memory-global", "terminal", "scene-atlas", "scene-camera", "pairing", "recovery"}
     if set(media) != {"screenshots", "video"} or not expected <= set(media["screenshots"]) <= allowed_screenshots:
-        raise ValueError("media.json requires workspace/research/creative/phone screenshots; console, memory and terminal captures are optional")
+        raise ValueError("media.json requires workspace/research/creative/phone screenshots; console, memory, scene, terminal, pairing and recovery captures are optional")
     if set(media["video"]) != {"src", "poster", "captionsZh", "captionsEn"}:
         raise ValueError("video requires src, poster, captionsZh and captionsEn")
     files: set[str] = set()
@@ -135,6 +137,7 @@ def render_page(locale: str, media: dict, media_root: Path = ROOT) -> str:
     c = json.loads((ROOT / f"content/{locale}.json").read_text(encoding="utf-8"))
     base = "../" if locale == "zh" else "./"
     context = {key: copy_text(value) for key, value in c.items() if isinstance(value, str)}
+    context.update({"releaseUrl": RELEASE_URL, "releaseVersion": RELEASE_TAG.removeprefix("v8-os-v")})
     context.update({"base": base, "home": "./", "otherLocale": "../" if locale == "zh" else "./zh/", "otherLang": "en" if locale == "zh" else "zh-CN", "canonical": "https://v8agentos.top/" + ("zh/" if locale == "zh" else ""), "close": "关闭图片" if locale == "zh" else "Close image", "quickstartUrl": "https://github.com/justForever17/v8-agent-os/blob/main/" + ("docs/V8_AGENT_OS_QUICK_START_ZH.md" if locale == "zh" else "README.md#quick-start")})
     for key, file in (("cssVersion", "assets/styles.css"), ("jsVersion", "assets/site.js"), ("orbitVersion", "assets/orbit.svg"), ("socialVersion", "assets/social-card.png")):
         context[key] = hashlib.sha256((ROOT / file).read_bytes()).hexdigest()[:10]
@@ -152,6 +155,18 @@ def render_page(locale: str, media: dict, media_root: Path = ROOT) -> str:
         panels.append(f'<article id="scenario-{ident}" data-tab-panel class="scenario{" is-active" if index == 0 else ""}" aria-labelledby="tab-{ident}">{visual}<div class="scenario-description"><h3>{text(s["title"])}</h3><p>{text(s["text"])}</p></div></article>')
     context["scenarioTabs"] = "".join(tabs)
     context["scenarioPanels"] = "".join(panels)
+    scene_items = [item for item in c["sceneViews"] if media["screenshots"].get(item["id"])]
+    scene_tabs, scene_panels = [], []
+    for index, item in enumerate(scene_items):
+        ident = item["id"]
+        active = " is-active" if index == 0 else ""
+        scene_tabs.append(f'<a class="scenario-tab{active}" id="tab-{ident}" href="#{ident}" data-tab="{ident}"><span>{index + 1:02}</span>{text(item["label"])}<span class="tab-arrow" aria-hidden="true">↗</span></a>')
+        visual = capture_figure(media["screenshots"][ident], item["alt"], c["sceneCaption"], c, base, media_root)
+        scene_panels.append(f'<article id="{ident}" data-tab-panel class="scene-panel{active}" aria-labelledby="tab-{ident}">{visual}<div class="scenario-description"><h3>{text(item["title"])}</h3><p>{text(item["text"])}</p></div></article>')
+    context["sceneGallery"] = f'''<section id="creative-direction" class="scene-section section-shell" aria-labelledby="scene-title" data-tab-group>
+      <div class="section-heading" data-reveal><div><p class="eyebrow">{text(c["sceneLabel"])}</p><h2 id="scene-title">{copy_text(c["sceneTitle"])}</h2></div><p class="section-description">{text(c["sceneText"])}</p></div>
+      <div class="scenario-tabs scene-tabs" data-tab-list aria-label="{text(c["sceneTabsLabel"])}">{"".join(scene_tabs)}</div>{"".join(scene_panels)}<p class="fine-print scene-note">{text(c["sceneNote"])}</p>
+    </section>''' if scene_items else ""
     controls = [item for item in c["controls"] if media["screenshots"].get(item["id"])]
     control_tabs, control_panels = [], []
     for index, item in enumerate(controls):
@@ -173,13 +188,19 @@ def render_page(locale: str, media: dict, media_root: Path = ROOT) -> str:
       <div class="section-heading" data-reveal><div><p class="eyebrow">{text(c["memoryLabel"])}</p><h2 id="memory-title">{copy_text(c["memoryTitle"])}</h2></div><p class="section-description">{text(c["memoryText"])}</p></div>
       <div class="memory-layout"><div class="memory-index"><div class="memory-tabs" data-tab-list aria-label="{text(c["memoryTabsLabel"])}">{"".join(memory_tabs)}</div><p class="fine-print">{text(c["memoryNote"])}</p></div><div class="memory-panels">{"".join(memory_panels)}</div></div>
     </section>''' if memory_items else ""
-    terminal = media["screenshots"].get("terminal")
-    if terminal:
-        visual = capture_figure(terminal, c["terminalAlt"], c["terminalCaption"], c, base, media_root)
+    detail_captures = {}
+    for ident in ("terminal", "recovery", "pairing"):
+        source = media["screenshots"].get(ident)
+        if source:
+            visual = capture_figure(source, c[f"{ident}Alt"], c[f"{ident}Caption"], c, base, media_root)
+            detail_captures[ident] = f'<details class="capture-detail {ident}-evidence"><summary>{text(c[f"{ident}Reveal"])}<span aria-hidden="true">+</span></summary><div id="{ident}-capture">{visual}<p class="fine-print capture-note">{text(c[f"{ident}Note"])}</p></div></details>'
+    context["pairingCapture"] = detail_captures.get("pairing", "")
+    execution_captures = "".join(detail_captures[ident] for ident in ("terminal", "recovery") if ident in detail_captures)
+    if execution_captures:
         points = "".join(f'<li><span>{index + 1:02}</span>{text(item)}</li>' for index, item in enumerate(c["terminalPoints"]))
         context["terminalSection"] = f'''<section id="continuity" class="terminal-section section-shell" aria-labelledby="terminal-title">
           <div class="terminal-copy" data-reveal><p class="eyebrow">{text(c["terminalLabel"])}</p><h2 id="terminal-title">{copy_text(c["terminalTitle"])}</h2><p class="section-description">{text(c["terminalText"])}</p></div>
-          <div class="terminal-detail"><ul class="terminal-points">{points}</ul><details class="terminal-evidence"><summary>{text(c["terminalReveal"])}<span aria-hidden="true">+</span></summary><div id="terminal-capture">{visual}<p class="fine-print terminal-note">{text(c["terminalNote"])}</p></div></details></div>
+          <div class="terminal-detail"><ul class="terminal-points">{points}</ul>{execution_captures}</div>
         </section>'''
     else:
         context["terminalSection"] = ""
@@ -194,7 +215,7 @@ def render_page(locale: str, media: dict, media_root: Path = ROOT) -> str:
     context["principleRows"] = "".join(f'<article class="principle" data-reveal><span class="principle-number">{text(p["number"])}</span><div><h3>{text(p["title"])}</h3><p>{text(p["text"])}</p></div><span class="principle-word" aria-hidden="true">{text(p["word"])}</span></article>' for p in c["principles"])
     phone = media["screenshots"]["phone"]
     if phone:
-        context["phoneMedia"] = f'<figure class="phone-device actual-phone"><img src="{text(base + phone)}" alt="{text(c["phoneAlt"])}" width="1080" height="2340" loading="lazy" decoding="async"><figcaption>{text(c["screenshotLabel"])}</figcaption></figure>'
+        context["phoneMedia"] = '<div id="phone-capture" class="phone-capture">' + capture_figure(phone, c["phoneAlt"], c["phoneCaption"], c, base, media_root) + '</div>'
     else:
         context["phoneMedia"] = f'<figure class="phone-device"><div class="phone-status"><span>{text(c["phoneTime"])}</span><i></i><span aria-hidden="true">▰</span></div><div class="phone-body"><div class="phone-app"><img src="{base}assets/product-icon.png" alt="" width="28" height="28"><span>V8 Agent OS</span><span>＋</span></div><span class="phone-project">{text(c["phoneProject"])}</span><p class="phone-user-message">{text(c["phoneMessage"])}</p><div class="phone-response"><span aria-hidden="true">✳</span><p>{text(c["phoneReply"])}</p></div><div class="phone-mini-art" aria-hidden="true"><i></i><img src="{base}assets/product-icon.png" alt="" width="62" height="62"></div><div class="phone-composer" aria-hidden="true"><span>＋</span><i></i><span>↑</span></div></div><figcaption>{text(c["phoneConcept"])}</figcaption></figure>'
     context["ecosystemChips"] = "".join(f'<span><i aria-hidden="true">{symbol}</i>{text(item)}</span>' for symbol, item in zip(("◈", "⌘", "↗", "✳", "◇", "⤴"), c["ecosystemItems"]))

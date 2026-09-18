@@ -3,14 +3,18 @@
     "workspace": "assets/media/workspace-20260913.webp",
     "research": "assets/media/materials-20260913.webp",
     "creative": "assets/media/canvas-20260913.webp",
-    "phone": "",
+    "phone": "assets/media/phone-connections-20260917.png",
     "models": "assets/media/models-20260913.webp",
     "projects": "assets/media/projects-20260913.webp",
     "plugins": "assets/media/plugins-20260913.webp",
     "memory-overview": "assets/media/memory-overview-20260916.png",
     "memory-project": "assets/media/memory-project-20260916.png",
     "memory-global": "assets/media/memory-global-20260916.png",
-    "terminal": "assets/media/terminal-20260916.png"
+    "terminal": "assets/media/terminal-20260916.png",
+    "scene-atlas": "assets/media/scene-atlas-20260917.png",
+    "scene-camera": "assets/media/scene-camera-20260917.png",
+    "pairing": "assets/media/phone-pairing-20260917.png",
+    "recovery": "assets/media/reply-recovery-20260917.png"
   },
   "video": {
     "src": "",

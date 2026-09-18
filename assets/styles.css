@@ -142,6 +142,11 @@ h2 span { color: #96938e; }
 .controls-intro h3 { font-size: 22px; font-weight: 500; letter-spacing: -.4px; }
 .controls-intro p { color: var(--muted); max-width: 490px; font-size: 12px; line-height: 1.9; }
 .controls-note { margin-top: 23px; }
+.scene-section { padding: 85px 0 0; }
+.scene-tabs { grid-template-columns: repeat(2,minmax(0,1fr)); }
+.scene-panel { scroll-margin-top: 30px; }
+html:not(.has-js) .scene-panel + .scene-panel { margin-top: 40px; }
+.scene-note { margin-top: 24px; max-width: 800px; }
 .memory-section { padding: 15px 0 120px; }
 .memory-layout { display: grid; grid-template-columns: minmax(0,240px) minmax(0,1fr); gap: 48px; align-items: start; }
 .memory-tabs { border-top: 1px solid var(--line); }
@@ -159,11 +164,12 @@ html[lang="zh-CN"] .terminal-copy h2 { font-size: clamp(30px,3.1vw,42px); }
 .terminal-points { list-style: none; padding: 0; margin: 0; display: grid; font-size: 16px; color: #d4cfc6; border-top: 1px solid var(--line); }
 .terminal-points li { padding: 23px 0; border-bottom: 1px solid var(--line); }
 .terminal-points span { margin-right: 15px; color: #b48e72; font-size: 9px; }
-.terminal-evidence summary { display: flex; align-items: center; justify-content: space-between; gap: 20px; list-style: none; cursor: pointer; padding: 22px 0; color: var(--accent); font-size: 12px; }
-.terminal-evidence summary::-webkit-details-marker { display: none; }
-.terminal-evidence summary > span { font-size: 20px; }
-.terminal-evidence[open] summary > span { transform: rotate(45deg); }
-.terminal-note { margin-top: 16px; line-height: 1.9; }
+.capture-detail summary { display: flex; align-items: center; justify-content: space-between; gap: 20px; list-style: none; cursor: pointer; padding: 22px 0; color: var(--accent); font-size: 12px; }
+.capture-detail summary::-webkit-details-marker { display: none; }
+.capture-detail summary > span { font-size: 20px; flex-shrink: 0; }
+.capture-detail[open] summary > span { transform: rotate(45deg); }
+.capture-detail + .capture-detail { border-top: 1px solid var(--line); }
+.capture-note { margin: 16px 0 22px; line-height: 1.9; }
 .phone-identity { border-top: 1px solid var(--line); padding-top: 22px; margin-bottom: 22px; }
 .phone-identity h3 { font-size: 13px; font-weight: 500; color: #d4cfc6; }
 .phone-identity p { font-size: 11px; line-height: 1.9; color: var(--muted); margin-top: 10px; max-width: 420px; }
@@ -197,7 +203,8 @@ html[lang="zh-CN"] .film-center h2 { font-size: clamp(32px,4.5vw,56px); line-hei
 .principle h3 { font-size: 21px; font-weight: 500; letter-spacing: -.5px; line-height: 1.5; }
 .principle p { color: var(--muted); font-size: 12px; line-height: 1.95; max-width: 520px; margin-top: 14px; }
 .principle-word { text-align: right; font-size: 9px; letter-spacing: 2px; color: #948475; padding-top: 11px; }
-.phone-section { display: grid; grid-template-columns: 1.1fr 1fr; gap: 80px; align-items: center; padding: 60px 0 160px; }
+.phone-section { display: grid; grid-template-columns: minmax(0,1.1fr) minmax(0,1fr); gap: 80px; align-items: start; padding: 60px 0 160px; }
+.phone-copy { padding-top: 45px; }
 .phone-copy h2 { margin: 24px 0; font-size: clamp(35px,3.5vw,48px); }
 html[lang="zh-CN"] .phone-copy h2 { font-size: clamp(32px,3.15vw,42px); }
 .phone-copy .section-description { font-size: 13px; }
@@ -223,7 +230,12 @@ html[lang="zh-CN"] .phone-copy h2 { font-size: clamp(32px,3.15vw,42px); }
 .phone-composer i { width: 45%; height: 2px; background: #ffffff20; }
 .phone-composer > span:last-child { margin-left: auto; color: #ebb58a; }
 .phone-device figcaption { position: absolute; width: 100%; bottom: 0; text-align: center; padding: 9px 0 11px; font-size: 7px; letter-spacing: .8px; color: #a69c8f; background: #151617dd; }
-.actual-phone img { height: 100%; width: 100%; object-fit: cover; }
+.phone-capture { width: min(100%,294px); position: relative; margin-inline: auto; }
+.phone-capture .actual-capture { overflow: visible; border: 0; background: transparent; }
+.phone-capture .capture-open { border: 5px solid #383530; outline: 1px solid #aaa3966b; border-radius: 28px; overflow: hidden; box-shadow: 20px 25px 75px #0009; }
+.phone-capture figcaption { background: transparent; border: 0; padding: 20px 0 0; letter-spacing: .5px; font-size: 9px; }
+.release-version { margin-top: 17px; color: var(--accent); font-size: 12px; }
+.distribution-note { margin: 16px auto 0; max-width: 560px; color: var(--muted); font-size: 11px; line-height: 1.9; }
 .phone-orbits { position: absolute; top: 14%; left: -5%; width: 110%; height: 80%; overflow: hidden; background: radial-gradient(ellipse,#aa6a2f14,transparent 65%); }
 .phone-orbits i { position: absolute; width: 115%; height: 39%; border: 1px solid #c9945430; top: 30%; left: -8%; border-radius: 50%; transform: rotate(-24deg); }
 .phone-orbits i:nth-child(2) { transform: rotate(-24deg) scale(1.12); border-color: #c9945410; }
@@ -390,6 +402,8 @@ html[lang="zh-CN"] .download-section h2 { font-size: clamp(40px,4.8vw,64px); }
   .controls-intro { display: block; margin-bottom: 20px; }
   .controls-intro h3 { font-size: 19px; }
   .controls-intro p { font-size: 11px; margin-top: 14px; }
+  .scene-section { padding-top: 40px; }
+  .scene-note { margin-top: 20px; }
   .memory-section { padding: 0 0 75px; }
   .memory-layout { grid-template-columns: minmax(0,1fr); gap: 22px; }
   .memory-tabs { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); border-top: 0; }
@@ -402,7 +416,7 @@ html[lang="zh-CN"] .download-section h2 { font-size: clamp(40px,4.8vw,64px); }
   .terminal-copy .section-description { font-size: 12px; }
   .terminal-points { font-size: 13px; }
   .terminal-points li { padding: 19px 0; }
-  .terminal-evidence summary { font-size: 11px; }
+  .capture-detail summary { font-size: 11px; }
   .scenario-description { flex-direction: column; gap: 10px; padding-top: 20px; }
   .scenario-description h3,.scenario-description p { width: 100%; }
   .scenario-description h3 { font-size: 15px; }
@@ -427,6 +441,7 @@ html[lang="zh-CN"] .download-section h2 { font-size: clamp(40px,4.8vw,64px); }
   .principle p { font-size: 11px; margin-top: 11px; }
   .phone-section { grid-template-columns: minmax(0,1fr); gap: 30px; padding: 32px 0 86px; }
   .phone-copy h2,html[lang="zh-CN"] .phone-copy h2 { font-size: 31px; }
+  .phone-copy { padding-top: 0; }
   .phone-copy .section-description { font-size: 12px; }
   .phone-benefits { font-size: 11px; }
   .phone-stage { width: min(420px,100%); margin-inline: auto; padding: 30px 0; }

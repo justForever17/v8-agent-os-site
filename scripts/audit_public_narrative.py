@@ -6,7 +6,7 @@ import re
 import sys
 from urllib.parse import unquote, urlsplit
 
-from build_site import ROOT, STATIC_FILES, build, validate_media
+from build_site import ROOT, STATIC_FILES, RELEASE_URL, build, validate_media
 
 
 class Page(HTMLParser):
@@ -64,7 +64,8 @@ def audit():
                 target /= "index.html"
             assert target.is_file(), f"{relative}: missing local target {url}"
         assert "https://github.com/justForever17/v8-agent-os/discussions" in page.links
-        assert "https://github.com/justForever17/v8-agent-os/releases/latest" in page.links
+        assert RELEASE_URL in page.links
+        assert "https://github.com/justForever17/v8-agent-os/releases/latest" not in page.links, "Preview downloads must target the verified release, not GitHub's stable-only latest redirect"
         if not media["video"]["src"]:
             assert not page.videos and "film-placeholder" in source, "Empty video must not present a broken player"
         else:

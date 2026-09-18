@@ -17,7 +17,7 @@ import time
 from threading import Event, Thread
 
 from playwright.sync_api import sync_playwright, expect
-from build_site import ROOT, render_headers, render_page
+from build_site import ROOT, RELEASE_URL, render_headers, render_page
 
 
 class Handler(SimpleHTTPRequestHandler):
@@ -179,12 +179,15 @@ def capture_acceptance(browser, output):
                     page.goto(base + path, wait_until="networkidle")
                     expect(page.locator('.brand img').first).to_have_attribute("src", "../assets/product-icon.png" if path == "/zh/" else "./assets/product-icon.png")
                     for ident, source in media["screenshots"].items():
-                        if not source or ident == "phone":
+                        if not source:
                             continue
-                        if ident == "terminal":
-                            expect(page.locator(".terminal-evidence")).not_to_have_attribute("open", "")
-                            page.locator(".terminal-evidence summary").click()
-                            panel_id = "terminal-capture"
+                        detail = ident in ("terminal", "recovery", "pairing")
+                        if detail:
+                            expect(page.locator(f".{ident}-evidence")).not_to_have_attribute("open", "")
+                            page.locator(f".{ident}-evidence summary").click()
+                            panel_id = f"{ident}-capture"
+                        elif ident == "phone":
+                            panel_id = "phone-capture"
                         else:
                             tab = page.locator(f"#tab-{ident}")
                             other_ids = page.locator("[data-tab-group]").evaluate_all("(groups, tabId) => groups.filter(g => !g.querySelector('#'+tabId)).map(g => g.querySelector('[data-tab-panel].is-active')?.id).filter(Boolean)", f"tab-{ident}")
@@ -205,14 +208,15 @@ def capture_acceptance(browser, output):
                         expect(page.locator(".dialog-original")).to_have_attribute("href", ("../" if path == "/zh/" else "./") + source)
                         page.keyboard.press("Escape")
                         expect(panel.locator(".capture-open")).to_be_focused()
-                        if output and ident in ("memory-global", "terminal") and width in (1440, 390):
+                        section_ids = {"memory-global": "memory", "terminal": "continuity", "recovery": "continuity", "scene-camera": "creative-direction", "phone": "phone", "pairing": "phone"}
+                        if output and ident in section_ids and width in (1440, 390):
                             output.mkdir(parents=True, exist_ok=True)
-                            page.locator("#memory" if ident == "memory-global" else "#continuity").screenshot(path=str(output / f"{'zh' if path=='/zh/' else 'en'}-{ident}-{width}.png"))
-                        if ident == "terminal":
-                            page.locator(".terminal-evidence summary").focus()
+                            page.locator(f"#{section_ids[ident]}").screenshot(path=str(output / f"{'zh' if path=='/zh/' else 'en'}-{ident}-{width}.png"))
+                        if detail:
+                            page.locator(f".{ident}-evidence summary").focus()
                             page.keyboard.press("Enter")
                             expect(panel).not_to_be_visible()
-                    for selector in (".controls-gallery", ".memory-section"):
+                    for selector in (".controls-gallery", ".memory-section", ".scene-section"):
                         group_tabs = page.locator(f"{selector} [data-tab]")
                         if not group_tabs.count():
                             continue
@@ -222,18 +226,25 @@ def capture_acceptance(browser, output):
                         expect(group_tabs.last).to_be_focused()
                         page.reload(wait_until="networkidle")
                         expect(page.locator(f"#{last_panel}")).to_be_visible()
+                    for link in page.locator("#download a[href*='/releases/']").all():
+                        expect(link).to_have_attribute("href", RELEASE_URL)
                     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth+1")
                     if output and width in (1440, 390):
                         output.mkdir(parents=True, exist_ok=True)
                         page.screenshot(path=str(output / f"captures-{'zh' if path=='/zh/' else 'en'}-{width}.png"), full_page=True)
                     page.close()
-            nojs = browser.new_page(java_script_enabled=False)
+            nojs = browser.new_page(java_script_enabled=False, viewport={"width":390, "height":844})
             nojs.goto(base + "/zh/")
             expect(nojs.locator(".control-panel:visible")).to_have_count(sum(bool(media["screenshots"].get(k)) for k in ("models", "projects", "plugins")))
             expect(nojs.locator(".memory-panel:visible")).to_have_count(sum(bool(media["screenshots"].get(k)) for k in ("memory-overview", "memory-project", "memory-global")))
-            if media["screenshots"].get("terminal"):
-                nojs.locator(".terminal-evidence summary").click()
-                expect(nojs.locator("#terminal-capture")).to_be_visible()
+            expect(nojs.locator(".scene-panel:visible")).to_have_count(sum(bool(media["screenshots"].get(k)) for k in ("scene-atlas", "scene-camera")))
+            for ident in ("terminal", "recovery", "pairing"):
+                if media["screenshots"].get(ident):
+                    nojs.locator(f".{ident}-evidence summary").click()
+                    expect(nojs.locator(f"#{ident}-capture")).to_be_visible()
+            if media["screenshots"].get("phone"):
+                expect(nojs.locator("#phone-capture img")).to_be_visible()
+            assert nojs.evaluate("document.documentElement.scrollWidth <= innerWidth+1")
             nojs.close()
             print("Passed configured product captures, intrinsic sizing, independent tab groups, full-image links and mobile/no-JS views.")
         finally:
